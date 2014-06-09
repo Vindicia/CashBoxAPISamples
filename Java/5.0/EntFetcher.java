@@ -11,8 +11,8 @@ public class EntFetcher {
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub SKD00001847
 		com.vindicia.client.ClientConstants.DEFAULT_VINDICIA_SERVICE_URL = "https://soap.staging.sj.vindicia.com";
-		com.vindicia.client.ClientConstants.SOAP_LOGIN = "int_engr_soap";
-		com.vindicia.client.ClientConstants.SOAP_PASSWORD = "jpVYg48pv9pdrZcdMKbpHwG9rTE12Bso";
+		com.vindicia.client.ClientConstants.SOAP_LOGIN = "XXXXX_soap";
+		com.vindicia.client.ClientConstants.SOAP_PASSWORD = "XXXXXXXXXXXXXXXXXXXXXX";
 		com.vindicia.client.ClientConstants.DEFAULT_TIMEOUT = 2500000;
 		//String accountFilter = null; 
 		
