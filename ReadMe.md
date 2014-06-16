@@ -1,0 +1,1 @@
+This is a collection of code samples that illustrate usage of Vindicia CashBox APIs in the most common billing use cases where CashBox is used. These samples assume that you are using a Vindicia Client Library. 
