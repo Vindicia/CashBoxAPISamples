@@ -1,3 +1,5 @@
+import java.util.ResourceBundle;
+
 import com.vindicia.client.*;
 
 /*
@@ -8,10 +10,11 @@ import com.vindicia.client.*;
 public class ProductCreator {
 
 	public static void main(String[] args) {
-		com.vindicia.client.ClientConstants.DEFAULT_VINDICIA_SERVICE_URL = "https://soap.prodtest.sj.vindicia.com";
-		com.vindicia.client.ClientConstants.SOAP_LOGIN = "XXXXXX_soap";
-		com.vindicia.client.ClientConstants.SOAP_PASSWORD = "XXXXXXXXXXXXXXXXX";
-		com.vindicia.client.ClientConstants.DEFAULT_TIMEOUT = 250000; // ms
+		ResourceBundle rb = ResourceBundle.getBundle("properties.Environment");
+		com.vindicia.client.ClientConstants.SOAP_LOGIN = rb.getString("soap_login");
+		com.vindicia.client.ClientConstants.SOAP_PASSWORD = rb.getString("soap_password");
+		com.vindicia.client.ClientConstants.DEFAULT_VINDICIA_SERVICE_URL= rb.getString("soap_url");
+		com.vindicia.client.ClientConstants.DEFAULT_TIMEOUT = Integer.parseInt(rb.getString("soap_timeout"));
 		
 		com.vindicia.client.Product p = new com.vindicia.client.Product();
 		
