@@ -1,6 +1,8 @@
 import com.vindicia.client.*;
 
-// 
+// This sample has been tested for 4.3 version of CashBox API. It will also work for 5.0, 6.0 and 7.0 version.
+// This is a work-around for a bug in the AutoBill.delayBill() API calls where the movePermanently flag does not work correctly.
+
 public class PermanentDelay {
 
 	public static void main(String[] args) {
