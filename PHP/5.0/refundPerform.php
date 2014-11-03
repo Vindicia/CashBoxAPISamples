@@ -10,7 +10,8 @@ $transaction = new Transaction();
 $transaction->setMerchantTransactionId($tx_id);
 
 //Alternatively, you can use the VID of the transaction
-$transaction->setVID($tx_vid);
+//Commented out in this example, since we're not setting tx_vid before this call
+//$transaction->setVID($tx_vid);
 
 
 $refund1->setTransaction($transaction);
