@@ -20,6 +20,7 @@ do {
             foreach ($fetchedProducts as $prod) {
                 print('Product Id='.$prod->merchantProductId.PHP_EOL);
                 print('Product Description='.$prod->descriptions[0]->description.PHP_EOL);
+                print('Default Billing Plan='.$prod->defaultBillingPlan->merchantBillingPlanId.PHP_EOL);
                 $totalProductCount++;
             }
             $page++;
