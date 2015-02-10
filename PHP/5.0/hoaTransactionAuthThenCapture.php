@@ -27,10 +27,11 @@ function get_unique_value()
 
 function hoaTransactionAuthThenCapture()
 {
+    $transactionIdMaxLength = 21;
     $uniqueValue = get_unique_value();
     $merchantAccountId = 'account-' . $uniqueValue;
     $merchantTransactionId = 'tx-' . $uniqueValue;
-    $merchantTransactionId = substr($merchantTransactionId, 0, 25);
+    $merchantTransactionId = substr($merchantTransactionId, 0, $transactionIdMaxLength);
     $merchantPaymentMethodId = 'pm-' . $uniqueValue;
     $creditCardAccount = '5454541111111111';
     $paymentType = 'CreditCard';
