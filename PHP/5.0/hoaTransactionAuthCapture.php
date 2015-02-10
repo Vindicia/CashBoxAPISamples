@@ -25,20 +25,34 @@ function get_unique_value()
     return $nowNewYork->format('Y-m-d_h_i_s');
 }
 
-function hoaTransactionAuthCapture()
+function fail_if_merchant_transaction_id_too_long($merchantTransactionId)
 {
     $transactionIdMaxLength = 21;
+    $length = strlen($merchantTransactionId);
+    if ($length > $transactionIdMaxLength) {
+        print "Merchant Transaction Id too long.\n";
+        return true;
+    }
+    return false;
+}
+
+function hoaTransactionAuthCapture()
+{
     $uniqueValue = get_unique_value();
     $merchantAccountId = 'account-' . $uniqueValue;
-    $merchantTransactionId = 'tx-' . $uniqueValue;
-    $merchantTransactionId = substr($merchantTransactionId, 0, $transactionIdMaxLength);
+    $merchantTransactionId = 't-' . $uniqueValue;
+    if (fail_if_merchant_transaction_id_too_long($merchantTransactionId))
+    {
+        return;
+    }
+
     $merchantPaymentMethodId = 'pm-' . $uniqueValue;
     $campaign = '';
 
     $creditCardAccount = '5454541111111111';
     $paymentType = 'CreditCard';
     $cvn = '111';
-    $exp = '201501';
+    $exp = '201801';
     $email = get_unique_value() . '@nomail.com';
     $successUrl = 'http://good.com';
     $errorUrl = 'http://bad.com';
@@ -305,17 +319,23 @@ function hoaTransactionAuthCapture()
 
     if ( $response['returnCode'] != '200' )
     {
-        print($response);
+        print $response['data']->session->apiReturn->returnCode . PHP_EOL;
+        print $response['data']->session->apiReturn->returnString . PHP_EOL;
     }
 
     else
     {
+        print "returnCode=" . $response['data']->session->apiReturn->returnCode . PHP_EOL;
+        print "returnString=" . $response['data']->session->apiReturn->returnString . PHP_EOL;
+
         if ( $response['data']->session->apiReturn->returnCode == "200" )
         {
             $returnTransaction = $response['data']->session->apiReturnValues->transactionAuthCapture->transaction;
 
             if($returnTransaction->statusLog[0]->status=='Authorized') {
-                print "Transaction approved";
+                print "Transaction approved\n";
+                print ("Transaction with id " . $returnTransaction->merchantTransactionId .
+                    " was successfully captured");
             }
             else if($returnTransaction->statusLog[0]->status=='Cancelled') {
                 print "Transaction not approved \n";
@@ -336,17 +356,11 @@ function hoaTransactionAuthCapture()
         else if ($response['data']->session->apiReturn->returnCode=="402") {
             print "Transaction cannot be processed due to transaction error\n";
         }
-        else if ($response['data']->session->apiReturn->returnCode="403") {
-            print "Transaction cannot be processed due to high fraud potential\n";
+        else if ($response['data']->session->apiReturn->returnCode="409") {
+            print "Transaction cannot be processed due to Failed AVS and CVN policy evaluation\n";
         }
-        else if ($response['data']->session->apiReturn->returnCode="406") {
-            print "Transaction cannot be processed due to Chargeback risk score being higher than minChargebackProbability\n";
-        }
-        else if ($response['data']->session->apiReturn->returnCode="407") {
-            print "Transaction cannot be processed due to Failed AVS policy evaluation\n";
-        }
-        else if ($response['data']->session->apiReturn->returnCode="408") {
-            print "Transaction cannot be processed due to Failed CVN policy evaluation\n";
+        else if ($response['data']->session->apiReturn->returnCode="410") {
+            print "Transaction cannot be processed due to not being able to perform AVS and CVN policy evaluation\n";
         }
         else {
             print "Error while making call to Vindicia CashBox\n";

@@ -25,18 +25,31 @@ function get_unique_value()
     return $nowNewYork->format('Y-m-d_h_i_s');
 }
 
-function hoaTransactionAuthThenCapture()
+function fail_if_merchant_transaction_id_too_long($merchantTransactionId)
 {
     $transactionIdMaxLength = 21;
+    $length = strlen($merchantTransactionId);
+    if ($length > $transactionIdMaxLength) {
+        print "Merchant Transaction Id too long.\n";
+        return true;
+    }
+    return false;
+}
+
+function hoaTransactionAuthThenCapture()
+{
     $uniqueValue = get_unique_value();
     $merchantAccountId = 'account-' . $uniqueValue;
-    $merchantTransactionId = 'tx-' . $uniqueValue;
-    $merchantTransactionId = substr($merchantTransactionId, 0, $transactionIdMaxLength);
+    $merchantTransactionId = 't-' . $uniqueValue;
+    if (fail_if_merchant_transaction_id_too_long($merchantTransactionId))
+    {
+        return;
+    }
     $merchantPaymentMethodId = 'pm-' . $uniqueValue;
     $creditCardAccount = '5454541111111111';
     $paymentType = 'CreditCard';
     $cvn = '111';
-    $exp = '201501';
+    $exp = '201801';
     $email = get_unique_value() . '@nomail.com';
     $successUrl = 'http://good.com';
     $errorUrl = 'http://bad.com';
@@ -303,20 +316,26 @@ function hoaTransactionAuthThenCapture()
 
     if ( $response['returnCode'] != '200' )
     {
-        print($response);
+        print $response['data']->session->apiReturn->returnCode . PHP_EOL;
+        print $response['data']->session->apiReturn->returnString . PHP_EOL;
     }
 
     else
     {
+        print "returnCode=" . $response['data']->session->apiReturn->returnCode . PHP_EOL;
+        print "returnString=" . $response['data']->session->apiReturn->returnString . PHP_EOL;
+
         if ( $response['data']->session->apiReturn->returnCode == "200" )
         {
             $returnTransaction = $response['data']->session->apiReturnValues->transactionAuth->transaction;
 
             if($returnTransaction->statusLog[0]->status=='Authorized') {
-                print "Transaction approved";
+                print "Transaction approved\n";
 
                 $captureTransaction = new Transaction();
                 $response = $captureTransaction->capture(array($returnTransaction));
+                print "returnCode=" . $response['returnCode'] . PHP_EOL;
+                print "returnString=" . $response['returnString'] . PHP_EOL;
                 if($response['returnCode']==200) {
                     $captureResults = $response['data']->results;
                     foreach ($captureResults as $captureResult) {
