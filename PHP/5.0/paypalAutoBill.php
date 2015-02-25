@@ -131,7 +131,7 @@ function create_paypal_AutoBill($account)
 
         if ($auth_status->status == 'AuthorizationPending') {
             $redirection_url = $auth_status->payPalStatus->redirectUrl;
-            echo "To authorize, please visit: <a href=\"" . $redirection_url . "\">Continue to Paypal</a>";
+            echo "To authorize, please visit: <a href=\"" . $redirection_url . "\">Continue to Paypal</a>"  . PHP_EOL;
         } else if ($auth_status->status == 'Cancelled') {
             echo "Autobill not accepted by PayPal";
         } else {
@@ -153,6 +153,10 @@ function finalize_paypal_AutoBill($vid)
         print($response);
         print('Error finalizing autobill' . PHP_EOL);
     } else {
-        print('Success');
+        // You can obtain the paypal payer email address from the return object if you desire to persist this.
+        $response_object = $response['data'];
+        $auth_status = $response_object->authStatus;
+        $payPalEmail = $auth_status->payPalStatus->paypalEmail;
+        print('Successfully paid for by ' . $payPalEmail);
     }
 }
