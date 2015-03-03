@@ -5,8 +5,8 @@
  */
 
 // Include the Vindicia library
-require_once("../../../API/50/Vindicia/Soap/Vindicia.php");
-require_once("../../../API/50/Vindicia/Soap/Const.php");
+require_once("../../../API/90/Vindicia/Soap/Vindicia.php");
+require_once("../../../API/90/Vindicia/Soap/Const.php");
 
 /**
  * Step 1. Create Account with Payment Method object
@@ -106,16 +106,21 @@ function create_paypal_AutoBill($account)
     $autobill->setBillingPlan($billingplan);
     $autobill->setCurrency('USD');
 
-    $duplicateBehavior = 'Fail';
+    //$duplicateBehavior = 'Fail'; //removed in 9.0
+    //$validatePaymentMethod = true; //removed in 9.0
+    $immediateAuthFailurePolicy = 'putAutoBillInRetryCycleIfPaymentMethodIsValid'; //added in 9.0
+    $validateForFuturePayment = true; //added in 9.0
     $minChargebackProbability = 100;
     $ignoreAvsPolicy = true;
     $ignoreCvnPolicy = true;
-    $campaignCode = '';
+    $campaignCode = null;
     $dryrun = false;
-    $validatePaymentMethod = true;
 
-    $response = $autobill->update($duplicateBehavior,
-        $validatePaymentMethod,
+    $response = $autobill->update(
+        //$duplicateBehavior, //removed in 9.0
+        //$validatePaymentMethod, //removed in 9.0
+        $immediateAuthFailurePolicy, //added in 9.0
+        $validateForFuturePayment, //added in 9.0
         $minChargebackProbability,
         $ignoreAvsPolicy,
         $ignoreCvnPolicy,
@@ -124,6 +129,9 @@ function create_paypal_AutoBill($account)
 
     if ($response['returnCode'] != '200') {
         print('Error creating autobill' . PHP_EOL);
+        print 'Soap Id = ' . $response['data']->return->soapId . PHP_EOL;
+        print 'Return Code = ' . $response['returnCode'] . PHP_EOL;
+        print 'Return String = ' . $response['returnString'] . PHP_EOL;
     } else {
         $response_object = $response['data'];
 
@@ -150,8 +158,10 @@ function finalize_paypal_AutoBill($vid)
     $autobill = new Autobill();
     $response = $autobill->finalizePayPalAuth($vid, true);
     if ($response['returnCode'] != '200') {
-        print($response);
         print('Error finalizing autobill' . PHP_EOL);
+        print 'Soap Id = ' . $response['data']->return->soapId . PHP_EOL;
+        print 'Return Code = ' . $response['returnCode'] . PHP_EOL;
+        print 'Return String = ' . $response['returnString'] . PHP_EOL;
     } else {
         // You can obtain the paypal payer email address from the return object if you desire to persist this.
         $response_object = $response['data'];
