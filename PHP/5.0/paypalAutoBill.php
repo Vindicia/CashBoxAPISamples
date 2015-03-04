@@ -108,7 +108,7 @@ function create_paypal_AutoBill($account)
 
     //$duplicateBehavior = 'Fail'; //removed in 9.0
     //$validatePaymentMethod = true; //removed in 9.0
-    $immediateAuthFailurePolicy = 'putAutoBillInRetryCycleIfPaymentMethodIsValid'; //added in 9.0
+    $immediateAuthFailurePolicy = 'doNotSaveAutoBill'; //added in 9.0
     $validateForFuturePayment = true; //added in 9.0
     $minChargebackProbability = 100;
     $ignoreAvsPolicy = true;
