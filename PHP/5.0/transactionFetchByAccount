@@ -1,0 +1,33 @@
+<?php
+
+require_once('Vindicia/Soap/Vindicia.php');
+require_once('Vindicia/Soap/Const.php');
+
+$accountID = ($argv[1]);
+
+$account = new Account();
+$account->setMerchantAccountId($accountID);
+
+$tx = new Transaction();
+
+$response = $tx->fetchByAccount($account, false);
+print_r($response);
+$returnCode   = $response['returnCode'];
+$returnString = $response['returnString'];
+
+if ($returnCode == 200) {
+    $returned_txs = $response['data']->transactions;
+    print "merchantTransactionId,status\n";
+    
+    foreach ($returned_txs as $transaction) {
+        
+        $tx_status = $transaction->statusLog[0]->status;
+        print "$transaction->merchantTransactionId" . "," . "$tx_status" . "\n";
+    }
+} else {
+    print "Unable to retrieve Transactions for account ID: $accountID \n";
+    print "$returnString\n";
+    
+}
+
+?>
