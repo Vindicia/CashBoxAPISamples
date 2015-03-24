@@ -1,6 +1,20 @@
 <pre>
 <?php
 
+#-----------------------------------------------------------------------------------
+#
+#	HOA Account_UpdatePaymentMethod sample
+#
+#		This sample demonstrates Updating a Credit Card on file using HOA.
+#
+#		This file is called by UC-003_UpdateCreditCard.php which includes
+#		the full Use Case flow, with additional API calls from SOAP.
+#
+#		To run this sample as a single standalone file to see HOA execution only,
+#		simply uncomment the call to hoaAccountUpdatePaymentMethod() below.
+#
+#-----------------------------------------------------------------------------------
+
 ini_set('include_path','/usr/local/Vindicia_php5_lib_5.0');
 //ini_set('include_path','../../../API/50');
 ini_set('display_errors',1);
@@ -8,7 +22,8 @@ ini_set('display_errors',1);
 require_once("Vindicia/Soap/Vindicia.php");
 require_once("Vindicia/Soap/Const.php");
 
-hoaAccountUpdatePaymentMethod();
+# uncomment for single file execution:
+# hoaAccountUpdatePaymentMethod();
 
 function get_unique_value()
 {
