@@ -113,10 +113,10 @@ function create_ecp_AutoBill($account)
     } else {
         $response_object = $response['data'];
         $auth_status = $response_object->authStatus;
-        if ($auth_status->status == 'AuthorizationPending') {
-            echo "ECP payment in AuthorizationPending status, this is a successful test of ECP."  . PHP_EOL;
+        if ($auth_status->status == 'AuthorizedForValidation') {
+            echo "ECP payment in AuthorizedForValidation status, this is a successful test of ECP."  . PHP_EOL;
         } else if ($auth_status->status == 'Cancelled') {
-            echo "Autobill with ECP was not accepted by the bank.";
+            echo "Validation of ECP failed.";
         } else {
             echo "Status = " . $auth_status->status;
         }
