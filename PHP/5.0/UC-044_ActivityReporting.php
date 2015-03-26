@@ -27,7 +27,6 @@ ini_set('display_errors',1);
 error_reporting(E_ALL|E_STRICT);
 
 require_once('Vindicia/Soap/Vindicia.php');
-
 require_once('Vindicia/Soap/Const.php');
 
 $merchantAccountId = 'acct66485';
