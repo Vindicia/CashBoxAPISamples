@@ -261,7 +261,6 @@ function createTransaction($account, $merchantPaymentMethodId, $merchantTransact
 	$tx_lineItem0 = new TransactionItem();
 	$tx_lineItem0->setSku('WIDGET200');						# 1) Descriptive name
 	$tx_lineItem0->setName('600 Widgets ($3.30 for 200)');	# 2) Description field
-	$tx_lineItem0->setMerchantAutoBillItemId('foobar');
 	$tx_lineItem0->setQuantity('3');			# 3) Quantity: how many were purchased
 	$tx_lineItem0->setPrice('3.30');			# 4) Amount for a single unit
 	
