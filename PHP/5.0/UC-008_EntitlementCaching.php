@@ -22,12 +22,12 @@
 #		Methods:
 #
 #			fetchEntitlements()		Main loop of paged calls to Entitlement.fetchDeltaSince
-#									used to populate & maintain local Entitlement cache, by
-#									requesting all changes to Entitlements since the time
-#									of the last successful execution, tracked in $next_start
+#							used to populate & maintain local Entitlement cache, by
+#							requesting all changes to Entitlements since the time
+#							of the last successful execution, tracked in $next_start
 #
 #			userEntitled()			Determines dynamically at time of login if user entitled
-#									from inspection of local Entitlement cache.
+#							from inspection of local Entitlement cache.
 #
 #
 #-----------------------------------------------------------------------------------
@@ -112,7 +112,8 @@ function logReturn($return, $s)
 		"\tReturn Message: " . $return->returnString . "\n" .
 		"\tSoap call ID: " . $return->soapId . "\n" );
 
-	return ( $return->returnCode );
+	return array('returnCode' => $return->returnCode,
+					'soapId' => $return->soapId);
 }
 
 function getCashBoxVersion()
@@ -192,7 +193,11 @@ function fetchEntitlements()
 	do {
 		logEFDS($start, $page, $pageSize, $end);
 		$response = $entitlement->fetchDeltaSince( $start, $page, $pageSize, $end );
-		$returnCode = logReturn($response['data']->return, "TEntitlement result:");
+		$return = $response['data']->return;
+		$results = logReturn($return, "TEntitlement result:");
+		$returnCode = $results['returnCode'];
+		$soapId = $results['soapId'];	// soapId of this paged call to fetchDeltaSince
+		print "soapId: " . $soapId . ", page: " . $page . "\n";
 		if ( '200' != $returnCode ) {
 			logEnvironment();
 			break;
