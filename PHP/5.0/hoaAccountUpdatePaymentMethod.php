@@ -15,7 +15,7 @@
 #
 #-----------------------------------------------------------------------------------
 
-ini_set('include_path','/usr/local/Vindicia_php5_lib_5.0');
+ini_set('include_path','/usr/local/Vindicia_php5_lib_9.0');
 //ini_set('include_path','../../../API/50');
 ini_set('display_errors',1);
 
@@ -43,8 +43,8 @@ function hoaAccountUpdatePaymentMethod(
 	$successUrl = 'http://good.com';
 	$errorUrl = 'http://bad.com';
 	$HOAmethod = 'Account_UpdatePaymentMethod';
-	$HOAurl = 'https://secure.prodtest.sj.vindicia.com/vws';
-	$HOAversion = '5.0';
+	$HOAurl = str_replace("soap","secure",VIN_SOAP_HOST) . "/vws.html";
+	$HOAversion = '5.0';	// VIN_SOAP_CLIENT_VERSION
 	$ipAddress = '127.0.0.1';
 	$name = 'John Vindicia';
 	$addr1 = '303 Twin Dolphin Drive';
@@ -107,6 +107,8 @@ function hoaAccountUpdatePaymentMethod(
 
 	$response = $webSession->initialize();
 
+		print_r($response);
+
 	# Check to see that the initialize succeeded
 	#
 	if ($response['returnCode'] == 200) {
@@ -114,7 +116,7 @@ function hoaAccountUpdatePaymentMethod(
 		#
 		$vin_WebSession_vid = $response['data']->session->getVID();
 	} else {
-		print($response);
+		print_r($response);
 		return;
 	}
 
@@ -166,10 +168,14 @@ function hoaAccountUpdatePaymentMethod(
 		$curlopts .= " --data-urlencode $name=\"$value\"";
 	}
 
+	print "<b><i>SOAP URL</i></b>: " . VIN_SOAP_HOST . PHP_EOL;
+	
 	# Do the POST
 	#
-	exec("curl -s $curlopts " . $HOAurl,
-	$curlout, $curlret);
+	print "Posting to <b>HOA URL</b>: " . $HOAurl . PHP_EOL;
+	print PHP_EOL;
+	
+	exec("curl -s $curlopts " . $HOAurl, $curlout, $curlret);
 
 	# this line is only here to support testing with a single PHP file:
 	$_GET = simulate_get($curlout);
@@ -278,6 +284,8 @@ function hoaAccountUpdatePaymentMethod(
 	#-Step 3- is a page that performs all the actual finalize steps.
 	#-Step 3-
 
+	print "Parameters from redirect URL:" . PHP_EOL;
+	print_r ($_GET);
 	$session_id = $_GET['session_id'];
 	$webSession = new WebSession();
 	$webSession->setVid($session_id);
@@ -371,6 +379,10 @@ function hoaAccountUpdatePaymentMethod(
 // case the $_GET array is automatically populated with the query values).
 function simulate_get($curlout)
 {
+	print "Response from curl:" . PHP_EOL;
+	print_r($curlout);
+	print PHP_EOL;
+
 	#if (php_sapi_name() == "cli") {
 	$curlresp = implode("\n", $curlout);
 	$reg_exUrl = "/(?<=href=(\"|'))[^\"']+(?=(\"|'))/";
