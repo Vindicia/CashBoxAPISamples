@@ -5,7 +5,7 @@ require_once("Vindicia/Soap/Const.php");
 $tx = new Transaction();
 $sparseReturnDescriptor = ''; // We want full Transaction object returned
 $tx_vid = "" ; // Grab this from the value associated with the name 'vid' in the query string of the URL when customer arrives at your return page after completing the MOLPay payment
-$response = $tx->finalizeCustomerAction($sparseReturnDescriptor, $txVid);
+$response = $tx->finalizeCustomerAction($sparseReturnDescriptor, $tx_vid);
 if ($response['returnCode'] == 200) {
        $returned_tx = $response['data']->transaction;
         if ($returned_tx->statusLog[0]->status == 'Pending') {
