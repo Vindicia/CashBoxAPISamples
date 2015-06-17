@@ -194,6 +194,11 @@ function hoaPaymentMethodUpdate(
 		if ($apiReturnCode == "200") {
 			print PHP_EOL. 'Created' .
 				' PaymentMethod=' . $merchantPaymentMethodId . PHP_EOL;
+				
+			$creditCardVid = $paymentMethodUpdate->paymentMethod->creditCard->VID;
+			
+			// Look up the credit card VID extracted above in the local database for previous free trial usage
+			// for UC-062
 		}
 		else if ($apiReturnCode=="400") {
 			print "One of the following:
