@@ -1,0 +1,268 @@
+<?php
+
+
+require_once("Vindicia/Soap/Vindicia.php");
+require_once("Vindicia/Soap/Const.php");
+
+# uncomment for single file execution:
+# hoaPaymentMethodUpdate();
+
+function get_unique_value()
+{
+	$nowNewYork = new \DateTime( 'now', new \DateTimeZone( 'America/New_York' ) );
+	return $nowNewYork->format('Y-m-d_h_i_s');
+}
+
+function hoaPaymentMethodUpdate(
+	$merchantAccountId = null,
+	$merchantPaymentMethodId = null )
+{
+	$creditCardAccount = '5454541111111111';
+	$paymentType = 'CreditCard';
+	$cvn = '111';
+	$exp = '201805';
+	$email = get_unique_value() . '@nomail.com';
+	$successUrl = 'http://good.com';
+	$errorUrl = 'http://bad.com';
+	$HOAmethod = 'PaymentMethod_Update';
+	$HOAurl = str_replace("soap","secure",VIN_SOAP_HOST) . "/vws.html";
+	$HOAversion = '5.0';	// VIN_SOAP_CLIENT_VERSION
+	$ipAddress = '127.0.0.1';
+	$name = 'John Vindicia';
+	$addr1 = '303 Twin Dolphin Drive';
+	$city = 'Redwood City';
+	$district = 'CA';
+	$postalCode = '94065';
+	$country = 'US';
+
+	# Create a new WebSession object
+	$webSession = new WebSession();
+
+	# Set the WebSession parameters
+	$webSession->setReturnURL($successUrl);
+	$webSession->setErrorURL($errorUrl);
+	$webSession->setIpAddress($ipAddress);
+	$webSession->setMethod($HOAmethod);
+	$webSession->setVersion($HOAversion);
+
+	if ( is_null($merchantAccountId) )
+		$merchantAccountId = 'account-2015-02-10_02_55_50';
+	if ( is_null($merchantPaymentMethodId) )
+		$merchantPaymentMethodId = 'pm-2015-02-10_02_55_50';
+
+// Step 2: start configuring the WebSession with the parameters we want to have
+
+
+	$nvp2 = new NameValuePair();
+	$nvp2->setName('vin_PaymentMethod_merchantPaymentMethodId');
+	$nvp2->setValue($merchantPaymentMethodId);
+
+	$nvp3 = new NameValuePair();
+	$nvp3->setName('vin_PaymentMethod_type');
+	$nvp3->setValue($paymentType);
+
+	$webSession->setPrivateFormValues(array($nvp2, $nvp3));
+
+	$nvp7 = new NameValuePair();
+	$nvp7->setName('PaymentMethod_update_validate');
+	$nvp7->setValue('true');
+
+	$nvp8 = new NameValuePair();
+	$nvp8->setName('PaymentMethod_update_replaceOnAllAutoBills');
+	$nvp8->setValue('false');
+
+	$nvp9 = new NameValuePair();
+	$nvp9->setName('PaymentMethod_update_ignoreAvsPolicy');
+	$nvp9->setValue('false');
+
+	$nvp10 = new NameValuePair();
+	$nvp10->setName('PaymentMethod_update_ignoreCvnPolicy');
+	$nvp10->setValue('false');
+	
+	$nvp11 = new NameValuePair();
+	$nvp11->setName('PaymentMethod_update_sourceIp');
+	$nvp11->setValue($ipAddress);
+	
+	$nvp12 = new NameValuePair();
+	$nvp12->setName('PaymentMethod_update_minChargebackProbability');
+	$nvp12->setValue('100'); //specify a value lower than 100 to enable fraud screening
+	
+  $nvp13 = new NameValuePair();
+	$nvp13->setName('PaymentMethod_update_replaceOnAllChildAutoBills');
+	$nvp13->setValue('false');
+
+	$webSession->setMethodParamValues(array(
+	$nvp7, $nvp8, $nvp9, $nvp10, $nvp11, $nvp12, $nvp13));
+
+// now, create the session and generate it's session ID
+
+	$response = $webSession->initialize();
+
+		print_r($response);
+
+	# Check to see that the initialize succeeded
+	#
+	if ($response['returnCode'] == 200) {
+		# The VID of the WebSession object serves as session id
+		#
+		$vin_WebSession_vid = $response['data']->session->getVID();
+	} else {
+		print_r($response);
+		return;
+	}
+
+	# populate accountHolderName with same value as on billingAddress:
+	$post['vin_PaymentMethod_accountHolderName'] =
+	$post['vin_PaymentMethod_billingAddress_name'] = $name;
+	$post['vin_PaymentMethod_billingAddress_addr1'] = $addr1;
+	$post['vin_PaymentMethod_billingAddress_city'] = $city;
+	$post['vin_PaymentMethod_billingAddress_district'] = $district;
+	$post['vin_PaymentMethod_billingAddress_postalCode'] = $postalCode;
+	$post['vin_PaymentMethod_billingAddress_country'] = $country;
+	$post['vin_PaymentMethod_creditCard_account'] = $creditCardAccount;
+	$post['vin_PaymentMethod_creditCard_expirationDate'] = $exp;
+	$post['vin_PaymentMethod_nameValues_cvn'] = $cvn;
+
+	$post['vin_WebSession_vid'] = $vin_WebSession_vid;
+
+
+	# Create the curl command line for exec by looping through the
+	# $post array
+	#
+	$curlopts = "";
+	foreach ($post as $name => $value) {
+		$curlopts .= " --data-urlencode $name=\"$value\"";
+	}
+
+	print "<b><i>SOAP URL</i></b>: " . VIN_SOAP_HOST . PHP_EOL;
+	
+	# Do the POST
+	#
+	print "Posting to <b>HOA URL</b>: " . $HOAurl . PHP_EOL;
+	print PHP_EOL;
+	
+	exec("curl -s $curlopts " . $HOAurl, $curlout, $curlret);
+
+	# this line is only here to support testing with a single PHP file:
+	$_GET = simulate_get($curlout);
+	
+	print "Parameters from redirect URL:" . PHP_EOL;
+	print_r ($_GET);
+	$session_id = $_GET['session_id'];
+	$webSession = new WebSession();
+	$webSession->setVid($session_id);
+
+	# initialize call timestamp in case of error for support information below:
+	date_default_timezone_set("America/Los_Angeles");
+	$call_timestamp = date("c");	// c - The ISO-8601 date (e.g. 2015-06-17T16:34:42+00:00)
+
+	$response = $webSession->finalize();
+	print_r ($response);
+ 
+	$session = $response['data']->session;
+
+		# WebSession.finalizeResponse.return.returnCode
+	$returnCode = $response['returnCode'];
+		# WebSession.finalizeResponse.return.returnString
+	$returnString = $response['returnString'];
+		# WebSession.finalizeResponse.return.soapId
+	$finalize_soapId = $response['data']->return->soapId;
+	print $call_timestamp . " WebSession.finalize soapId: " . $finalize_soapId . "\n";
+		# log soap id if available in the return values of this call
+
+		# WebSession.apiReturn.returnCode
+	$apiReturnCode = $session->apiReturn->returnCode;
+		# WebSession.apiReturn.returnString
+	$apiReturnString = $session->apiReturn->returnString;
+
+		# WebSession.apiReturnValues
+	$apiReturnValues = $session->apiReturnValues;
+
+	$paymentMethodUpdate = $apiReturnValues->paymentMethodUpdate;
+		# WebSession.apiReturnValues.accountUpdatePaymentMethod.validated
+	$validated = $paymentMethodUpdate->validated;
+
+	if ($response['returnCode'] != '200') {
+		print $response['returnCode'] . PHP_EOL;
+		print $returnString . PHP_EOL;
+		print $apiReturnCode . PHP_EOL;
+		print $apiReturnString . PHP_EOL;
+	}
+	else {
+		print $apiReturnCode . PHP_EOL;
+		print $apiReturnString . PHP_EOL;
+		if ($apiReturnCode == "200") {
+			print PHP_EOL. 'Created' .
+				' PaymentMethod=' . $merchantPaymentMethodId . PHP_EOL;
+		}
+		else if ($apiReturnCode=="400") {
+			print "One of the following:
+• Invalid Payment Method Type. (You cannot change the Payment Method Type on an existing Payment Method.)
+• No PaymentMethod specified in arguments.
+• Data validation error Failed to create Payment-Type-Specific Payment Record: Credit Card conversion failed: Credit Card failed Luhn check.\n";
+		}
+		else if ($apiReturnCode=="402") {
+			print "One of the following:
+• PaymentMethod failed validation.
+• Error attempting to authorize card.
+• Unable to authorize card.\n";
+		}
+		else if ($apiReturnCode="404") {
+			print "No match found error-description.
+ Returned if CashBox cannot find an account that matches the input in the Vindicia database.\n";
+		}
+		else if ($apiReturnCode="407") {
+			print "Transaction cannot be processed due to Failed AVS policy evaluation\n";
+		}
+		else if ($apiReturnCode="408") {
+			print "Transaction cannot be processed due to Failed CVN policy evaluation\n";
+		}
+		else if ($apiReturnCode="409") {
+			print "AutoBill creation failed: due to AVS and CVV Check Failed\n";
+		}
+		else if ($apiReturnCode="410") {
+			print "AutoBill creation failed: due to AVS and CVV Check not being able to be performed\n";
+		}
+		else {
+			print "Error while making call to Vindicia CashBox\n";
+		}
+	}
+	return array('apiReturnCode' => $apiReturnCode, 'validated' => $validated);
+}
+
+// Only to facilitate command line running of method or single PHP
+// file execution invoked from a browser, both for testing only.
+//
+// Artificially sets the $_GET array to facilitate testing so that
+// it matches the behavior with a separate HOA Success page (in which
+// case the $_GET array is automatically populated with the query values).
+function simulate_get($curlout)
+{
+	print "Response from curl:" . PHP_EOL;
+	print_r($curlout);
+	print PHP_EOL;
+
+	#if (php_sapi_name() == "cli") {
+	$curlresp = implode("\n", $curlout);
+	$reg_exUrl = "/(?<=href=(\"|'))[^\"']+(?=(\"|'))/";
+	preg_match($reg_exUrl, $curlresp, $url);
+	$parsed_url = parse_url($url[0]);
+	$qs = $parsed_url['query'];
+	$nvparray = explode("&amp;", $qs);
+	#print_r($nvparray);
+	foreach ($nvparray as $val) {
+		if ( !empty($val) ) { 
+			$nvp = explode("=", $val);
+			$key = $nvp[0];
+			$value = $nvp[1];
+			#print "\$key=" . $key . ", \$value=" . $value . PHP_EOL;
+			$_GET[$key] = $value;
+		}
+	}
+	#}
+	#print_r($_GET);
+	return $_GET;
+}
+
+?>
+</pre>
