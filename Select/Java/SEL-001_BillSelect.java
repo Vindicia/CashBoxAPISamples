@@ -1,3 +1,13 @@
+//
+//		Use Case SEL-001: Submit Failed Transactions for recovery
+//
+//		SEL-001_BillSelect.java
+//
+//		This sample was built against a java library that was generated
+//		using the Axis wsdl2java utility against the WSDL endpoint shown.
+//
+//		To run this sample it is required to first generate the java library.
+//
 import com.vindicia.soap.v1_0.select.*;
 import com.vindicia.soap.v1_0.selecttypes.*;
 
