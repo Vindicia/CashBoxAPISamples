@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+        var websession_id;
+        $(document).ready(function() {
+            $('button').prop('disabled', true);
+            var merchant_account_id = 'account-2015-02-10_02_55_50';
+            var merchant_payment_method_id = 'pm-2015-02-10_02_55_50';
+            $("#div1").html('Merchant Account Id =' + merchant_account_id + '. ' + 'Payment Method Id =' + merchant_payment_method_id + '. Fetching SessionId with server call to WebSession Initialize...');
+            //Step 1: on page load call localhost:5000/wsinitialize
+            $.ajax({
+                method: 'GET',
+                url: "wsinitializeaccountupdatepaymentmethod?vin_Account_merchantAccountId=" + merchant_account_id + '&vin_PaymentMethod_merchantPaymentMethodId=' + merchant_payment_method_id,
+                success: function (result) {
+                    websession_id = result;
+                    $("#div1").html('WebSession Initialized.  WebSession Id =' + websession_id + '. Click Update to HOA Ajax call Account_UpdatePaymentMethod.');
+                    $('button').prop('disabled', false);
+                },
+                error: function (result) {
+                    $("#div1").html('Web Session Initialization Failed!  Please reload the page to try again.');
+                }
+            });
+            $('button').click(function () {
+                $('button').prop('disabled', true);
+                //Step 2: on button click hoa ajax to vws with data
+                var url = 'https://secure.prodtest.sj.vindicia.com/vws';  //url is specific to ProdTest, change the url if pointing to staging or production
+                var creditCardAccount = '5454541111111111';
+                var cvn = '123';
+                var exp = '202001';
+                var name = 'Jim Felderman';
+                var addr1 = '123 Twin Dolphin Drive';
+                var city = 'Redwood City';
+                var district = 'CA';
+                var postalCode = '94065';
+                var country = 'US';
+                var phone = '703-555-1212';
+                var vin_ajax = '1';
+
+                $("#div1").html('HOA ajax posting to VWS...')
+                $.ajax({
+                    method: 'POST',
+                    url: url,
+                    success: function (result) {
+                        //Step 3: in callback from Step 2, call localhost:5000/wsfinalize
+                        $("#div1").html('HOA ajax post returned successfully from VWS.  Finalizing WebSession...');
+                        $.ajax({
+                            method: 'GET',
+                            url: "wsfinalizeaccountupdatepaymentmethod?vin_WebSession_VID=" + websession_id,
+                            success: function (result) {
+                                var paymentmethod_vid = result;
+                                $("#div1").html('WebSession Finalized.  Credit Card Updated with VID = ' + paymentmethod_vid + '.');
+                            },
+                            error: function (result) {
+                                $("#div1").html('WebSession Finalization Failed!');
+                            }
+                        });
+                    },
+                    error: function (result) {
+                        $("#div1").html('HOA Ajax Post Failed!');
+                    },
+                    data: {
+                        vin_PaymentMethod_accountHolderName: name,
+                        vin_PaymentMethod_billingAddress_name: name,
+                        vin_PaymentMethod_billingAddress_addr1: addr1,
+                        vin_PaymentMethod_billingAddress_city: city,
+                        vin_PaymentMethod_billingAddress_district: district,
+                        vin_PaymentMethod_billingAddress_postalCode: postalCode,
+                        vin_PaymentMethod_billingAddress_country: country,
+                        vin_Account_shippingAddress_addr1: addr1,
+                        vin_Account_shippingAddress_city: city,
+                        vin_Account_shippingAddress_district: district,
+                        vin_Account_shippingAddress_postalCode: postalCode,
+                        vin_Account_shippingAddress_country: country,
+                        vin_Account_shippingAddress_phone: phone,
+                        vin_PaymentMethod_creditCard_account: creditCardAccount,
+                        vin_PaymentMethod_creditCard_expirationDate: exp,
+                        vin_PaymentMethod_nameValues_cvn: cvn,
+                        vin_ajax: vin_ajax,
+                        vin_WebSession_VID: websession_id
+                    }
+                })
+            });
+        });
+    </script>
+</head>
+<body>
+<button>Update Credit Card</button>
+<div id="div1"><h2>Welcome to your store front.  Update Credit Card.</h2></div>
+</body>
+</html>
