@@ -219,3 +219,27 @@ function finalize_paypal_AutoBill_then_transaction_auth_capture_Transaction_Item
         }
     }
 }
+
+function Combining_Subscription_Non_Subscription_Items()
+{
+    $autobill = new AutoBill();
+
+    $productSubscription = new Product();
+    $productSubscription->setMerchantProductId('Video Subscription'); //Must be defined in CashBox portal
+
+    $productNonRecurring = new Product();
+    $productNonRecurring->setMerchantProductId('Golf Clubs'); //Must be defined in CashBox portal
+
+    $itemSubscription = new AutoBillItem();
+    $itemSubscription->setIndex(0);
+    $itemSubscription->setProduct($productSubscription);
+
+    $itemNonRecurring = new AutoBillItem();
+    $itemNonRecurring->setCycles(1);  //Only bill first time
+    $itemNonRecurring->setIndex(1);
+    $itemNonRecurring->setProduct($productNonRecurring);
+
+    $autobill->setItems(array($itemSubscription, $itemNonRecurring));
+
+    // Finish setting up autobill and then call autobill.update.
+}
