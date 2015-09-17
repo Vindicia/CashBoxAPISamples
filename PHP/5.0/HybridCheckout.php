@@ -220,7 +220,7 @@ function finalize_paypal_AutoBill_then_transaction_auth_capture_Transaction_Item
     }
 }
 
-function Combining_Subscription_Non_Subscription_Items()
+function Combining_Subscription_And_Non_Subscription_Items_To_Checkout_With_Single_Transaction()
 {
     $autobill = new AutoBill();
 
@@ -237,6 +237,10 @@ function Combining_Subscription_Non_Subscription_Items()
     $itemNonRecurring = new AutoBillItem();
     $itemNonRecurring->setCycles(1);  //Only bill first time
     $itemNonRecurring->setIndex(1);
+
+    //If you want to minimize the number of Products defined in CashBox,
+    //you have the option to re-use Products by overriding the price by setting the autobill item amount.
+    $itemNonRecurring->setAmount(100);
     $itemNonRecurring->setProduct($productNonRecurring);
 
     $autobill->setItems(array($itemSubscription, $itemNonRecurring));
