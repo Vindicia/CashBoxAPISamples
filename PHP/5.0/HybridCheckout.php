@@ -70,23 +70,24 @@ function finalize_credit_card_AutoBill_then_transaction_auth_capture_Transaction
 
         if ( $response['returnCode'] != '200' )
         {
-            print $response['data']->session->apiReturn->returnCode . PHP_EOL;
-            print $response['data']->session->apiReturn->returnString . PHP_EOL;
+            print $response['returnCode'] . PHP_EOL;
+            print $response['returnString'] . PHP_EOL;
         }
 
         else
         {
-            print "returnCode=" . $response['data']->session->apiReturn->returnCode . PHP_EOL;
-            print "returnString=" . $response['data']->session->apiReturn->returnString . PHP_EOL;
+            print "returnCode=" . $response['returnCode'] . PHP_EOL;
+            print "returnString=" . $response['returnString'] . PHP_EOL;
 
-            if ( $response['data']->session->apiReturn->returnCode == "200" )
+            if ( $response['returnCode'] == "200" )
             {
-                $returnTransaction = $response['data']->session->apiReturnValues->transactionAuthCapture->transaction;
+                $returnTransaction = $response['data']->transaction;
 
                 if($returnTransaction->statusLog[0]->status=='Authorized') {
                     print "Transaction approved\n";
                     print ("Transaction with id " . $returnTransaction->merchantTransactionId .
                         " was successfully captured");
+                    return $returnTransaction->merchantTransactionId;
                 }
                 else if($returnTransaction->statusLog[0]->status=='Cancelled') {
                     print "Transaction not approved \n";
@@ -98,19 +99,19 @@ function finalize_credit_card_AutoBill_then_transaction_auth_capture_Transaction
                     print "Error: Unexpected transaction status\n";
                 }
             }
-            else if ($response['data']->session->apiReturn->returnCode="202") {
+            else if ($response['returnCode']=="202") {
                 print "Transaction cannot be processed due to taxes being temporarily unavailable\n";
             }
-            else if ($response['data']->session->apiReturn->returnCode=="400") {
+            else if ($response['returnCode']=="400") {
                 print "Transaction cannot be processed due to data validation error\n";
             }
-            else if ($response['data']->session->apiReturn->returnCode=="402") {
+            else if ($response['returnCode']=="402") {
                 print "Transaction cannot be processed due to transaction error\n";
             }
-            else if ($response['data']->session->apiReturn->returnCode="409") {
+            else if ($response['returnCode']=="409") {
                 print "Transaction cannot be processed due to Failed AVS and CVN policy evaluation\n";
             }
-            else if ($response['data']->session->apiReturn->returnCode="410") {
+            else if ($response['returnCode']=="410") {
                 print "Transaction cannot be processed due to not being able to perform AVS and CVN policy evaluation\n";
             }
             else {
@@ -181,39 +182,53 @@ function finalize_paypal_AutoBill_then_transaction_auth_capture_Transaction_Item
 
         $response = $transaction->authCapture($sendEmailNotification, $ignoreAvsPolicy, $ignoreCvnPolicy, $campaign, $dryrun);
 
-        if ($response['returnCode'] != '200') {
-            print $response['data']->session->apiReturn->returnCode . PHP_EOL;
-            print $response['data']->session->apiReturn->returnString . PHP_EOL;
-        } else {
-            print "returnCode=" . $response['data']->session->apiReturn->returnCode . PHP_EOL;
-            print "returnString=" . $response['data']->session->apiReturn->returnString . PHP_EOL;
+        if ( $response['returnCode'] != '200' )
+        {
+            print $response['returnCode'] . PHP_EOL;
+            print $response['returnString'] . PHP_EOL;
+        }
 
-            if ($response['data']->session->apiReturn->returnCode == "200") {
-                $returnTransaction = $response['data']->session->apiReturnValues->transactionAuthCapture->transaction;
+        else
+        {
+            print "returnCode=" . $response['returnCode'] . PHP_EOL;
+            print "returnString=" . $response['returnString'] . PHP_EOL;
 
-                if ($returnTransaction->statusLog[0]->status == 'Authorized') {
+            if ( $response['returnCode'] == "200" )
+            {
+                $returnTransaction = $response['data']->transaction;
+
+                if($returnTransaction->statusLog[0]->status=='Authorized') {
                     print "Transaction approved\n";
                     print ("Transaction with id " . $returnTransaction->merchantTransactionId .
                         " was successfully captured");
-                } else if ($returnTransaction->statusLog[0]->status == 'Cancelled') {
+                    return $returnTransaction->merchantTransactionId;
+                }
+                else if($returnTransaction->statusLog[0]->status=='Cancelled') {
                     print "Transaction not approved \n";
                     print "Reason code is: ";
                     print $returnTransaction->statusLog[0]->creditCardStatus->authCode;
                     print "\n";
-                } else {
+                }
+                else {
                     print "Error: Unexpected transaction status\n";
                 }
-            } else if ($response['data']->session->apiReturn->returnCode = "202") {
+            }
+            else if ($response['returnCode']=="202") {
                 print "Transaction cannot be processed due to taxes being temporarily unavailable\n";
-            } else if ($response['data']->session->apiReturn->returnCode == "400") {
+            }
+            else if ($response['returnCode']=="400") {
                 print "Transaction cannot be processed due to data validation error\n";
-            } else if ($response['data']->session->apiReturn->returnCode == "402") {
+            }
+            else if ($response['returnCode']=="402") {
                 print "Transaction cannot be processed due to transaction error\n";
-            } else if ($response['data']->session->apiReturn->returnCode = "409") {
+            }
+            else if ($response['returnCode']=="409") {
                 print "Transaction cannot be processed due to Failed AVS and CVN policy evaluation\n";
-            } else if ($response['data']->session->apiReturn->returnCode = "410") {
+            }
+            else if ($response['returnCode']=="410") {
                 print "Transaction cannot be processed due to not being able to perform AVS and CVN policy evaluation\n";
-            } else {
+            }
+            else {
                 print "Error while making call to Vindicia CashBox\n";
             }
         }
