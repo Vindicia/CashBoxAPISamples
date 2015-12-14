@@ -8,13 +8,19 @@ function AddCurrencyCredit($merchantAutobillId)
 {
     $autoBill = new AutoBill();
     $autoBill->setMerchantAutoBillId($merchantAutobillId);
+    
+//note field can be empty - it doesn't get used.
+//use description and/or reason fields in the Credit object instead
 
     $curAmount = new CurrencyAmount();
     $curAmount->setCurrency('USD');
     $curAmount->setAmount(25);
+    $curAmount->setDescription("25 Dollar Currency Credit");
+    $curAmount->setReason("Credit for July");
+    
     $cr = new Credit();
     $cr->setCurrencyAmounts(array($curAmount));
-    $response = $autoBill->grantCredit($cr, '25 Currency Credit');
+    $response = $autoBill->grantCredit($cr, '');
     logCall($response, 'AutoBill::GrantCredit', '25 Currency Credit');
 }
 
@@ -25,9 +31,12 @@ function AddTimeCredit($merchantAutobillId, $daysRemaining)
 
     $timeInterval = new TimeInterval();
     $timeInterval->setDays($daysRemaining);
+    $timeInterval->setDescription("Early Pay on NonRecurring Billing");
+    $timeInterval->setReason("Credit for July");
+    
     $cr = new Credit();
     $cr->setTimeIntervals(array($timeInterval));
-    $response = $autoBill->grantCredit($cr, 'Early Pay on NonRecurring Billing');
+    $response = $autoBill->grantCredit($cr, '');
     logCall($response, 'AutoBill::GrantCredit', $daysRemaining);
 }
 
