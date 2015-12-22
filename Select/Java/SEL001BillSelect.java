@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 import org.apache.axis2.transport.http.HTTPConstants;
 
 
-class SEL-001_BillSelect {
+class SEL001BillSelect {
 
 	static Authentication auth = new Authentication();
 	static String endpoint;
@@ -34,8 +34,8 @@ class SEL-001_BillSelect {
 	static SelectStub select;
 
     static {
-		ResourceBundle rb = ResourceBundle.getBundle("properties.Environment");
-		login = = rb.getString("soap_login");
+		ResourceBundle rb = ResourceBundle.getBundle("Environment");
+		login = rb.getString("soap_login");
 		password = rb.getString("soap_password");
 
 		endpoint = "https://soap.prodtest.sj.vindicia.com/v1.0/soap.pl";
@@ -233,3 +233,4 @@ class SEL-001_BillSelect {
 	}
 	
 }
+
