@@ -26,11 +26,11 @@ import java.util.Set;
 import org.apache.axis2.transport.http.HTTPConstants;
 
 
-class SEL-002_FetchSelect {
+class SEL002FetchSelect {
 
 	private static final java.util.logging.Logger log
        =
-	java.util.logging.Logger.getLogger(FetchSelect.class.getName());
+	java.util.logging.Logger.getLogger(SEL002FetchSelect.class.getName());
 
 	static Authentication auth = new Authentication();
 	static String endpoint;
@@ -43,8 +43,8 @@ class SEL-002_FetchSelect {
 	static SelectStub select;
 
     static {
-		ResourceBundle rb = ResourceBundle.getBundle("properties.Environment");
-		login = = rb.getString("soap_login");
+		ResourceBundle rb = ResourceBundle.getBundle("Environment");
+		login = rb.getString("soap_login");
 		password = rb.getString("soap_password");
 
 		endpoint = "https://soap.prodtest.sj.vindicia.com/v1.0/soap.pl";
@@ -383,4 +383,3 @@ class SEL-002_FetchSelect {
 	}
 	
 }
-
