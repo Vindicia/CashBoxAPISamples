@@ -10,7 +10,7 @@ Files:
 	VindiciaSelectIntegration.sln	- Compiles BillSelect/FetchSelect C# sample
 	build.bat			- Generates VindiciaSelect dll
 	Readme_SelectIntegration.txt	- This file
-	Environment.properties		- The configuration file from which soap credentials are read
+	bin\Environment.properties	- The configuration file from which soap credentials are read
 
 
 Installation
