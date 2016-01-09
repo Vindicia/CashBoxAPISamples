@@ -22,9 +22,7 @@ namespace VindiciaSelectIntegration
             DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
             Console.WriteLine("Executing in: " + dir);
             DirectoryInfo parentDir = new DirectoryInfo(dir.Parent.FullName);
-            DirectoryInfo projDir = new DirectoryInfo(parentDir.Parent.FullName);
-            Console.WriteLine("Project: " + projDir);
-            return new PropertyFile(projDir + "\\" + propFile + ".properties");
+            return new PropertyFile(parentDir + "\\" + propFile + ".properties");
         }
 
         public String get(String field, String defValue)
