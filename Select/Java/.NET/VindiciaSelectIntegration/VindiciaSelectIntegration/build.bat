@@ -1,5 +1,5 @@
 
-REM Build script that generates VindiciaSelect dll from Select v1.1 WSDL.
+REM Build script that generates VindiciaSelect dll from Select v1.1 WSDL
 
 REM Destination drive
 F:
