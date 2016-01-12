@@ -3,13 +3,13 @@
 
 Files:
 
-	SEL001BillSelect.java		    - BillSelect Java class file
-	build.sh			              - Compiles BillSelect Java sample
-	build.bat			              - Compiles BillSelect Java sample (Windows)
-	run.sh				              - Runs the BillSelect Java sample
-	run.bat				              - Runs the BillSelect Java sample (Windows)
-	Readme_BillSelect.txt		    - This file
-	bin\Environment.properties  - The configuration file from which soap credentials are read
+	SEL001BillSelect.java		- BillSelect Java class file
+	build.sh			- Compiles BillSelect Java sample
+	build.bat			- Compiles BillSelect Java sample (Windows)
+	run.sh				- Runs the BillSelect Java sample
+	run.bat				- Runs the BillSelect Java sample (Windows)
+	Readme_BillSelect.txt		- This file
+	bin\Environment.propertie	- The configuration file from which soap credentials are read
 
 
 Installation
