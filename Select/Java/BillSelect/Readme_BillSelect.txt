@@ -9,7 +9,7 @@ Files:
 	run.sh				- Runs the BillSelect Java sample
 	run.bat				- Runs the BillSelect Java sample (Windows)
 	Readme_BillSelect.txt		- This file
-	bin\Environment.propertie	- The configuration file from which soap credentials are read
+	bin\Environment.properties	- The configuration file from which soap credentials are read
 
 
 Installation
