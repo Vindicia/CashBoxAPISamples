@@ -36,3 +36,4 @@ CP=$CP8:$BASEDIR/$SELECT/bin:$BASEDIR/bin
 cd $BASEDIR
 
 java -cp .:bin:$CP SEL001BillSelect BillSelect_TEST20140506
+
