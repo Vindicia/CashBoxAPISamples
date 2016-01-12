@@ -47,8 +47,8 @@ class SEL002FetchSelect {
 		login = rb.getString("soap_login");
 		password = rb.getString("soap_password");
 
-		endpoint = "https://soap.prodtest.sj.vindicia.com/v1.0/soap.pl";
-		//endpoint = rb.getString("soap_url");
+		//endpoint = "https://soap.prodtest.sj.vindicia.com/soap.pl";
+		endpoint = rb.getString("soap_url");
 
 		version = "1.0";
 		userAgent = "FetchSelect (Select API)";
