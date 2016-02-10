@@ -1,0 +1,88 @@
+
+First, run wsdl2java using the Axis library (1.6.2) to generate
+the Select v1.1 library source code.
+
+1) Issue #1:
+
+At compile time, the generated source code for the Select v1.1
+library in selecttypes/ReturnCode.java includes a syntax error
+in that the input parameter to method ReturnCode fromValue(int value)
+is an int, but the lines of code causing the compiler error access
+the int value as if it were a string:
+
+Executing in: /Users/sheller/Downloads/Clients/java/Select ...
+javac 1.6.0_65
+src/com/vindicia/soap/v1_1/selecttypes/ReturnCode.java:566: incomparable types: int and <nulltype>
+                    if ((enumeration == null) && !((value == null) || (value.equals("")))) {
+                                                          ^
+src/com/vindicia/soap/v1_1/selecttypes/ReturnCode.java:566: int cannot be dereferenced
+                    if ((enumeration == null) && !((value == null) || (value.equals("")))) {
+                                                                            ^
+Note: src/com/vindicia/soap/v1_1/select/SelectStub.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+2 errors
+vindicias-MacBook-Pro-5:Select sheller$ 
+
+Solution:
+
+# Note: To compile ReturnCode.java, I had to comment out the following line 566:
+#	if ((enumeration == null) && !((value == null) || (value.equals("")))) {
+# and replace it with this:
+	if ((enumeration == null)) {
+
+
+
+2) Issue #2:
+
+At runtime, once Issue #1 has been addressed & the generated Select v1.1
+library has compiled successfully:
+
+Last login: Tue Jan 12 16:14:05 on ttys008
+vindicias-MacBook-Pro-5:~ sheller$ /Users/sheller/Downloads/Clients/java/sample/Select/test2/Select/BillSelect/run.sh ; exit;
+Executing in: /Users/sheller/Downloads/Clients/java/sample/Select/test2 ...
+endpoint=https://soap.prodtest.sj.vindicia.com/soap.pl
+login=xxx_soap
+2016-01-12 16:14:55.571 BillSelect.run(): merchantTransactionId=BillSelect_TEST20140506
+log4j:WARN No appenders could be found for logger (org.apache.axis2.description.AxisOperation).
+log4j:WARN Please initialize the log4j system properly.
+merchantTransactionId BillSelect_TEST20140506 with status Failed , authCode 302 on 2016-01-12 16:14:56.132 for 10.99 USD
+Beginning request to bill transactions
+2016-01-12 16:14:57.053org.apache.axis2.AxisFault: org.apache.axis2.databinding.ADBException: Unexpected subelement returnString
+org.apache.axis2.AxisFault: org.apache.axis2.databinding.ADBException: Unexpected subelement returnString
+	at org.apache.axis2.AxisFault.makeFault(AxisFault.java:430)
+	at com.vindicia.soap.v1_1.select.SelectStub.fromOM(SelectStub.java:1349)
+	at com.vindicia.soap.v1_1.select.SelectStub.billTransactions(SelectStub.java:738)
+	at SEL001BillSelect.run(SEL001BillSelect.java:128)
+	at SEL001BillSelect.main(SEL001BillSelect.java:78)
+Caused by: java.lang.Exception: org.apache.axis2.databinding.ADBException: Unexpected subelement returnString
+	at com.vindicia.soap.v1_1.selecttypes.Return$Factory.parse(Return.java:604)
+	at com.vindicia.soap.v1_1.select.BillTransactionsResponse$Factory.parse(BillTransactionsResponse.java:518)
+	at com.vindicia.soap.v1_1.select.SelectStub.fromOM(SelectStub.java:1329)
+	... 3 more
+Caused by: org.apache.axis2.databinding.ADBException: Unexpected subelement returnString
+	at com.vindicia.soap.v1_1.selecttypes.Return$Factory.parse(Return.java:598)
+	... 5 more
+logout
+
+[Process completed]
+
+Solution:
+
+Modify the local SelectTypes.xsd to have returnString last (instead of second within
+the Return type) as below:
+
+  <xsd:complexType name="Return">
+    <xsd:sequence>
+      <xsd:element minOccurs="1" name="returnCode" type="tns:ReturnCode" />
+      <xsd:element minOccurs="0" name="soapId" type="xsd:string" />
+      <xsd:element minOccurs="0" name="returnString" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+Then run wsdl2java referencing the local WSDL files to pickup the change to SelectTypes.xsd
+shown above:
+
+WSDL_DIR=wsdls
+
+$AXIS_DIR/wsdl2java.sh -uri $WSDL_DIR/Select.wsdl -u -s -o . -t
+
