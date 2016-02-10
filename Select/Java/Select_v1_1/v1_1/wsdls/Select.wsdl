@@ -1,0 +1,379 @@
+<definitions name="Select" targetNamespace="http://soap.vindicia.com/v1_1/Select" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://soap.vindicia.com/v1_1/Select" xmlns:vin="http://soap.vindicia.com/v1_1/SelectTypes" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsdl="http://soap.vindicia.com/v1_1/Select" >
+  <documentation>WSDL Specification for Select</documentation>
+  <types>
+    <xsd:schema targetNamespace="http://soap.vindicia.com/v1_1/Select">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://soap.vindicia.com/v1_1/SelectTypes" schemaLocation="./SelectTypes.xsd" />
+      <xsd:element name="reportTransactions">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="auth" type="vin:Authentication" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="transactions" type="vin:Transaction" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="reportTransactionsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="return" type="vin:Return" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="response" type="vin:TransactionValidationResponse" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="billTransactions">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="auth" type="vin:Authentication" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="transactions" type="vin:Transaction" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="billTransactionsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="return" type="vin:Return" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="response" type="vin:TransactionValidationResponse" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="refundTransactions">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="auth" type="vin:Authentication" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="refunds" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="refundTransactionsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="return" type="vin:Return" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="response" type="vin:TransactionValidationResponse" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="fetchBillingResults">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="auth" type="vin:Authentication" />
+            <xsd:element name="timestamp" type="xsd:dateTime" />
+            <xsd:element name="endTimestamp" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" name="page" type="xsd:int" />
+            <xsd:element minOccurs="0" name="pageSize" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="fetchBillingResultsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="return" type="vin:Return" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="transactions" type="vin:Transaction" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="fetchChargebacks">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="auth" type="vin:Authentication" />
+            <xsd:element name="timestamp" type="xsd:dateTime" />
+            <xsd:element name="endTimestamp" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" name="page" type="xsd:int" />
+            <xsd:element minOccurs="0" name="pageSize" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="fetchChargebacksResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="return" type="vin:Return" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="chargebacks" type="vin:Chargeback" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="fetchByMerchantTransactionId">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="auth" type="vin:Authentication" />
+            <xsd:element name="merchantTransactionId" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="fetchByMerchantTransactionIdResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="return" type="vin:Return" />
+            <xsd:element minOccurs="0" name="transaction" type="vin:Transaction" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+  <message name="reportTransactions_in">
+    <part element="tns:reportTransactions" name="parameters" />
+  </message>
+  <message name="reportTransactions_out">
+    <part element="tns:reportTransactionsResponse" name="parameters" />
+  </message>
+  <message name="billTransactions_in">
+    <part element="tns:billTransactions" name="parameters" />
+  </message>
+  <message name="billTransactions_out">
+    <part element="tns:billTransactionsResponse" name="parameters" />
+  </message>
+  <message name="refundTransactions_in">
+    <part element="tns:refundTransactions" name="parameters" />
+  </message>
+  <message name="refundTransactions_out">
+    <part element="tns:refundTransactionsResponse" name="parameters" />
+  </message>
+  <message name="fetchBillingResults_in">
+    <part element="tns:fetchBillingResults" name="parameters" />
+  </message>
+  <message name="fetchBillingResults_out">
+    <part element="tns:fetchBillingResultsResponse" name="parameters" />
+  </message>
+  <message name="fetchChargebacks_in">
+    <part element="tns:fetchChargebacks" name="parameters" />
+  </message>
+  <message name="fetchChargebacks_out">
+    <part element="tns:fetchChargebacksResponse" name="parameters" />
+  </message>
+  <message name="fetchByMerchantTransactionId_in">
+    <part element="tns:fetchByMerchantTransactionId" name="parameters" />
+  </message>
+  <message name="fetchByMerchantTransactionId_out">
+    <part element="tns:fetchByMerchantTransactionIdResponse" name="parameters" />
+  </message>
+  <portType name="SelectPortType">
+    <operation name="reportTransactions">
+      <input message="tns:reportTransactions_in" />
+      <output message="tns:reportTransactions_out" />
+    </operation>
+    <operation name="billTransactions">
+      <input message="tns:billTransactions_in" />
+      <output message="tns:billTransactions_out" />
+    </operation>
+    <operation name="refundTransactions">
+      <input message="tns:refundTransactions_in" />
+      <output message="tns:refundTransactions_out" />
+    </operation>
+    <operation name="fetchBillingResults">
+      <input message="tns:fetchBillingResults_in" />
+      <output message="tns:fetchBillingResults_out" />
+    </operation>
+    <operation name="fetchChargebacks">
+      <input message="tns:fetchChargebacks_in" />
+      <output message="tns:fetchChargebacks_out" />
+    </operation>
+    <operation name="fetchByMerchantTransactionId">
+      <input message="tns:fetchByMerchantTransactionId_in" />
+      <output message="tns:fetchByMerchantTransactionId_out" />
+    </operation>
+  </portType>
+  <binding name="SelectBinding" type="tns:SelectPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="reportTransactions">
+      <xsd:annotation>
+        <xsd:documentation><![CDATA[
+
+        
+        Report an array of Transaction objects listing the results of your billing attempts. Vindicia uses this for
+        determining appropriate actions when a subsequent request is made for us to attempt billing through
+        the <a href="#data_type.billTransactions">billTransactions</a> method. If a submitted item fails to validate it will be returned
+        in the response array along with information indicating the validation issue.
+        
+    <p>
+<h4>Input Fields</h4><dl>
+<dt><b>auth</b></dt>
+<dd>Credentials required to authenticate this request</dd>
+<dt><b>transactions</b></dt>
+<dd>An array of <a href="#data_type.Transaction">Transaction</a> objects</dd>
+</dl>
+<h4>Output Fields</h4><dl>
+<dt><b>return</b></dt>
+<dd>Basic results of this request (success, failure, error, etc.)</dd>
+<dt><b>response</b></dt>
+<dd>An array of <a href="#data_type.ValidationResponse">ValidationResponse</a> objects</dd>
+</dl>
+]]></xsd:documentation>
+      </xsd:annotation>
+      <soap:operation soapAction="http://soap.vindicia.com/v1_1/Select#reportTransactions" />
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="literal" />
+      </input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="literal" />
+      </output>
+    </operation>
+    <operation name="billTransactions">
+      <xsd:annotation>
+        <xsd:documentation><![CDATA[
+
+        
+        Instructs Vindicia to attempt to recover these billings through the use of our Advanced Retry Technology.
+        The results of these attempts will be communicated through the <a href="#data_type.fetchBillingResults">fetchBillingResults</a> method.
+        If for any reason you wish to withdrawal a Transaction after calling this method you should use the
+        <a href="#data_type.refundTransactions">refundTransactions</a> method. If a submitted item fails to validate it will be returned
+        in the response array along with information indicating the validation issue.
+        
+    <p>
+<h4>Input Fields</h4><dl>
+<dt><b>auth</b></dt>
+<dd>Credentials required to authenticate this request</dd>
+<dt><b>transactions</b></dt>
+<dd>An array of <a href="#data_type.Transaction">Transaction</a> objects</dd>
+</dl>
+<h4>Output Fields</h4><dl>
+<dt><b>return</b></dt>
+<dd>Basic results of this request (success, failure, error, etc.)</dd>
+<dt><b>response</b></dt>
+<dd>An array of <a href="#data_type.ValidationResponse">ValidationResponse</a> objects</dd>
+</dl>
+]]></xsd:documentation>
+      </xsd:annotation>
+      <soap:operation soapAction="http://soap.vindicia.com/v1_1/Select#billTransactions" />
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="literal" />
+      </input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="literal" />
+      </output>
+    </operation>
+    <operation name="refundTransactions">
+      <xsd:annotation>
+        <xsd:documentation><![CDATA[
+
+        
+        Instructs Vindicia to discontinue further attempts to bill a customer (i.e. the customer has cancelled 
+        their subscription or paid through another channel). If Vindicia has not yet successfully billed this
+        customer this method cancels our attempts. If we receive this request after having successfully billed 
+        then we will issue a refund against our transaction to eliminate the unwanted billing. Confirmation
+        of a refund will be returned in the <a href="#data_type.fetchBillingResults">fetchBillingResults</a> method. If a submitted item fails to validate 
+        it will be returned in the response array along with information indicating the validation issue.
+        
+    <p>
+<h4>Input Fields</h4><dl>
+<dt><b>auth</b></dt>
+<dd>Credentials required to authenticate this request</dd>
+<dt><b>refunds</b></dt>
+<dd>An array of ids used to identify transactions</dd>
+</dl>
+<h4>Output Fields</h4><dl>
+<dt><b>return</b></dt>
+<dd>Basic results of this request (success, failure, error, etc.)</dd>
+<dt><b>response</b></dt>
+<dd>An array of <a href="#data_type.ValidationResponse">ValidationResponse</a> objects</dd>
+</dl>
+]]></xsd:documentation>
+      </xsd:annotation>
+      <soap:operation soapAction="http://soap.vindicia.com/v1_1/Select#refundTransactions" />
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="literal" />
+      </input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="literal" />
+      </output>
+    </operation>
+    <operation name="fetchBillingResults">
+      <xsd:annotation>
+        <xsd:documentation><![CDATA[
+
+         
+         Returns a list of <a href="#data_type.Transaction">Transaction</a> objects that have changed status since the input timestamp.  
+         Paging is supported via page and pageSize.  You should continue calling the function until the 
+         length of the resulting array is 0.
+         
+    <p>
+<h4>Input Fields</h4><dl>
+<dt><b>auth</b></dt>
+<dd>Credentials required to authenticate this request</dd>
+<dt><b>timestamp</b></dt>
+<dd>All transactions on or after this timestamp</dd>
+<dt><b>endTimestamp</b></dt>
+<dd>All transactions before this timestamp</dd>
+<dt><b>page</b></dt>
+<dd>Optional page number to begin results returned</dd>
+<dt><b>pageSize</b></dt>
+<dd>Optional number of results to display per a page</dd>
+</dl>
+<h4>Output Fields</h4><dl>
+<dt><b>return</b></dt>
+<dd>Basic results of this request (success, failure, error, etc.)</dd>
+<dt><b>transactions</b></dt>
+<dd>Array of <a href="#data_type.Transaction">Transaction</a> objects that have updated status since the timestamp</dd>
+</dl>
+]]></xsd:documentation>
+      </xsd:annotation>
+      <soap:operation soapAction="http://soap.vindicia.com/v1_1/Select#fetchBillingResults" />
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="literal" />
+      </input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="literal" />
+      </output>
+    </operation>
+    <operation name="fetchChargebacks">
+      <xsd:annotation>
+        <xsd:documentation><![CDATA[
+<p>
+<h4>Input Fields</h4><dl>
+<dt><b>auth</b></dt>
+<dd>Credentials required to authenticate this request</dd>
+<dt><b>timestamp</b></dt>
+<dd>All chargebacks on or after this timestamp</dd>
+<dt><b>endTimestamp</b></dt>
+<dd>All chargebacks before this timestamp</dd>
+<dt><b>page</b></dt>
+<dd>The offset, based on pageSize, to return.</dd>
+<dt><b>pageSize</b></dt>
+<dd>The number of chargebacks to return per page.</dd>
+</dl>
+<h4>Output Fields</h4><dl>
+<dt><b>return</b></dt>
+<dd>Basic results of this request (success, failure, error, etc.)</dd>
+<dt><b>chargebacks</b></dt>
+<dd>Array of <a href="#data_type.Chargeback">Chargeback</a> objects that have updated status since the timestamp</dd>
+</dl>
+]]></xsd:documentation>
+      </xsd:annotation>
+      <soap:operation soapAction="http://soap.vindicia.com/v1_1/Select#fetchChargebacks" />
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="literal" />
+      </input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="literal" />
+      </output>
+    </operation>
+    <operation name="fetchByMerchantTransactionId">
+      <xsd:annotation>
+        <xsd:documentation><![CDATA[
+Loads a transaction for a merchant transaction ID.<p>
+<h4>Input Fields</h4><dl>
+<dt><b>auth</b></dt>
+<dd>Credentials required to authenticate this request</dd>
+<dt><b>merchantTransactionId</b></dt>
+<dd>Merchant's unique ID for transaction</dd>
+</dl>
+<h4>Output Fields</h4><dl>
+<dt><b>return</b></dt>
+<dd>Basic results of this request (success, failure, error, etc.)</dd>
+<dt><b>transaction</b></dt>
+<dd>The transaction object with this merchant transaction id</dd>
+</dl>
+]]></xsd:documentation>
+      </xsd:annotation>
+      <soap:operation soapAction="http://soap.vindicia.com/v1_1/Select#fetchByMerchantTransactionId" />
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="literal" />
+      </input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="Select">
+    <port binding="tns:SelectBinding" name="SelectPort">
+      <soap:address location="https://soap.vindicia.com/soap.pl" />
+    </port>
+  </service>
+</definitions>
