@@ -1,0 +1,184 @@
+		How to generate java stubs from WSDL
+		------------------------------------
+
+1) First retrieve the WSDL files & save to local copies from these URI's:
+
+	https://soap.prodtest.sj.vindicia.com/1.1/Select.wsdl
+	https://soap.prodtest.sj.vindicia.com/1.1/SelectTypes.xsd
+
+2) Create a directory, called wsdls, and save these two files there.
+
+a) Edit the local copy of SelectTypes.xsd making the following change:
+
+Move returnString to be last (instead of second within the Return type):
+
+  <xsd:complexType name="Return">
+    <xsd:sequence>
+      <xsd:element minOccurs="1" name="returnCode" type="tns:ReturnCode" />
+      <xsd:element minOccurs="0" name="soapId" type="xsd:string" />
+      <xsd:element minOccurs="0" name="returnString" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+This is necessary to address Issue #2 (unexpected subelement returnString)
+which occurs at runtime if this change is not made before the java source
+code for the Select library is generated.
+
+
+3) Download the axis binary distribution to obtain the wsdl2java binary from this page:
+
+	http://axis.apache.org/axis2/java/core/download.cgi#std-bin (I chose the binary distribution).
+
+
+4) Extract the downloaded binary to a directory, in my case this is in:
+
+	~/Downloads/Clients/java
+
+which resulted in the following location for the axis distribution:
+
+	~/Downloads/Clients/java/axis2-1.6.2
+
+There is a bin directory under this location, where the file wsdl2java.sh is located.
+
+
+
+5) Create a .sh file to populate with the necessary commands to setup environment and
+run wsdl2java for you.  Below should work on a mac:
+
+My filename is called Select_wsdl2java.sh, and I located it in a directory at
+	~/Downloads/Clients/java/Select/v1_1
+
+The contents of Select_wsdl2java.sh is below:
+
+cd "$( dirname "${BASH_SOURCE[0]}" )"
+DIR=`pwd`
+echo "Executing in: $DIR ..."
+
+#export JAVA_HOME=$(/usr/libexec/java_home)
+
+AXIS_DIR=~/Downloads/Clients/java/axis2-1.6.2/bin
+WSDL_DIR=wsdls
+
+set -x verbose #echo on
+
+$AXIS_DIR/wsdl2java.sh -uri $WSDL_DIR/Select.wsdl -u -s -o ./Select -t
+
+In the above command:
+	-uri references the location of the Select.wsdl file as the source wsdl
+	-u unpacks all the classes in separate java files, one for each class &
+	   type in their relative directories rather than a single java file
+	   containing all classes & is quite large (i.e. 1 MB),
+	-s creates client side only code, which is synchronous (i.e. blocking calls)
+	-o specifies the output directory for the generated files
+	-t also generate a sample test case file
+
+
+6) Right click on the file Select_wsdl2java.sh in File Manager, then select Get Info, then be sure to
+    set the Open with: dropdown to Terminal.app.  This allows you to double click .sh files from File
+    Manager to execute them.
+
+7) Be sure Select_wsdl2java.sh has execute permissions:
+
+cd ~/Downloads/Clients/java/Select/v1_1
+ls -lF Select_wsdl2java.sh
+
+if necessary add execute permissions:
+chmod +x Select_wsdl2java.sh
+	or
+chmod 755 Select_wsdl2java.sh
+
+
+8) Double click Select_wsdl2java.sh to execute it, and run wsdl2java.sh on the
+    Select v1.1 URI schema's.
+
+I then ran wsdl2java with the following arguments:
+
+
+vindicias-MacBook-Pro-5:v1_1 sheller$ pwd
+/Users/sheller/Downloads/Clients/java/Select/v1_1
+vindicias-MacBook-Pro-5:v1_1 sheller$ ./Select_wsdl2java.sh 
+Executing in: /Users/sheller/Downloads/Clients/java/Select/v1_1 ...
+++ /Users/sheller/Downloads/Clients/java/axis2-1.6.2/bin/wsdl2java.sh -uri wsdls/Select.wsdl -u -s -o ./Select -t
+ Using AXIS2_HOME: /Users/sheller/Downloads/Clients/java/axis2-1.6.2
+ Using JAVA_HOME:  /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+Retrieving document at 'wsdls/Select.wsdl'.
+Retrieving schema at './SelectTypes.xsd', relative to 'file:/Users/sheller/Downloads/Clients/java/Select/v1_1/wsdls/Select.wsdl'.
+[WARN] No schemaLocation for import of http://schemas.xmlsoap.org/soap/encoding/; compilation may fail
+[WARN] No schemaLocation for import of http://schemas.xmlsoap.org/soap/encoding/; compilation may fail
+vindicias-MacBook-Pro-5:v1_1 sheller$ 
+
+
+9) In order to compile successfully, edit ReturnCode.java & make the following
+change, to address Issue #1 (incompatible types: int and <nulltype>):
+
+src/com/vindicia/soap/v1_1/selecttypes/ReturnCode.java:566:
+
+# Note: To compile ReturnCode.java, I had to comment out the following line 566:
+#	if ((enumeration == null) && !((value == null) || (value.equals("")))) {
+# and replace it with this:
+	if ((enumeration == null)) {
+
+
+10) Compile source files & generate jar file:
+
+If necessary, set $AXIS2_HOME environment variable:
+
+#AXIS2_DIR=~/Downloads/Clients/java/axis2-1.6.2
+# or, if Axis2.zip file was extracted:
+AXIS2_DIR=~/Downloads/Clients/java/Axis2/axis2-1.6.2
+#
+# Run setenv.sh, which comes with Axis2, to set {{$AXIS2_HOME}}:
+$AXIS2_DIR/setenv.sh
+
+Now build the source files & jar them up into the library:
+
+# Add all required Axis jars to the ClassPath:
+cd "$( dirname "${BASH_SOURCE[0]}" )"
+cd ..
+DIR=`pwd`
+echo "Executing in: $DIR ..."
+AXISDIR=$AXIS2_HOME/lib
+# AXISDIR=$DIR/Axis2/axis2-1.6.2/lib
+CP1=$AXISDIR/commons-cli-1.2.jar:$AXISDIR/axis2-adb-1.6.2.jar
+CP2=$CP1:$AXISDIR/axiom-api-1.2.13.jar:$AXISDIR/axis2-kernel-1.6.2.jar
+CP3=$CP2:$AXISDIR/wsdl4j-1.6.2.jar:$AXISDIR/*.jar
+CP4=$CP3:$AXISDIR/XmlSchema-1.4.7.jar:$AXISDIR/axiom-impl-1.2.13.jar
+CP5=$CP4:$AXISDIR/neethi-3.0.2.jar:$AXISDIR/mail-1.4.jar
+CP6=$CP5:$AXISDIR/axis2-transport-http-1.6.2.jar:$AXISDIR/axis2-transport-local-1.6.2.jar
+CP7=$CP6:$AXISDIR/commons-httpclient-3.1.jar:$AXISDIR/httpcore-4.0.jar
+CP8=$CP7:$AXISDIR/commons-codec-1.3.jar:$AXISDIR/httpcore-4.0.jar
+
+SELECT=v1_1
+BASEDIR=$DIR/$SELECT
+# Now add the Select WSDL generated class files + the local java test class files:
+CP=$CP8:$BASEDIR/bin
+# This is only included if ant was used to build (using build.xml):
+#:$BASEDIR/build/classes
+
+
+# In $BASEDIR/src/com/vindicia/soap/v1_1/selecttypes/ReturnCode.java:
+#
+# Note: To compile ReturnCode.java, I had to comment out the following line 566:
+#	if ((enumeration == null) && !((value == null) || (value.equals("")))) {
+# and replace it with this:
+#	if ((enumeration == null)) {
+
+# to echo full command line:
+#set -x
+
+# To be compatible with all Java versions forward from 1.5:
+COMPAT_VER=1.5
+COMPATIBILITY=-source\ $COMPAT_VER\ -target\ $COMPAT_VER
+
+#export JAVA_HOME=$(/usr/libexec/java_home -v '1.6*')
+javac -version
+# Compile the Select WSDL generated java class files & place into Select/bin directory:
+cd $BASEDIR
+javac -cp .:$CP $COMPATIBILITY -d bin src/com/vindicia/soap/$SELECT/selecttypes/*.java src/com/vindicia/soap/$SELECT/select/*.java
+
+# Compile the Select Test files to drive the generated java class files & place into bin directory:
+#cd $BASEDIR/BillSelect
+#javac -cp .:$CP -d $BASEDIR/bin *.java
+
+cd $BASEDIR/bin
+jar cvf VindiciaSelect_$SELECT.jar com
