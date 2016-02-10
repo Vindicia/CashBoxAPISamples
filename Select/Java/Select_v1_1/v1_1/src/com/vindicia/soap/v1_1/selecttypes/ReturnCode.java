@@ -1,0 +1,678 @@
+
+/**
+ * ReturnCode.java
+ *
+ * This file was auto-generated from WSDL
+ * by the Apache Axis2 version: 1.6.2  Built on : Apr 17, 2012 (05:34:40 IST)
+ */
+
+            
+                package com.vindicia.soap.v1_1.selecttypes;
+            
+
+            /**
+            *  ReturnCode bean class
+            */
+            @SuppressWarnings({"unchecked","unused"})
+        
+        public  class ReturnCode
+        implements org.apache.axis2.databinding.ADBBean{
+        
+                public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
+                "http://soap.vindicia.com/v1_1/SelectTypes",
+                "ReturnCode",
+                "ns1");
+
+            
+
+                        /**
+                        * field for ReturnCode
+                        */
+
+                        
+                                    protected int localReturnCode ;
+                                
+                            private static java.util.HashMap _table_ = new java.util.HashMap();
+
+                            // Constructor
+                            
+                                protected ReturnCode(int value, boolean isRegisterValue) {
+                                    localReturnCode = value;
+                                    if (isRegisterValue){
+                                        
+                                             _table_.put(localReturnCode + "", this);
+                                           
+                                    }
+
+                                }
+                            
+                                    public static final int _value1 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("200");
+                                
+                                    public static final int _value2 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("201");
+                                
+                                    public static final int _value3 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("202");
+                                
+                                    public static final int _value4 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("203");
+                                
+                                    public static final int _value5 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("204");
+                                
+                                    public static final int _value6 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("205");
+                                
+                                    public static final int _value7 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("206");
+                                
+                                    public static final int _value8 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("300");
+                                
+                                    public static final int _value9 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("301");
+                                
+                                    public static final int _value10 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("302");
+                                
+                                    public static final int _value11 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("303");
+                                
+                                    public static final int _value12 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("304");
+                                
+                                    public static final int _value13 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("305");
+                                
+                                    public static final int _value14 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("306");
+                                
+                                    public static final int _value15 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("307");
+                                
+                                    public static final int _value16 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("400");
+                                
+                                    public static final int _value17 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("401");
+                                
+                                    public static final int _value18 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("402");
+                                
+                                    public static final int _value19 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("403");
+                                
+                                    public static final int _value20 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("404");
+                                
+                                    public static final int _value21 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("405");
+                                
+                                    public static final int _value22 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("406");
+                                
+                                    public static final int _value23 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("407");
+                                
+                                    public static final int _value24 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("408");
+                                
+                                    public static final int _value25 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("409");
+                                
+                                    public static final int _value26 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("410");
+                                
+                                    public static final int _value27 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("411");
+                                
+                                    public static final int _value28 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("412");
+                                
+                                    public static final int _value29 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("413");
+                                
+                                    public static final int _value30 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("414");
+                                
+                                    public static final int _value31 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("415");
+                                
+                                    public static final int _value32 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("416");
+                                
+                                    public static final int _value33 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("417");
+                                
+                                    public static final int _value34 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("500");
+                                
+                                    public static final int _value35 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("501");
+                                
+                                    public static final int _value36 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("502");
+                                
+                                    public static final int _value37 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("503");
+                                
+                                    public static final int _value38 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("504");
+                                
+                                    public static final int _value39 =
+                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt("505");
+                                
+                                public static final ReturnCode value1 =
+                                    new ReturnCode(_value1,true);
+                            
+                                public static final ReturnCode value2 =
+                                    new ReturnCode(_value2,true);
+                            
+                                public static final ReturnCode value3 =
+                                    new ReturnCode(_value3,true);
+                            
+                                public static final ReturnCode value4 =
+                                    new ReturnCode(_value4,true);
+                            
+                                public static final ReturnCode value5 =
+                                    new ReturnCode(_value5,true);
+                            
+                                public static final ReturnCode value6 =
+                                    new ReturnCode(_value6,true);
+                            
+                                public static final ReturnCode value7 =
+                                    new ReturnCode(_value7,true);
+                            
+                                public static final ReturnCode value8 =
+                                    new ReturnCode(_value8,true);
+                            
+                                public static final ReturnCode value9 =
+                                    new ReturnCode(_value9,true);
+                            
+                                public static final ReturnCode value10 =
+                                    new ReturnCode(_value10,true);
+                            
+                                public static final ReturnCode value11 =
+                                    new ReturnCode(_value11,true);
+                            
+                                public static final ReturnCode value12 =
+                                    new ReturnCode(_value12,true);
+                            
+                                public static final ReturnCode value13 =
+                                    new ReturnCode(_value13,true);
+                            
+                                public static final ReturnCode value14 =
+                                    new ReturnCode(_value14,true);
+                            
+                                public static final ReturnCode value15 =
+                                    new ReturnCode(_value15,true);
+                            
+                                public static final ReturnCode value16 =
+                                    new ReturnCode(_value16,true);
+                            
+                                public static final ReturnCode value17 =
+                                    new ReturnCode(_value17,true);
+                            
+                                public static final ReturnCode value18 =
+                                    new ReturnCode(_value18,true);
+                            
+                                public static final ReturnCode value19 =
+                                    new ReturnCode(_value19,true);
+                            
+                                public static final ReturnCode value20 =
+                                    new ReturnCode(_value20,true);
+                            
+                                public static final ReturnCode value21 =
+                                    new ReturnCode(_value21,true);
+                            
+                                public static final ReturnCode value22 =
+                                    new ReturnCode(_value22,true);
+                            
+                                public static final ReturnCode value23 =
+                                    new ReturnCode(_value23,true);
+                            
+                                public static final ReturnCode value24 =
+                                    new ReturnCode(_value24,true);
+                            
+                                public static final ReturnCode value25 =
+                                    new ReturnCode(_value25,true);
+                            
+                                public static final ReturnCode value26 =
+                                    new ReturnCode(_value26,true);
+                            
+                                public static final ReturnCode value27 =
+                                    new ReturnCode(_value27,true);
+                            
+                                public static final ReturnCode value28 =
+                                    new ReturnCode(_value28,true);
+                            
+                                public static final ReturnCode value29 =
+                                    new ReturnCode(_value29,true);
+                            
+                                public static final ReturnCode value30 =
+                                    new ReturnCode(_value30,true);
+                            
+                                public static final ReturnCode value31 =
+                                    new ReturnCode(_value31,true);
+                            
+                                public static final ReturnCode value32 =
+                                    new ReturnCode(_value32,true);
+                            
+                                public static final ReturnCode value33 =
+                                    new ReturnCode(_value33,true);
+                            
+                                public static final ReturnCode value34 =
+                                    new ReturnCode(_value34,true);
+                            
+                                public static final ReturnCode value35 =
+                                    new ReturnCode(_value35,true);
+                            
+                                public static final ReturnCode value36 =
+                                    new ReturnCode(_value36,true);
+                            
+                                public static final ReturnCode value37 =
+                                    new ReturnCode(_value37,true);
+                            
+                                public static final ReturnCode value38 =
+                                    new ReturnCode(_value38,true);
+                            
+                                public static final ReturnCode value39 =
+                                    new ReturnCode(_value39,true);
+                            
+
+                                public int getValue() { return localReturnCode;}
+
+                                public boolean equals(java.lang.Object obj) {return (obj == this);}
+                                public int hashCode() { return toString().hashCode();}
+                                public java.lang.String toString() {
+                                
+                                        return org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localReturnCode);
+                                    
+
+                                }
+
+                        
+
+     
+     
+        /**
+        *
+        * @param parentQName
+        * @param factory
+        * @return org.apache.axiom.om.OMElement
+        */
+       public org.apache.axiom.om.OMElement getOMElement (
+               final javax.xml.namespace.QName parentQName,
+               final org.apache.axiom.om.OMFactory factory) throws org.apache.axis2.databinding.ADBException{
+
+
+        
+               org.apache.axiom.om.OMDataSource dataSource =
+                       new org.apache.axis2.databinding.ADBDataSource(this,MY_QNAME);
+               return factory.createOMElement(dataSource,MY_QNAME);
+            
+        }
+
+         public void serialize(final javax.xml.namespace.QName parentQName,
+                                       javax.xml.stream.XMLStreamWriter xmlWriter)
+                                throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException{
+                           serialize(parentQName,xmlWriter,false);
+         }
+
+         public void serialize(final javax.xml.namespace.QName parentQName,
+                               javax.xml.stream.XMLStreamWriter xmlWriter,
+                               boolean serializeType)
+            throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException{
+            
+                
+                //We can safely assume an element has only one type associated with it
+                
+                            java.lang.String namespace = parentQName.getNamespaceURI();
+                            java.lang.String _localName = parentQName.getLocalPart();
+                        
+                            writeStartElement(null, namespace, _localName, xmlWriter);
+
+                            // add the type details if this is used in a simple type
+                               if (serializeType){
+                                   java.lang.String namespacePrefix = registerPrefix(xmlWriter,"http://soap.vindicia.com/v1_1/SelectTypes");
+                                   if ((namespacePrefix != null) && (namespacePrefix.trim().length() > 0)){
+                                       writeAttribute("xsi","http://www.w3.org/2001/XMLSchema-instance","type",
+                                           namespacePrefix+":ReturnCode",
+                                           xmlWriter);
+                                   } else {
+                                       writeAttribute("xsi","http://www.w3.org/2001/XMLSchema-instance","type",
+                                           "ReturnCode",
+                                           xmlWriter);
+                                   }
+                               }
+                            
+                                               if (localReturnCode==java.lang.Integer.MIN_VALUE) {
+                                           
+                                                         throw new org.apache.axis2.databinding.ADBException("property value cannot be null!!");
+                                                      
+                                               } else {
+                                                    xmlWriter.writeCharacters(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localReturnCode));
+                                               }
+                            
+                            xmlWriter.writeEndElement();
+                    
+
+        }
+
+        private static java.lang.String generatePrefix(java.lang.String namespace) {
+            if(namespace.equals("http://soap.vindicia.com/v1_1/SelectTypes")){
+                return "ns1";
+            }
+            return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
+        }
+
+        /**
+         * Utility method to write an element start tag.
+         */
+        private void writeStartElement(java.lang.String prefix, java.lang.String namespace, java.lang.String localPart,
+                                       javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+            java.lang.String writerPrefix = xmlWriter.getPrefix(namespace);
+            if (writerPrefix != null) {
+                xmlWriter.writeStartElement(namespace, localPart);
+            } else {
+                if (namespace.length() == 0) {
+                    prefix = "";
+                } else if (prefix == null) {
+                    prefix = generatePrefix(namespace);
+                }
+
+                xmlWriter.writeStartElement(prefix, localPart, namespace);
+                xmlWriter.writeNamespace(prefix, namespace);
+                xmlWriter.setPrefix(prefix, namespace);
+            }
+        }
+        
+        /**
+         * Util method to write an attribute with the ns prefix
+         */
+        private void writeAttribute(java.lang.String prefix,java.lang.String namespace,java.lang.String attName,
+                                    java.lang.String attValue,javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException{
+            if (xmlWriter.getPrefix(namespace) == null) {
+                xmlWriter.writeNamespace(prefix, namespace);
+                xmlWriter.setPrefix(prefix, namespace);
+            }
+            xmlWriter.writeAttribute(namespace,attName,attValue);
+        }
+
+        /**
+         * Util method to write an attribute without the ns prefix
+         */
+        private void writeAttribute(java.lang.String namespace,java.lang.String attName,
+                                    java.lang.String attValue,javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException{
+            if (namespace.equals("")) {
+                xmlWriter.writeAttribute(attName,attValue);
+            } else {
+                registerPrefix(xmlWriter, namespace);
+                xmlWriter.writeAttribute(namespace,attName,attValue);
+            }
+        }
+
+
+           /**
+             * Util method to write an attribute without the ns prefix
+             */
+            private void writeQNameAttribute(java.lang.String namespace, java.lang.String attName,
+                                             javax.xml.namespace.QName qname, javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+
+                java.lang.String attributeNamespace = qname.getNamespaceURI();
+                java.lang.String attributePrefix = xmlWriter.getPrefix(attributeNamespace);
+                if (attributePrefix == null) {
+                    attributePrefix = registerPrefix(xmlWriter, attributeNamespace);
+                }
+                java.lang.String attributeValue;
+                if (attributePrefix.trim().length() > 0) {
+                    attributeValue = attributePrefix + ":" + qname.getLocalPart();
+                } else {
+                    attributeValue = qname.getLocalPart();
+                }
+
+                if (namespace.equals("")) {
+                    xmlWriter.writeAttribute(attName, attributeValue);
+                } else {
+                    registerPrefix(xmlWriter, namespace);
+                    xmlWriter.writeAttribute(namespace, attName, attributeValue);
+                }
+            }
+        /**
+         *  method to handle Qnames
+         */
+
+        private void writeQName(javax.xml.namespace.QName qname,
+                                javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+            java.lang.String namespaceURI = qname.getNamespaceURI();
+            if (namespaceURI != null) {
+                java.lang.String prefix = xmlWriter.getPrefix(namespaceURI);
+                if (prefix == null) {
+                    prefix = generatePrefix(namespaceURI);
+                    xmlWriter.writeNamespace(prefix, namespaceURI);
+                    xmlWriter.setPrefix(prefix,namespaceURI);
+                }
+
+                if (prefix.trim().length() > 0){
+                    xmlWriter.writeCharacters(prefix + ":" + org.apache.axis2.databinding.utils.ConverterUtil.convertToString(qname));
+                } else {
+                    // i.e this is the default namespace
+                    xmlWriter.writeCharacters(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(qname));
+                }
+
+            } else {
+                xmlWriter.writeCharacters(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(qname));
+            }
+        }
+
+        private void writeQNames(javax.xml.namespace.QName[] qnames,
+                                 javax.xml.stream.XMLStreamWriter xmlWriter) throws javax.xml.stream.XMLStreamException {
+
+            if (qnames != null) {
+                // we have to store this data until last moment since it is not possible to write any
+                // namespace data after writing the charactor data
+                java.lang.StringBuffer stringToWrite = new java.lang.StringBuffer();
+                java.lang.String namespaceURI = null;
+                java.lang.String prefix = null;
+
+                for (int i = 0; i < qnames.length; i++) {
+                    if (i > 0) {
+                        stringToWrite.append(" ");
+                    }
+                    namespaceURI = qnames[i].getNamespaceURI();
+                    if (namespaceURI != null) {
+                        prefix = xmlWriter.getPrefix(namespaceURI);
+                        if ((prefix == null) || (prefix.length() == 0)) {
+                            prefix = generatePrefix(namespaceURI);
+                            xmlWriter.writeNamespace(prefix, namespaceURI);
+                            xmlWriter.setPrefix(prefix,namespaceURI);
+                        }
+
+                        if (prefix.trim().length() > 0){
+                            stringToWrite.append(prefix).append(":").append(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(qnames[i]));
+                        } else {
+                            stringToWrite.append(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(qnames[i]));
+                        }
+                    } else {
+                        stringToWrite.append(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(qnames[i]));
+                    }
+                }
+                xmlWriter.writeCharacters(stringToWrite.toString());
+            }
+
+        }
+
+
+        /**
+         * Register a namespace prefix
+         */
+        private java.lang.String registerPrefix(javax.xml.stream.XMLStreamWriter xmlWriter, java.lang.String namespace) throws javax.xml.stream.XMLStreamException {
+            java.lang.String prefix = xmlWriter.getPrefix(namespace);
+            if (prefix == null) {
+                prefix = generatePrefix(namespace);
+                javax.xml.namespace.NamespaceContext nsContext = xmlWriter.getNamespaceContext();
+                while (true) {
+                    java.lang.String uri = nsContext.getNamespaceURI(prefix);
+                    if (uri == null || uri.length() == 0) {
+                        break;
+                    }
+                    prefix = org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
+                }
+                xmlWriter.writeNamespace(prefix, namespace);
+                xmlWriter.setPrefix(prefix, namespace);
+            }
+            return prefix;
+        }
+
+
+  
+        /**
+        * databinding method to get an XML representation of this object
+        *
+        */
+        public javax.xml.stream.XMLStreamReader getPullParser(javax.xml.namespace.QName qName)
+                    throws org.apache.axis2.databinding.ADBException{
+
+
+        
+                
+                //We can safely assume an element has only one type associated with it
+                 return new org.apache.axis2.databinding.utils.reader.ADBXMLStreamReaderImpl(MY_QNAME,
+                            new java.lang.Object[]{
+                            org.apache.axis2.databinding.utils.reader.ADBXMLStreamReader.ELEMENT_TEXT,
+                            org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localReturnCode)
+                            },
+                            null);
+
+        }
+
+  
+
+     /**
+      *  Factory class that keeps the parse method
+      */
+    public static class Factory{
+
+        
+        
+                public static ReturnCode fromValue(int value)
+                      throws java.lang.IllegalArgumentException {
+                    ReturnCode enumeration = (ReturnCode)
+                       
+                             _table_.get(value + "");
+                           
+
+                    //if ((enumeration == null) && !((value == null) || (value.equals("")))) {
+					if ((enumeration == null)) {
+                        throw new java.lang.IllegalArgumentException();
+                    }
+// In $BASEDIR/src/com/vindicia/soap/v1_1/selecttypes/ReturnCode.java:
+//
+// Note: To compile ReturnCode.java, I had to comment out the following line 566:
+//	if ((enumeration == null) && !((value == null) || (value.equals("")))) {
+// and replace it with this:
+//	if ((enumeration == null)) {
+                    return enumeration;
+                }
+                public static ReturnCode fromString(java.lang.String value,java.lang.String namespaceURI)
+                      throws java.lang.IllegalArgumentException {
+                    try {
+                       
+                             return fromValue(org.apache.axis2.databinding.utils.ConverterUtil.convertToInt(value));
+                           
+
+                    } catch (java.lang.Exception e) {
+                        throw new java.lang.IllegalArgumentException();
+                    }
+                }
+
+                public static ReturnCode fromString(javax.xml.stream.XMLStreamReader xmlStreamReader,
+                                                                    java.lang.String content) {
+                    if (content.indexOf(":") > -1){
+                        java.lang.String prefix = content.substring(0,content.indexOf(":"));
+                        java.lang.String namespaceUri = xmlStreamReader.getNamespaceContext().getNamespaceURI(prefix);
+                        return ReturnCode.Factory.fromString(content,namespaceUri);
+                    } else {
+                       return ReturnCode.Factory.fromString(content,"");
+                    }
+                }
+            
+
+        /**
+        * static method to create the object
+        * Precondition:  If this object is an element, the current or next start element starts this object and any intervening reader events are ignorable
+        *                If this object is not an element, it is a complex type and the reader is at the event just after the outer start element
+        * Postcondition: If this object is an element, the reader is positioned at its end element
+        *                If this object is a complex type, the reader is positioned at the end element of its outer element
+        */
+        public static ReturnCode parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception{
+            ReturnCode object = null;
+                // initialize a hash map to keep values
+                java.util.Map attributeMap = new java.util.HashMap();
+                java.util.List extraAttributeList = new java.util.ArrayList<org.apache.axiom.om.OMAttribute>();
+            
+
+            int event;
+            java.lang.String nillableValue = null;
+            java.lang.String prefix ="";
+            java.lang.String namespaceuri ="";
+            try {
+                
+                while (!reader.isStartElement() && !reader.isEndElement())
+                    reader.next();
+
+                
+
+                
+                // Note all attributes that were handled. Used to differ normal attributes
+                // from anyAttributes.
+                java.util.Vector handledAttributes = new java.util.Vector();
+                
+
+                   
+                while(!reader.isEndElement()) {
+                    if (reader.isStartElement()  || reader.hasText()){
+                
+                                    nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance","nil");
+                                    if ("true".equals(nillableValue) || "1".equals(nillableValue)){
+                                        throw new org.apache.axis2.databinding.ADBException("The element: "+"ReturnCode" +"  cannot be null");
+                                    }
+                                    
+
+                                    java.lang.String content = reader.getElementText();
+                                    
+                                        if (content.indexOf(":") > 0) {
+                                            // this seems to be a Qname so find the namespace and send
+                                            prefix = content.substring(0, content.indexOf(":"));
+                                            namespaceuri = reader.getNamespaceURI(prefix);
+                                            object = ReturnCode.Factory.fromString(content,namespaceuri);
+                                        } else {
+                                            // this seems to be not a qname send and empty namespace incase of it is
+                                            // check is done in fromString method
+                                            object = ReturnCode.Factory.fromString(content,"");
+                                        }
+                                        
+                                        
+                             } else {
+                                reader.next();
+                             }  
+                           }  // end of while loop
+                        
+
+
+
+            } catch (javax.xml.stream.XMLStreamException e) {
+                throw new java.lang.Exception(e);
+            }
+
+            return object;
+        }
+
+        }//end of factory class
+
+        
+
+        }
+           
+    
