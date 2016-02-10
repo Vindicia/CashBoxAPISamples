@@ -22,7 +22,22 @@ Files:
 Installation
 ------------
 
-0. For the binary version of this distribution:
+0. Choose working directory, referenced as <Base Path> below.
+
+1. Install Axis2 1.6.2 binary distribution to obtain Axis jar files from:
+
+	http://axis.apache.org/axis2/java/core/download.cgi
+
+   Extract axis2-1.6.2-bin.zip (or Axis2.zip) so it is populated in the directory:
+
+	<Base Path>/Axis2/axis2-1.6.2
+
+The above is required to either build with the jar file or generate from source
+& build the the jar file for either the binary or source distribution in the
+steps below:
+
+
+2. For the binary version of this distribution:
 
 	Obtain the jar file, VindiciaSelect_v1_1.jar & include it in your ClassPath
 	of your example Project which makes calls to the Select v1.1 API.
@@ -32,7 +47,7 @@ Installation
 		https://github.com/Vindicia/CashBoxAPISamples/releases/Select_v1_1
 
    
-1. If you wish to generate Java source files from the Select WSDL, and
+3. If you wish to generate Java source files from the Select WSDL, and
    compile source to generate the jar file for the Select v1.1 API:
    
 	Follow the steps outlined in the text file describing Detailed steps
