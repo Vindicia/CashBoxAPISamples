@@ -45,7 +45,7 @@ steps below:
    Binary version is on GitHub in Releases at:
    
 		https://github.com/Vindicia/CashBoxAPISamples/releases/Select_v1_1
-
+		https://github.com/Vindicia/CashBoxAPISamples/files/124097/Select_v1_1.zip
    
 3. If you wish to generate Java source files from the Select WSDL, and
    compile source to generate the jar file for the Select v1.1 API:
