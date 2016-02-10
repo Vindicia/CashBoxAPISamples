@@ -1,0 +1,180 @@
+  <xsd:schema targetNamespace="http://soap.vindicia.com/v1_1/SelectTypes" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://soap.vindicia.com/v1_1/SelectTypes" xmlns:vin="http://soap.vindicia.com/v1_1/SelectTypes" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsdl="http://soap.vindicia.com/v1_1/SelectTypes" >
+  <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+  <xsd:complexType name="NameValuePair">
+    <xsd:sequence>
+      <xsd:element minOccurs="1" name="name" type="xsd:string" />
+      <xsd:element minOccurs="1" name="value" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TransactionValidationResponse">
+    <xsd:sequence>
+      <xsd:element minOccurs="1" name="merchantTransactionId" type="xsd:string" />
+      <xsd:element minOccurs="1" name="code" type="xsd:int" />
+      <xsd:element minOccurs="1" name="description" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Transaction">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="VID" type="xsd:string" />
+      <xsd:element minOccurs="1" name="timestamp" type="xsd:dateTime" />
+      <xsd:element minOccurs="1" name="amount" type="xsd:decimal" />
+      <xsd:element minOccurs="0" name="currency" type="xsd:string" />
+      <xsd:element minOccurs="1" name="status" type="tns:TransactionStatusType" />
+      <xsd:element minOccurs="1" name="divisionNumber" type="xsd:string" />
+      <xsd:element minOccurs="1" name="merchantTransactionId" type="xsd:string" />
+      <xsd:element minOccurs="0" name="selectTransactionId" type="xsd:string" />
+      <xsd:element minOccurs="0" name="selectRefundId" type="xsd:string" />
+      <xsd:element minOccurs="1" name="subscriptionId" type="xsd:string" />
+      <xsd:element minOccurs="0" name="subscriptionStartDate" type="xsd:dateTime" />
+      <xsd:element minOccurs="0" name="billingFrequency" type="tns:BillingIntervalType" />
+      <xsd:element minOccurs="0" name="previousBillingDate" type="xsd:dateTime" />
+      <xsd:element minOccurs="0" name="previousBillingCount" type="xsd:int" />
+      <xsd:element minOccurs="1" name="customerId" type="xsd:string" />
+      <xsd:element minOccurs="1" name="paymentMethodId" type="xsd:string" />
+      <xsd:element minOccurs="1" name="paymentMethodIsTokenized" type="xsd:boolean" />
+      <xsd:element minOccurs="0" name="creditCardAccount" type="xsd:string" />
+      <xsd:element minOccurs="0" name="creditCardAccountHash" type="xsd:string" />
+      <xsd:element minOccurs="0" name="creditCardExpirationDate" type="xsd:string" />
+      <xsd:element minOccurs="0" name="accountHolderName" type="xsd:string" />
+      <xsd:element minOccurs="0" name="billingAddressLine1" type="xsd:string" />
+      <xsd:element minOccurs="0" name="billingAddressLine2" type="xsd:string" />
+      <xsd:element minOccurs="0" name="billingAddressLine3" type="xsd:string" />
+      <xsd:element minOccurs="0" name="billingAddressCity" type="xsd:string" />
+      <xsd:element minOccurs="0" name="billingAddressCounty" type="xsd:string" />
+      <xsd:element minOccurs="0" name="billingAddressDistrict" type="xsd:string" />
+      <xsd:element minOccurs="0" name="billingAddressPostalCode" type="xsd:string" />
+      <xsd:element minOccurs="0" name="billingAddressCountry" type="xsd:string" />
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="nameValues" type="vin:NameValuePair" />
+      <xsd:element minOccurs="0" name="affiliateId" type="xsd:string" />
+      <xsd:element minOccurs="0" name="affiliateSubId" type="xsd:string" />
+      <xsd:element minOccurs="0" name="billingStatementIdentifier" type="xsd:string" />
+      <xsd:element minOccurs="1" name="authCode" type="xsd:string" />
+      <xsd:element minOccurs="0" name="avsCode" type="xsd:string" />
+      <xsd:element minOccurs="0" name="cvnCode" type="xsd:string" />
+      <xsd:element minOccurs="0" name="creditCardAccountUpdated" type="xsd:boolean" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Chargeback">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="VID" type="xsd:string" />
+      <xsd:element minOccurs="1" name="amount" type="xsd:decimal" />
+      <xsd:element minOccurs="0" name="currency" type="xsd:string" />
+      <xsd:element minOccurs="0" name="presentmentAmount" type="xsd:decimal" />
+      <xsd:element minOccurs="0" name="presentmentCurrency" type="xsd:string" />
+      <xsd:element minOccurs="0" name="divisionNumber" type="xsd:string" />
+      <xsd:element minOccurs="1" name="reasonCode" type="xsd:string" />
+      <xsd:element minOccurs="0" name="caseNumber" type="xsd:string" />
+      <xsd:element minOccurs="0" name="referenceNumber" type="xsd:string" />
+      <xsd:element minOccurs="0" name="merchantNumber" type="xsd:string" />
+      <xsd:element minOccurs="0" name="merchantTransactionId" type="xsd:string" />
+      <xsd:element minOccurs="0" name="merchantTransactionTimestamp" type="xsd:dateTime" />
+      <xsd:element minOccurs="1" name="processorReceivedTimestamp" type="xsd:dateTime" />
+      <xsd:element minOccurs="1" name="postedTimestamp" type="xsd:dateTime" />
+      <xsd:element minOccurs="0" name="statusChangedTimestamp" type="xsd:dateTime" />
+      <xsd:element minOccurs="1" name="status" type="tns:ChargebackStatus" />
+      <xsd:element minOccurs="0" name="merchantUserId" type="xsd:string" />
+      <xsd:element minOccurs="0" name="note" type="xsd:string" />
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="nameValues" type="vin:NameValuePair" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Authentication">
+    <xsd:sequence>
+      <xsd:element minOccurs="1" name="version" type="xsd:string" />
+      <xsd:element minOccurs="1" name="login" type="xsd:string" />
+      <xsd:element minOccurs="1" name="password" type="xsd:string" />
+      <xsd:element minOccurs="0" name="evid" type="xsd:string" />
+      <xsd:element minOccurs="0" name="userAgent" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Return">
+    <xsd:sequence>
+      <xsd:element minOccurs="1" name="returnCode" type="tns:ReturnCode" />
+      <xsd:element minOccurs="0" name="returnString" type="xsd:string" />
+      <xsd:element minOccurs="0" name="soapId" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="TransactionStatusType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Authorized" />
+      <xsd:enumeration value="Captured" />
+      <xsd:enumeration value="Settled" />
+      <xsd:enumeration value="Refunded" />
+      <xsd:enumeration value="Failed" />
+      <xsd:enumeration value="Cancelled" />
+      <xsd:enumeration value="BillingNotAttempted" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="BillingIntervalType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Non-recurring" />
+      <xsd:enumeration value="Daily" />
+      <xsd:enumeration value="Weekly" />
+      <xsd:enumeration value="Monthly" />
+      <xsd:enumeration value="Quarterly" />
+      <xsd:enumeration value="Yearly" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ChargebackStatus">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="New" />
+      <xsd:enumeration value="Retrieval" />
+      <xsd:enumeration value="Responded" />
+      <xsd:enumeration value="Legitimate" />
+      <xsd:enumeration value="Challenged" />
+      <xsd:enumeration value="Represented" />
+      <xsd:enumeration value="Won" />
+      <xsd:enumeration value="Lost" />
+      <xsd:enumeration value="CollectionsNew" />
+      <xsd:enumeration value="CollectionsWon" />
+      <xsd:enumeration value="CollectionsLost" />
+      <xsd:enumeration value="Expired" />
+      <xsd:enumeration value="Pass" />
+      <xsd:enumeration value="Incomplete" />
+      <xsd:enumeration value="NewSecondChargeback" />
+      <xsd:enumeration value="Duplicate" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ReturnCode">
+    <xsd:restriction base="xsd:int">
+      <xsd:enumeration value="200" />
+      <xsd:enumeration value="201" />
+      <xsd:enumeration value="202" />
+      <xsd:enumeration value="203" />
+      <xsd:enumeration value="204" />
+      <xsd:enumeration value="205" />
+      <xsd:enumeration value="206" />
+      <xsd:enumeration value="300" />
+      <xsd:enumeration value="301" />
+      <xsd:enumeration value="302" />
+      <xsd:enumeration value="303" />
+      <xsd:enumeration value="304" />
+      <xsd:enumeration value="305" />
+      <xsd:enumeration value="306" />
+      <xsd:enumeration value="307" />
+      <xsd:enumeration value="400" />
+      <xsd:enumeration value="401" />
+      <xsd:enumeration value="402" />
+      <xsd:enumeration value="403" />
+      <xsd:enumeration value="404" />
+      <xsd:enumeration value="405" />
+      <xsd:enumeration value="406" />
+      <xsd:enumeration value="407" />
+      <xsd:enumeration value="408" />
+      <xsd:enumeration value="409" />
+      <xsd:enumeration value="410" />
+      <xsd:enumeration value="411" />
+      <xsd:enumeration value="412" />
+      <xsd:enumeration value="413" />
+      <xsd:enumeration value="414" />
+      <xsd:enumeration value="415" />
+      <xsd:enumeration value="416" />
+      <xsd:enumeration value="417" />
+      <xsd:enumeration value="500" />
+      <xsd:enumeration value="501" />
+      <xsd:enumeration value="502" />
+      <xsd:enumeration value="503" />
+      <xsd:enumeration value="504" />
+      <xsd:enumeration value="505" />
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>
