@@ -118,3 +118,18 @@ which points to the correct CashBox environment (ProdTest or Staging):
 
 8. Build the VindiciaSelectIntegration.sln Project.
 
+
+------------
+For the binary version of this distribution:
+
+   Binary version is on GitHub in Releases at:
+   
+https://github.com/Vindicia/CashBoxAPISamples/releases/tag/Select_v1_1_.NET_VindiciaSelectIntegration
+https://github.com/Vindicia/CashBoxAPISamples/releases/download/Select_v1_1_.NET_VindiciaSelectIntegration/VindiciaSelectIntegration.zip
+   
+
+   Source distribution is on GitHub at:
+   
+	https://github.com/Vindicia/CashBoxAPISamples/tree/master/Select/.NET/VindiciaSelectIntegration
+
+
