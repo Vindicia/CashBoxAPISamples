@@ -35,26 +35,6 @@ start = '2016-02-05T10:41:39.000Z'	# Change to timestamp of last successful exec
 end = '2016-03-02T10:41:39.000Z'	# Change to timestamp of now (or prior midnight)
 pageSize = 100
 
-merchantTransactionId = 'TEST1234'	# Change this to your unique id of the Failed Transaction
-# Select will only process a Failed Transaction once per unique id specified in merchantTransactionId
-#
-# If a Failed Transaction is specified with a value for merchantTransactionId previously submitted
-# in a call to billTransactions, the response while returning a top level 200 returnCode, will also
-# include a TransactionValidationResponse element with code 400 as shown below:
-#(reply){
-#   return = 
-#      (Return){
-#         returnCode = "200"
-#         soapId = "d71eee02e9398f0172e37e9bf845084c31f5ad91"
-#         returnString = "OK"
-#      }
-#   response[] = 
-#      (TransactionValidationResponse){
-#         merchantTransactionId = "TEST1234"
-#         code = 400
-#         description = "Billing has already been attempted for Transaction ID TEST1234"
-#      },
-# }
 
 def log(message):
 
@@ -66,7 +46,12 @@ def wrapValue(value):
     right = "]-"
     wrappedValue = left + str(value) + right
     return wrappedValue
-	
+
+
+# Reference:
+#
+#	http://developer.vindicia.com/docs/soap/Select.html?ver=1.1 (fetchBillingResults)
+#
 def fetchResults(start, end, pageSize, page):
 
     nResults = 0
@@ -77,14 +62,10 @@ def fetchResults(start, end, pageSize, page):
     log("------------------------------------------------------------------------\n" +
 		"[Page " + str(page) + "]: Fetching " + wrapValue(pageSize) + " Billing Results")
 
-    #	Reference:
-    #
-    #		http://developer.vindicia.com/docs/soap/Select.html?ver=1.1 (fetchBillingResults)
-    #
     response = client.service.fetchBillingResults(authentication, start, end, page, pageSize)
     print response
     if response['return'].returnCode == '200':
-		print 'Successfully submitted!'
+		print 'Successfully retrieved!'
 
     log("Completed fetchBillingResults request[" + str(page) + "]:\n\tstart="
 					+ start
@@ -93,9 +74,38 @@ def fetchResults(start, end, pageSize, page):
     ftxsReturn = response['return']
     log("\n\tResult=" + ftxsReturn.returnCode + ", " + ftxsReturn.returnString +
     "\n\tsoapId=" + ftxsReturn.soapId + "\n")
-    nResults = reportResults(response['transactions'], page)
+    if hasattr(response, 'transactions'):
+        nResults = reportResults(response['transactions'], page)
 		
     return nResults
+
+
+def actionFetchResults(start, end, pageSize):
+
+    log("\n\tBeginning process to fetch billing results from "
+    	+ wrapValue(start) + ", ending " + wrapValue(end))
+
+    page = 0
+		
+    nRecords = 0
+    nTotalRecords = 0
+    while True:
+        nTotalRecords += nRecords;
+        nRecords = fetchResults(start, end, pageSize, page)
+        page +=1
+        if ( nRecords <= 0 ):
+            break
+
+    log("------------------------------------------------------------------------" +
+    	"\n\tCompleted process to fetch billing results from "
+    		+ wrapValue(start) + ", ending " + wrapValue(end) +
+			"\n\tstart=" + start +
+			"\n\tend=" + end +
+			"\n\tpageSize=" + str(pageSize) +
+			"\n" +
+			"\n\tnTotalRecords=" + str(nTotalRecords) +
+			"\n\tNumber of pages=" + str(page) +
+			"\n\tPage Size=" + str(pageSize) + "\n")
 
 
 def reportResults(results, page):
@@ -139,5 +149,4 @@ def reportResults(results, page):
     return nRecords
 
 
-fetchResults(start, end, pageSize, 0)
-
+actionFetchResults(start, end, pageSize)
