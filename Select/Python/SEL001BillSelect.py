@@ -56,13 +56,13 @@ merchantTransactionId = 'TEST1234'	# Change this to your unique id of the Failed
 
 def getTransaction(merchantTransactionId, customerId, subscriptionId,
     authCode, creditCardAccount, paymentMethodId, creditCardExpirationDate,
-	amount, currency, timestamp, divisionNumber, billingFrequency,
-	paymentMethodIsTokenized):
+    amount, currency, timestamp, divisionNumber, billingFrequency,
+    paymentMethodIsTokenized):
 
-	# Reference:
-	#
-	#	http://developer.vindicia.com/docs/soap/AllDataTypes.html?pf=1&ver=1.1&type=Transaction
-	#
+    # Reference:
+    #
+    #	http://developer.vindicia.com/docs/soap/AllDataTypes.html?pf=1&ver=1.1&type=Transaction
+    #
     transaction = client.factory.create('vin:Transaction')
 
     transaction.merchantTransactionId = merchantTransactionId	# Change this to your unique id of the Failed Transaction
@@ -109,7 +109,7 @@ transactions=[]
 for i in range(n):
 	trx = getTransaction(merchantTransactionId+('' if i==0 else '_'+str(i)),
 		customerId, subscriptionId,
-    	authCode, creditCardAccount, paymentMethodId, creditCardExpirationDate,
+		authCode, creditCardAccount, paymentMethodId, creditCardExpirationDate,
 		amount, currency, timestamp, divisionNumber, billingFrequency,
 		paymentMethodIsTokenized)
 	#print trx
