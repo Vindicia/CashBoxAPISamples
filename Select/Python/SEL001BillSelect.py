@@ -30,7 +30,6 @@ print '\tsoap version = ' + authentication.version
 print '\tuserAgent = ' + authentication.userAgent
 print
 
-transaction = client.factory.create('vin:Transaction')
 
 timestamp = '2016-02-05T10:41:39.000Z'	# Change to timestamp of last Failure of the Failed Transaction
 
