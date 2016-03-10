@@ -12,6 +12,18 @@ Files:
 	bin\Environment.properties	- The configuration file from which soap credentials are read
 
 
+Locations on GitHub
+-------------------
+
+   Binary version is on GitHub in Releases at:
+   
+	https://github.com/Vindicia/CashBoxAPISamples/releases/Select_Java_Samples_v1_1
+   
+   Source distribution is on GitHub at:
+   
+	https://github.com/Vindicia/CashBoxAPISamples/tree/master/Select/Java/FetchSelect
+
+
 Installation
 ------------
 
@@ -25,7 +37,18 @@ Installation
 
 	<Base Path>/Axis2/axis2-1.6.2
 
-2. Extract this sample to the following directory:
+2. Obtain VindiciaSelect_v1_1.jar & place it in your bin directory:
+
+   Binary version is on GitHub in Releases at:
+   
+		https://github.com/Vindicia/CashBoxAPISamples/releases/Select_v1_1
+		https://github.com/Vindicia/CashBoxAPISamples/files/124097/Select_v1_1.zip
+   
+   Source distribution is on GitHub at:
+   
+		https://github.com/Vindicia/CashBoxAPISamples/tree/master/Select/Java/
+
+3. Extract this sample to the following directory:
 
 	<Base Path>
 
@@ -38,11 +61,11 @@ Resulting directory structure after extracting Axis2 1.6.2 binary & Select.zip:
 		Select
 			BillSelect
 			bin
+			FetchChargebacks
 			FetchSelect
-			Select_v1_0
 
 
-3. Edit run.sh to reference the locations in 1. & 2. above:
+4. Edit run.sh to reference the locations in 1. & 2. above:
 
 	DIR=<Base Path> -- set to where Axis2 & Select subdirectories exist
 	AXISDIR=<Base Path>/Axis2/axis2-1.6.2/lib
@@ -53,7 +76,7 @@ Resulting directory structure after extracting Axis2 1.6.2 binary & Select.zip:
 Running the FetchSelect sample
 ------------------------------
 
-4. Run the FetchSelect sample:
+5. Run the FetchSelect sample:
 
 (First associate Terminal.app to *.sh files if on the Mac,
  by right button->Get Info on the run.sh file.  Then select
@@ -70,24 +93,24 @@ Or execute run.sh from the command line:
 Changing the FetchSelect sample
 -------------------------------
 
-5. Edit build.sh to reference the locations in 1. & 2. above:
+6. Edit build.sh to reference the locations in 1. & 2. above:
 
 	DIR=<Base Path> -- set to where Axis2 & Select subdirectories exist
 	AXISDIR=<Base Path>/Axis2/axis2-1.6.2/lib
 	BASEDIR=<Base Path>/Select
 
 
-6. Edit Environment.properties:
+7. Edit Environment.properties:
 
 So it has your soap login & password, points to the correct CashBox environment (ProdTest or Staging):
 
 	#
-	soap_url = https://soap.prodtest.sj.vindicia.com/v1.0/soap.pl
+	soap_url = https://soap.prodtest.sj.vindicia.com/soap.pl
 	#
 	soap_login = xxx_soap
 	soap_password = xxxxxx
 
-7. Compile the FetchSelect sample:
+8. Compile the FetchSelect sample:
 
  	Double click build.sh from Finder
 
@@ -96,7 +119,7 @@ Or execute build.sh from the command line:
 	FetchSelect> ./build.sh
 
 
-8. Run the changed FetchSelect sample as in 4. above:
+9. Run the changed FetchSelect sample as in 4. above:
 
 	Double click run.sh from Finder
 
