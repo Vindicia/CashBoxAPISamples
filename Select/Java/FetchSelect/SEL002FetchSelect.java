@@ -8,17 +8,23 @@
 //
 //		To run this sample it is required to first generate the java library.
 //
-import com.vindicia.soap.v1_0.select.*;
-import com.vindicia.soap.v1_0.selecttypes.*;
+import com.vindicia.soap.v1_1.select.*;
+import com.vindicia.soap.v1_1.selecttypes.*;
 
 import java.rmi.RemoteException;
-import java.io.*; 
+import java.io.*;
+import java.lang.Math;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -42,6 +48,82 @@ class SEL002FetchSelect {
 	static int timeOutInMilliSeconds;
 	static SelectStub select;
 
+	static FileWriter writer;
+
+	static String response_header;
+	static String response_path;
+	static String response_file;
+	static String[] hdrs;
+	static String[] data;
+
+	public static int iHDR_timestamp;
+	public static int iHDR_amount;
+	public static int iHDR_currency;
+	public static int iHDR_status;
+
+	public static int iHDR_merchantTransactionId;
+	public static int iHDR_subscriptionId;
+	public static int iHDR_customerId;
+
+	public static int iHDR_authCode;
+	public static int iHDR_avsCode;
+	public static int iHDR_cvnCode;
+	public static int iHDR_selectTransactionId;
+
+	// The following string values must match the strings included
+	// in the response header specified by response_header:
+	public static String sHDR_timestamp = "timestamp";
+	public static String sHDR_amount = "amount";
+	public static String sHDR_currency = "CURR";
+	public static String sHDR_status = "status";
+
+	public static String sHDR_merchantTransactionId = "merchantTransactionId";
+	public static String sHDR_subscriptionId = "subscriptionId";
+	public static String sHDR_customerId = "customerId";
+
+	public static String sHDR_authCode = "AUTH_RESPONSE_CODE";
+	public static String sHDR_avsCode = "avsCode";
+	public static String sHDR_cvnCode = "cvnCode";
+	public static String sHDR_selectTransactionId = "SELECTTRANSACTI";
+
+	// Sample value for response header matching above strings:
+	// response_header=MERCHANTTRANSACTIONID,SUBSCRIPTIONID,CUSTOMERID,SELECTTRANSACTI,STATUS,AUTH_RESPONSE_CODE,AMOUNT,CURR
+
+	public static int num_days;			// defaults to 1 day of data
+	public static int end_time;			// defaults to 0 (now), < 0 midnight PT: -1 last night, -2 night before etc...
+	public static int start_min_back;	// defaults to 0
+	public static int end_min_back;		// defaults to 0 unless start_min_back set
+	public static int page_size;		// defaults to 100
+
+    /**
+     * Properties supported in Environment.properties:
+     *
+     *		soap_url		- Soap endpoint, one of ProdTest, Staging, Production.
+     *		soap_login		- Soap login user for environment selected by soap_url.
+     *		soap_password	- Soap password for login for environment selected above.
+     *
+     *	Optional:
+     *
+     *		response_header	- Comma separated list of column headers for response file.
+     *						  When this property is set, a response file will be written
+     *						  writing response values as indicated by the ordered list
+     *						  of column headers.  Each Transaction result received from
+     *						  Select is written to a row containing the Transaction result.
+     *
+     *		response_path	- Specifies a different directory for response file than cwd.
+     *		response_file	- Filename to write as the output response file.
+     *
+     *
+     *
+     *	fetch.billingResults.numdays	- Number of days to fetch, defaults to 1 day
+     *	fetch.billingResults.end		- End time for fetch, defaults to 0 (now),
+     *									  < 0 midnight PT: -1 last night, -2 night before etc...
+     *	fetch.billingResults.endmin		- # minutes to move end time back, defaults to 0
+     *	fetch.billingResults.startmin	- # minutes to move start time back, defaults to 0 (unless startmin set)
+     *
+     *	fetch.billingResults.pageSize	- pageSize for fetchBillingResults, defaults to 100
+     *
+     */
     static {
 		ResourceBundle rb = ResourceBundle.getBundle("Environment");
 		login = rb.getString("soap_login");
@@ -50,11 +132,9 @@ class SEL002FetchSelect {
 		//endpoint = "https://soap.prodtest.sj.vindicia.com/soap.pl";
 		endpoint = rb.getString("soap_url");
 
-		version = "1.0";
+		version = "1.1";
 		userAgent = "FetchSelect (Select API)";
 			
-		log("endpoint=" + endpoint + "\nlogin=" + login);
-
 		auth.setLogin(login);
 		auth.setPassword(password);
 		auth.setVersion(version);
@@ -63,7 +143,103 @@ class SEL002FetchSelect {
 		// Connection Properties:
 		timeOutInMilliSeconds = 300000;
 		
-    }    
+		log("\n\tendpoint=" + endpoint + "\n\tlogin=" + login +
+		"\n\n\tversion=" + version + "\n\tuserAgent=" + userAgent +
+		"\n\ttimeOutInMilliSeconds=" + timeOutInMilliSeconds + "\n");
+
+		try {
+			response_header = rb.getString("response_header");
+			log("Found response_header property:\t=> File Based:\n");
+			log("Header format:\n" + response_header);
+			hdrs = response_header.split(",");
+			data = new String[hdrs.length];
+			//String row = logRow(hdrs);
+			String hdr = "";
+			log(hdr);
+			for (int i=0; i < hdrs.length; i++) {
+				hdr += "hdrs[" + i + "]=" + hdrs[i] + "\n";
+			}
+			//log(hdr);
+			
+			iHDR_timestamp = find(hdrs, sHDR_timestamp);
+			iHDR_amount = find(hdrs, sHDR_amount);
+			iHDR_currency = find(hdrs, sHDR_currency);
+			iHDR_status = find(hdrs, sHDR_status);
+
+			iHDR_merchantTransactionId = find(hdrs, sHDR_merchantTransactionId);
+			iHDR_subscriptionId = find(hdrs, sHDR_subscriptionId);
+			iHDR_customerId = find(hdrs, sHDR_customerId);
+
+			iHDR_authCode = find(hdrs, sHDR_authCode);
+			iHDR_avsCode = find(hdrs, sHDR_avsCode);
+			iHDR_cvnCode = find(hdrs, sHDR_cvnCode);
+			iHDR_selectTransactionId = find(hdrs, sHDR_selectTransactionId);
+
+			String dir = System.getProperty("user.dir");
+			log("\nWorking directory:\n\t" + dir);
+			try {
+				response_path = rb.getString("response_path");
+				log("\n\tresponse_path=" + response_path + "\n");
+			}
+			catch ( Exception e ) {
+				// default to current directory
+				response_path = dir;
+			}
+			response_file = rb.getString("response_file");
+			log("\n\tresponse_file=" + response_file + "\n");
+		}
+		catch ( Exception e ) {
+			log("No response_header property found:\t=> Not File Based:\n");
+		}
+		
+		// num_days: defaults to 1 day of data
+		// end_time: defaults to 0 (now), < 0 midnight PT: -1 last night, -2 night before etc...
+		// start_min_back: defaults to 0
+		// end_min_back: defaults to 0 unless start_min_back set
+		try {
+			num_days = Integer.parseInt(rb.getString("fetch.billingResults.numdays"));
+		}
+		catch ( Exception e ) {	num_days = 1;	}		// 1 day of data
+		try {
+			end_time = Integer.parseInt(rb.getString("fetch.billingResults.end"));
+		}
+		catch ( Exception e ) {	end_time = 0;	}		// now
+		try {
+			start_min_back = Integer.parseInt(rb.getString("fetch.billingResults.startmin"));
+		}
+		catch ( Exception e ) {	start_min_back = 0;	}	// do not start any # minutes before start
+		try {
+			end_min_back = Integer.parseInt(rb.getString("fetch.billingResults.endmin"));
+		}
+		catch ( Exception e ) {	end_min_back = 0;	}	// do not end any # minutes before end
+		try {
+			page_size = Integer.parseInt(rb.getString("fetch.billingResults.pageSize"));
+		}
+		catch ( Exception e ) {	page_size = 100;	}	// default to 100
+
+		log("\tnum_days=" + num_days + " day" + (num_days > 1 ? "s" : "") );
+		log("\tend_time=" + end_time + " (< 0: prior midnight PT, -1 last night, -2 night before...)");
+		log("\tstart_min_back=" + start_min_back );
+		log("\tend_min_back=" + end_min_back );
+		log("\tpage_size=" + page_size + "\n");
+
+    }
+    
+    public static int find(String[] s, String val)
+		throws IOException
+	{
+		if (null != val) {
+			for (int i = 0; i < s.length; i++) {
+				if ( val.equalsIgnoreCase(s[i]) ) {
+					String msg = "iHDR_" + val;
+					for (int j=val.length(); j < 30; j++) msg += ' ';
+					//log(msg + "= " + i);
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
 
 	public static void main(String[] args) { 
 
@@ -89,8 +265,14 @@ class SEL002FetchSelect {
 
 	public static void log(String message) {
 
-		//System.out.println(message);
-		log.severe( message );
+		System.out.println(message);
+		//log.severe( message );
+
+	}
+
+	public static void log(StringBuffer message) {
+
+		log( message.toString() );
 
 	}
 	
@@ -119,6 +301,20 @@ class SEL002FetchSelect {
 	public static Calendar getToday() {
 		return Calendar.getInstance();  
 	}
+
+    public static Calendar setMidnight(Calendar calendar) {
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar;
+    }
+  
+	public static Calendar Copy(Calendar calendar) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis( calendar.getTimeInMillis() );
+		return cal;
+	}
 	
 	public static String wrapValue(String value) {
 		String left = "-[";
@@ -137,6 +333,20 @@ class SEL002FetchSelect {
 		}
 	}
 	
+	public static String amountToString(BigDecimal amount, String curr) {
+
+		NumberFormat nf = NumberFormat.getCurrencyInstance(); 
+		Currency currency = Currency.getInstance(curr);
+		nf.setCurrency(currency);
+		DecimalFormat df = (DecimalFormat) nf;
+		DecimalFormatSymbols dfsymbols = df.getDecimalFormatSymbols();
+		dfsymbols.setCurrencySymbol(""); // Don't use null.
+		df.setDecimalFormatSymbols(dfsymbols);
+
+		return df.format(amount);
+	}
+	
+	
 	public static int fetchResults(Calendar start, Calendar end, int pageSize, int page) throws RemoteException {
 
 		int nResults = 0;
@@ -154,16 +364,18 @@ class SEL002FetchSelect {
 		fetchResults.setPage(page);
 		fetchResults.setPageSize(pageSize);
 		
-		log("Fetching " + wrapValue(String.valueOf(pageSize)) + " Billing Results ");
+		log("------------------------------------------------------------------------\n" +
+		"[Page " + page + "]: Fetching " + wrapValue(String.valueOf(pageSize)) + " Billing Results");
+
 		response = select.fetchBillingResults(fetchResults);
-		//response = SelectHelper.fetchBillingResults(auth, start, end, pageSize, page);
-		log("Completed fetchBillingResults request: start="
+
+		log("Completed fetchBillingResults request[" + page + "]:\n\tstart="
 					+ new Timestamp(start.getTime().getTime())
 					+ ", end=" + new Timestamp(end.getTime().getTime())
-					+ ", pageSize=" + pageSize + ", page=" + page);
+					+ ",\n\tpageSize=" + pageSize + ", page=" + page + "\n");
 		Return ftxsReturn = response.get_return();
-		log("Result=" + ftxsReturn.getReturnCode().getValue() + ", " + ftxsReturn.getReturnString());
-		log("soapId=" + ftxsReturn.getSoapId());
+		log("\n\tResult=" + ftxsReturn.getReturnCode().getValue() + ", " + ftxsReturn.getReturnString() +
+		"\n\tsoapId=" + ftxsReturn.getSoapId() + "\n");
 		nResults = reportResults(response.getTransactions(), page);
 		
 		return nResults;
@@ -171,21 +383,27 @@ class SEL002FetchSelect {
 	}
 
 	public static void actionFetchResults(int num, int numStart, int numStartMin, int numEndMin) throws RemoteException {
-		log("Beginning request to fetch billing results from the last " + wrapValue(String.valueOf(num))
-						+ " days, starting from " + wrapValue(String.valueOf(numStart)) + " day(s) ago, "
+		log("\n\tBeginning process to fetch billing results from the last\n\t" + wrapValue(String.valueOf(num))
+						+ " days, starting from " + wrapValue(String.valueOf(numStart)) + " day(s) ago,\n\t"
 						+ wrapValue(String.valueOf(numStartMin)) + " minutes before current minute."
 						+ " ending "
 						+ wrapValue(String.valueOf(numEndMin)) + " minutes before current minute.");
-		Calendar start = Calendar.getInstance();  
+
+		Calendar start = getToday();
+
+		if ( numStart < 0 ) {
+			start =  setMidnight(start);
+			numStart++;
+			numStart = Math.abs(numStart);
+		}
 		start.add(Calendar.MINUTE, 0-numStartMin);
 		start.add(Calendar.DATE, 0-numStart);
-		//start.add(Calendar.DATE, -30);
+		Calendar end = Copy(start);
 		start.add(Calendar.DATE, 0-num);
-		Calendar end = getToday();
 		if (0 == numEndMin) numEndMin = numStartMin;
 		end.add(Calendar.MINUTE, 0-numEndMin);
 		end.add(Calendar.DATE, 0-numStart);
-		int pageSize = 100;	//Integer.parseInt(Resources.getMessage("fetch.billingResults.pageSize"));
+		int pageSize = page_size;
 		int page = 0;
 		
 		boolean bFail = true;
@@ -210,13 +428,18 @@ class SEL002FetchSelect {
 				} while ( bFail );
 				page++;
 			} while ( nRecords > 0 );
-			log("Completed request to fetch billing results from the last " + wrapValue(String.valueOf(num))
-						+ " days, starting from " + wrapValue(String.valueOf(numStart)) + " day(s) ago, "
-						+ wrapValue(String.valueOf(numStartMin)) + " minutes before current minute.");
-			log("numTimeouts=" + numTimeouts);
-			log("nTotalRecords=" + nTotalRecords);
-			log("Number of pages=" + page);
-			log("Page Size=" + pageSize);
+			log("------------------------------------------------------------------------" +
+			"\n\tCompleted process to fetch billing results from the last\n\t" + wrapValue(String.valueOf(num))
+						+ " days, starting from " + wrapValue(String.valueOf(numStart)) + " day(s) ago,\n\t"
+						+ wrapValue(String.valueOf(numStartMin)) + " minutes before current minute.\n" +
+			"\n\tstart=" + new Timestamp(start.getTime().getTime()) +
+			"\n\tend=" + new Timestamp(end.getTime().getTime()) +
+			"\n\tpageSize=" + pageSize +
+			"\n" +
+			"\n\tnumTimeouts=" + numTimeouts +
+			"\n\tnTotalRecords=" + nTotalRecords +
+			"\n\tNumber of pages=" + page +
+			"\n\tPage Size=" + pageSize + "\n");
 		} catch (Exception e) {
 			log(e);
 		}
@@ -240,7 +463,8 @@ class SEL002FetchSelect {
 					+ " with status " + wrapValue(tx.getStatus().toString())
 					+ " , authCode " + wrapValue(tx.getAuthCode().toString())
 					+ " on " + new Timestamp(tx.getTimestamp().getTime().getTime())
-					+ " for " + tx.getAmount() + " " + tx.getCurrency()
+					+ " for " + amountToString(tx.getAmount(), tx.getCurrency())
+					+ " " + tx.getCurrency()
 					);
 				NameValuePair[] nameValues = tx.getNameValues();
 				for (int i=0; i < nameValues.length; i++) {
@@ -249,6 +473,31 @@ class SEL002FetchSelect {
 				}
 				int count = freq.containsKey(status) ? freq.get(status) : 0;
 				freq.put(status, count + 1);
+				
+				setValue( data, "timestamp", iHDR_timestamp, "" + new Timestamp(tx.getTimestamp().getTime().getTime()) );
+				setValue( data, "amount", iHDR_amount, amountToString(tx.getAmount(), tx.getCurrency()) );
+				setValue( data, "currency", iHDR_currency, tx.getCurrency() );
+				setValue( data, "status", iHDR_status, tx.getStatus().toString() );
+
+				setValue( data, "merchantTransactionId", iHDR_merchantTransactionId, tx.getMerchantTransactionId() );
+				setValue( data, "subscriptionId", iHDR_subscriptionId, tx.getSubscriptionId() );
+				setValue( data, "customerId", iHDR_customerId, tx.getCustomerId() );
+
+				setValue( data, "authCode", iHDR_authCode, tx.getAuthCode().toString() );
+				setValue( data, "avsCode", iHDR_avsCode, tx.getAvsCode() );
+				setValue( data, "cvnCode", iHDR_cvnCode, tx.getCvnCode() );
+				setValue( data, "selectTransactionId", iHDR_selectTransactionId, tx.getSelectTransactionId() );
+				
+				log("");
+
+				if (writer != null) {
+            		try {
+						writeRow( data );
+					}
+					catch (Exception e) {		
+            			e.printStackTrace();
+					}
+				}
 			}
 			
 			Set<Map.Entry<TransactionStatusType, Integer>> s = freq.entrySet();
@@ -261,9 +510,20 @@ class SEL002FetchSelect {
 			}
 			
 		} else {
-			log("Nothing to fetch - the Transactions object is null.");
+			log("Nothing to fetch - the Transactions object is null.\n");
 		}
 		return nRecords;
+	}
+
+	public static void setValue(String[] data, String name, int i, String val ) {
+	
+		if ( null != data && ( i >= 0 && i < data.length ) ) {
+			data[i] = new String(val);
+		}
+		else {
+			log("Return value " + name + "=" + val + " skipped, not in response file format");
+		}
+
 	}
 	
 	public static void run() {
@@ -278,108 +538,74 @@ class SEL002FetchSelect {
 		select._getServiceClient().getOptions().setProperty(HTTPConstants.SO_TIMEOUT, new Integer(timeOutInMilliSeconds));
 		select._getServiceClient().getOptions().setProperty(HTTPConstants.CONNECTION_TIMEOUT, new Integer(timeOutInMilliSeconds));
 
-		int num = 1;
-		int numStart = 1;
-		int numStartMin = 0;
-		int numEndMin = 0;
+		int num = num_days;					// defaults to 1 day of data
+		int numStart = end_time;			// defaults to 0 (now), < 0 midnight PT:
+											//		-1 last night, -2 night before etc...
+		int numStartMin = start_min_back;	// defaults to 0
+		int numEndMin = end_min_back;		// defaults to 0 unless start_min_back set
 
+		String outputFile = "";
+
+		if ( response_header != null ) {
+			String separator = System.getProperty("file.separator");
+			String directoryPath = response_path;
+			String file = response_file;
+			outputFile	= directoryPath + separator + file;
+			log("outputFile="+outputFile +"\n");
+			writer = new FileWriter(outputFile);
+			writeRow(hdrs);
+		}
+		
 		actionFetchResults(num, numStart, numStartMin, numEndMin);
 		
+		if (writer != null) {
+			log("\nWrote response file to:\n\n"+outputFile +"\n");
+			//Close the output stream
+			writer.flush();
+			writer.close();
+		}
 	  }
 	  catch(Exception e) {
 
 		//System exception. 
 		log(timestamp() + e.toString());
 		e.printStackTrace();
+
+		if (writer != null) {
+            try {
+				writer.flush();
+				writer.close();
+			}
+			catch (Exception e2) {		
+            e2.printStackTrace();
+			}
+		}
 	  }
 
 	}
 
-	public static Transaction getTransaction( String transactionId ) {
+	public static String logRow(String[] s)
+		throws IOException
+	{
+		StringBuffer row = new StringBuffer();
 	
-		Transaction trans = new Transaction();
-		trans.setMerchantTransactionId( transactionId );
-
-		Calendar timestamp = Calendar.getInstance();
-		trans.setTimestamp(timestamp);
-
-		BigDecimal amount = new BigDecimal( "10.99" );
-		trans.setAmount(amount);
-		
-		String currency = "USD";
-		trans.setCurrency(currency);
-
-		TransactionStatusType status = TransactionStatusType.Failed;
-		trans.setStatus(status);
-		
-		String divisionNumber = "5698";
-		trans.setDivisionNumber(divisionNumber);
-
-		String subscriptionId = transactionId;
-		trans.setSubscriptionId(subscriptionId);
-
-		String customerId = transactionId;
-		trans.setCustomerId(customerId);
-		
-		String paymentMethodId = transactionId;
-		trans.setPaymentMethodId(paymentMethodId);
-
-		String creditCardAccount = getCreditCardAccount( TransactionStatusType.Captured, null );
-		trans.setCreditCardAccount(creditCardAccount);
-		
-		String creditCardExpirationDate = "202208";
-		trans.setCreditCardExpirationDate(creditCardExpirationDate);
-		
-		String authCode = new String( "302" );
-		trans.setAuthCode(authCode);
-		
-		
-		// Additional data members:
-		String affiliateId = "Affiliate" + divisionNumber;
-		trans.setAffiliateId(affiliateId);
-		String affiliateSubId = "SubAffiliate" + divisionNumber;
-		trans.setAffiliateSubId(affiliateSubId);
-		String billingAddressCity = "Any City";
-		trans.setBillingAddressCity(billingAddressCity);
-		String billingAddressCountry = "US";
-		trans.setBillingAddressCountry(billingAddressCountry);
-		String billingAddressCounty = "Any County";
-		trans.setBillingAddressCounty(billingAddressCounty);
-		String billingAddressDistrict = "Any State (i.e. District)";
-		trans.setBillingAddressDistrict(billingAddressDistrict);
-		String billingAddressLine1 = "123 Main (Address Line 1)";
-		trans.setBillingAddressLine1(billingAddressLine1);
-		String billingAddressLine2 = "Suite 5 (Address Line 2)";
-		trans.setBillingAddressLine2(billingAddressLine2);
-		String billingAddressLine3 = "Internet Widgets Co. Ltd. (Address Line 3)";
-		trans.setBillingAddressLine3(billingAddressLine3);
-		String billingAddressPostalCode = "94002";
-		trans.setBillingAddressPostalCode(billingAddressPostalCode);
-		Calendar startDate = Calendar.getInstance();
-		startDate.add(Calendar.YEAR, -1);
-		trans.setSubscriptionStartDate(startDate);
-	
-		return trans;
+		for (int i = 0; i < s.length; i++) {
+			if ( i > 0 ) {
+				row.append(',');
+			}
+			row.append(s[i]);
+		}
+		row.append('\n');
+		log(row);
+		return row.toString();
 	}
 
-	public static String getCreditCardAccount(TransactionStatusType resultType, String why) {
-		String creditCardAccount = null;
-		if (resultType.equals( TransactionStatusType.Captured )) {
-			creditCardAccount = new String("4111111111111111");
-		}
-		if (resultType.equals( TransactionStatusType.Failed )) {
-			if ( null != why ) {
-				if ( "Decline".equalsIgnoreCase(why) )
-					creditCardAccount = new String("6011555555555553");	// Soft Fail
-				else if ( "Hard".equalsIgnoreCase(why) )
-					creditCardAccount = new String("4555555555555550");	// Hard Fail
-			}
-			if ( null == creditCardAccount ) {
-				// Luhn Check Fail Validation
-				creditCardAccount = new String("1111111111111111");
-			}
-		}
-		return creditCardAccount;
+	public static void writeRow(String[] s)
+		throws IOException
+	{
+		String row = logRow(s);
+		writer.append( row );
 	}
 	
 }
+
