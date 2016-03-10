@@ -18,6 +18,7 @@ Locations on GitHub
    Binary version is on GitHub in Releases at:
    
 	https://github.com/Vindicia/CashBoxAPISamples/releases/Select_Java_Samples_v1_1
+ 	https://github.com/Vindicia/CashBoxAPISamples/releases/download/Select_Java_Samples_v1_1/Select_Java_Samples_v1_1.zip
    
    Source distribution is on GitHub at:
    
