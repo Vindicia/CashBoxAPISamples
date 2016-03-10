@@ -14,10 +14,15 @@ CP6=$CP5:$AXISDIR/axis2-transport-http-1.6.2.jar:$AXISDIR/axis2-transport-local-
 CP7=$CP6:$AXISDIR/commons-httpclient-3.1.jar:$AXISDIR/httpcore-4.0.jar
 CP8=$CP7:$AXISDIR/commons-codec-1.3.jar:$AXISDIR/httpcore-4.0.jar:$DIR/junit-4.11.jar
 
-SELECT=Select_v1_0
+#VERSION=v1_0
+VERSION=v1_1
+#SELECT=~/Downloads/Clients/java/Select/$VERSION/Select
+SELECT=Select_$VERSION
 BASEDIR=$DIR/Select
 # Now add the Select WSDL generated class files + the local java test class files:
-CP=$CP8:$BASEDIR/$SELECT/bin:$BASEDIR/bin
+CP=$CP8:$BASEDIR/bin:$BASEDIR/bin/Vindicia$SELECT.jar
+#CP=$CP8:$SELECT/bin:$BASEDIR/bin
+#CP=$CP8:$SELECT/build/classes:$BASEDIR/bin
 
 
 # In $BASEDIR/Select/src/com/vindicia/soap/v1_1/selecttypes/ReturnCode.java:
@@ -27,13 +32,15 @@ CP=$CP8:$BASEDIR/$SELECT/bin:$BASEDIR/bin
 # and replace it with this:
 #	if ((enumeration == null)) {
 
+export JAVA_HOME=$(/usr/libexec/java_home -v '1.6*')
+
 
 # Compile the Select WSDL generated java class files & place into Select/bin directory:
 #cd $BASEDIR/$SELECT
 #javac -cp .:$CP -d bin src/com/vindicia/soap/v1_1/selecttypes/*.java src/com/vindicia/soap/v1_1/select/*.java
 
 # Compile the Select Test files to drive the generated java class files & place into bin directory:
-cd $BASEDIR
+cd "$BASEDIR"
 
-java -cp bin:$CP SEL002FetchSelect -fetch 1 -fetchStart 31 -fetchStartMin 0 -fetchEndMin 0
+java -cp bin:"$CP" SEL002FetchSelect -fetch 1 -fetchStart 31 -fetchStartMin 0 -fetchEndMin 0
 
