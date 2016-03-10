@@ -13,10 +13,13 @@ SET CP6=%CP5%;%AXISDIR%\axis2-transport-http-1.6.2.jar;%AXISDIR%\axis2-transport
 SET CP7=%CP6%;%AXISDIR%\commons-httpclient-3.1.jar;%AXISDIR%\httpcore-4.0.jar
 SET CP8=%CP7%;%AXISDIR%\commons-codec-1.3.jar;%AXISDIR%\httpcore-4.0.jar;%DIR%\junit-4.11.jar
 
-SET SELECT=Select_v1_0
+REM SET VERSION=v1_0
+SET VERSION=v1_1
+SET SELECT=Select_%VERSION%
 SET BASEDIR=%DIR%\Select
-REM  Now add the Select WSDL generated class files + the local java test class files;
-SET CP=%CP8%;%BASEDIR%\%SELECT%\bin;%BASEDIR%\bin
+REM Now add the Select WSDL generated class files + the local java test class files:
+SET CP=%CP8%;%BASEDIR%\bin;%BASEDIR%\bin\Vindicia%SELECT%.jar
+REM CP=%CP8%\%SELECT%\bin;%BASEDIR%\bin
 
 
 REM  In %BASEDIR\Select\src\com\vindicia\soap\v1_1\selecttypes\ReturnCode.java;
@@ -27,12 +30,18 @@ REM  and replace it with this;
 REM 	if ((enumeration == null)) {
 
 
+javac -version
+
+REM To be compatible with all Java versions forward from 1.5:
+SET COMPAT_VER=1.5
+SET COMPATIBILITY=-source %COMPAT_VER% -target %COMPAT_VER%
+
 REM  Compile the Select WSDL generated java class files & place into Select\bin directory;
 REM cd %BASEDIR%\%SELECT%
 REM javac -cp .;%CP% -d bin src\com\vindicia\soap\v1_1\selecttypes\*.java src\com\vindicia\soap\v1_1\select\*.java
 
 REM  Compile the Select Test files to drive the generated java class files & place into bin directory;
 cd %BASEDIR%\FetchSelect
-javac -cp .;%CP% -d %BASEDIR%\bin *.java
+javac -cp .;%CP% %COMPATIBILITY% -d %BASEDIR%\bin *.java
 
 pause
