@@ -44,6 +44,6 @@ COMPATIBILITY=-source\ $COMPAT_VER\ -target\ $COMPAT_VER
 #javac -cp .:$CP -d bin src/com/vindicia/soap/v1_1/selecttypes/*.java src/com/vindicia/soap/v1_1/select/*.java
 
 # Compile the Select Test files to drive the generated java class files & place into bin directory:
-cd $BASEDIR/BillSelect
-javac -cp .:$CP $COMPATIBILITY -d $BASEDIR/bin *.java
+cd "$BASEDIR/BillSelect"
+javac -cp .:"$CP" $COMPATIBILITY -d "$BASEDIR/bin" *.java
 
