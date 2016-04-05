@@ -1,5 +1,8 @@
 <?php
 
+ini_set('include_path','/usr/local/Vindicia_php5_lib_9.0');
+ini_set('display_errors',1);
+
 require_once("Vindicia/Soap/Vindicia.php");
 require_once("Vindicia/Soap/Const.php");
 
