@@ -383,6 +383,10 @@ class SEL001BillSelect {
 		startDate.add(Calendar.YEAR, -1);
 		trans.setSubscriptionStartDate(startDate);
 	
+		// Reference: http://developer.vindicia.com/docs/soap/AllDataTypes.html?pf=1&pop=yes&ver=1.1&type=BillingIntervalType
+		// i.e. 'Monthly', 'Annual' etc.
+		trans.setBillingFrequency( BillingIntervalType.Factory.fromValue("Monthly") );
+
 		return trans;
 	}
 
