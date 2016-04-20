@@ -70,9 +70,16 @@ print "\tsoap login = " . $auth->login . EOL;
 print "\tsoap version = " . $auth->version . EOL;
 print "\tuserAgent = " . $auth->userAgent . EOL . EOL;
 
-
-$start = '2016-04-05T10:41:39.000Z';	# Change to timestamp of last successful execution 
-$end = '2016-05-02T10:41:39.000Z';		# Change to timestamp of now (or prior midnight)
+# Timestamps in Select are maintained & returned in Pacific Timezone
+#
+# Therefore to match the requested timezone to the Select timezone,
+# the -07:00 timezone specification should be used.  Your own timezone
+# may be used here instead & it will be honored, but when reviewing
+# the timestamps on the returned Transactions, they will be transformed
+# to the Pacific Timezone (i.e. -07:00).
+#
+$start = '2016-04-05T10:41:39-07:00';	# Change to timestamp of last successful execution 
+$end = '2016-05-02T10:41:39-07:00';	# Change to timestamp of now (or prior midnight)
 $pageSize = 100;
 
 
