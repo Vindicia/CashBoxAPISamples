@@ -52,7 +52,7 @@ message = {
     :transactions => transactions
 }
 
-response = client.call(:report_transactions, message: message)
+response = client.call(:bill_transactions, message: message)
 
 if response.http_error? then
     exit 'error connecting to soap endpoint'
@@ -68,7 +68,7 @@ puts result
 #
 #this will output something similar to this
 #{
-#   :report_transactions_respons => >{
+#   :bill_transactions_respons => >{
 #       :return => {
 #           :return_code => "200", 
 #           :soap_id => "0123456789abcde0123456789abcde0123456789", 
