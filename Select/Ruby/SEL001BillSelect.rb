@@ -65,7 +65,6 @@ end
 result = response.body.to_hash
 puts result
 
-#
 #this will output something similar to this
 #{
 #   :bill_transactions_respons => >{
@@ -80,3 +79,21 @@ puts result
 #   }
 #}
 #
+# its important to note that arrays of a single item
+# are unwrapped, so result[:bill_transactions_response][:response]
+# may be 
+#  not set - no failed transactions
+#  a Hash - the only failed transaction
+#  an Array - a set of failed transactions
+#
+#  Here is one example of how to handle this
+#
+#        if result[:bill_transactions_response][:response].nil? then 
+#
+#        elsif result[:bill_transactions_response][:response].class == Array then 
+#
+#        elsif result[:bill_transactions_response][:response].class == Hash then 
+#
+#        else
+#            puts 'Error' #should never happen
+#        end
