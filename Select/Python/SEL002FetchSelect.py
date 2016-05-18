@@ -15,14 +15,28 @@
 #
 from suds.client import Client
 client = Client('https://soap.vindicia.com/1.1/Select.wsdl')
-client.set_options(location='https://soap.prodtest.sj.vindicia.com/soap.pl')
+#client.set_options(location='https://soap.prodtest.sj.vindicia.com/soap.pl')
 
 authentication = client.factory.create('vin:Authentication')
-authentication.login = 'xxx_soap'
-authentication.password = 'xxxxxx'
 authentication.version = '1.1'
 authentication.userAgent = 'Vindicia Python Select v1.1 Library'
 authentication.evid = None
+
+env = dict(line.strip().replace(' ', '').split('=') for line in open('Environment.properties')
+	if not line.startswith('#') and not line.startswith('\n'))
+
+#print env
+
+login = env['soap_login']
+password = env['soap_password']
+endpoint = env['soap_url']
+
+authentication.login = login
+authentication.password = password
+client.set_options(location=endpoint)
+
+# uncomment to trigger timeout:
+#client.set_options(timeout=0.1)
 
 print
 print '\tsoap login = ' + authentication.login
@@ -31,8 +45,8 @@ print '\tuserAgent = ' + authentication.userAgent
 print
 
 
-start = '2016-02-05T10:41:39.000Z'	# Change to timestamp of last successful execution 
-end = '2016-03-02T10:41:39.000Z'	# Change to timestamp of now (or prior midnight)
+start = '2016-02-05T10:41:39-07:00'	# Change to timestamp of last successful execution 
+end = '2016-03-02T10:41:39-07:00'	# Change to timestamp of now (or prior midnight)
 pageSize = 100
 
 
@@ -127,6 +141,8 @@ def reportResults(results, page):
 					+ " created selectTransactionId " + wrapValue(tx.selectTransactionId)
 					+ " with status " + wrapValue(status)
 					+ " , authCode " + wrapValue(tx.authCode)
+					+ " , divisionNumber " + wrapValue(tx.divisionNumber)
+					+ " , paymentMethodIsTokenized " + wrapValue(tx.paymentMethodIsTokenized)
 					+ " on " + str(tx.timestamp)
 					+ " for " + str(tx.amount)
 					+ " " + tx.currency
