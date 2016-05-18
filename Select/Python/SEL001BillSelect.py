@@ -15,14 +15,28 @@
 #
 from suds.client import Client
 client = Client('https://soap.vindicia.com/1.1/Select.wsdl')
-client.set_options(location='https://soap.prodtest.sj.vindicia.com/soap.pl')
+#client.set_options(location='https://soap.prodtest.sj.vindicia.com/soap.pl')
 
 authentication = client.factory.create('vin:Authentication')
-authentication.login = 'xxx_soap'
-authentication.password = 'xxxxxx'
 authentication.version = '1.1'
 authentication.userAgent = 'Vindicia Python Select v1.1 Library'
 authentication.evid = None
+
+env = dict(line.strip().replace(' ', '').split('=') for line in open('Environment.properties')
+	if not line.startswith('#') and not line.startswith('\n'))
+
+#print env
+
+login = env['soap_login']
+password = env['soap_password']
+endpoint = env['soap_url']
+
+authentication.login = login
+authentication.password = password
+client.set_options(location=endpoint)
+
+# uncomment to trigger timeout:
+#client.set_options(timeout=0.1)
 
 print
 print '\tsoap login = ' + authentication.login
@@ -31,9 +45,9 @@ print '\tuserAgent = ' + authentication.userAgent
 print
 
 
-timestamp = '2016-02-05T10:41:39.000Z'	# Change to timestamp of last Failure of the Failed Transaction
+timestamp = '2016-02-05T10:41:39-07:00'	# Change to timestamp of last Failure of the Failed Transaction
 
-merchantTransactionId = 'TEST1234'	# Change this to your unique id of the Failed Transaction
+merchantTransactionId = 'TEST1236'	# Change this to your unique id of the Failed Transaction
 # Select will only process a Failed Transaction once per unique id specified in merchantTransactionId
 #
 # If a Failed Transaction is specified with a value for merchantTransactionId previously submitted
@@ -92,12 +106,17 @@ def getTransaction(merchantTransactionId, customerId, subscriptionId,
     return transaction
 
 customerId = 'CUST1234'	# Change this to your unique id of the Customer's account
-subscriptionId = 'SUBS1234'	# Change this to your unique id of the Customer's subscription
+subscriptionId = 'SUBS1235'	# Change this to your unique id of the Customer's subscription
 authCode = '302'
 creditCardAccount = '4111111111111111'	# When using Tokens, change to the BIN (1st 6 digits of Card)
 amount = '10.99'
 paymentMethodId = 'PAYMETHOD1234'	# Change to your unique id of the Payment Method, or Token Id
-creditCardExpirationDate = '202208'
+# numbers (not strings):
+year = 2022
+month = 8
+# creditCardExpirationDate = '{0:04d}{1:02d}'.format(2022, 8)	# '202208'
+creditCardExpirationDate = '{0:04d}{1:02d}'.format(year, month)	# '202208'
+# creditCardExpirationDate = '%04d%02d' % (year, month)	# '202208'
 divisionNumber = '5698'
 currency = 'USD'
 billingFrequency = 'Monthly'
