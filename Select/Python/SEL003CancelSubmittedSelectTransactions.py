@@ -52,7 +52,7 @@ print '\tuserAgent = ' + authentication.userAgent
 print
 
 
-timestamp = '2016-02-05T10:41:39.000Z'	# Change to timestamp of last Failure of the Failed Transaction
+timestamp = '2016-02-05T10:41:39-07:00'	# Change to timestamp of last Failure of the Failed Transaction
 
 merchantTransactionId = 'TEST1234'	# Change this to your unique id of the Failed Transaction
 
