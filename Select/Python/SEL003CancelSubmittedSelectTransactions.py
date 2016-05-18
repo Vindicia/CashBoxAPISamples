@@ -113,7 +113,12 @@ authCode = '302'
 creditCardAccount = '4111111111111111'	# When using Tokens, change to the BIN (1st 6 digits of Card)
 amount = '10.99'
 paymentMethodId = 'PAYMETHOD1234'	# Change to your unique id of the Payment Method, or Token Id
-creditCardExpirationDate = '202208'
+# numbers (not strings):
+year = 2022
+month = 8
+# creditCardExpirationDate = '{0:04d}{1:02d}'.format(2022, 8)	# '202208'
+creditCardExpirationDate = '{0:04d}{1:02d}'.format(year, month)	# '202208'
+# creditCardExpirationDate = '%04d%02d' % (year, month)	# '202208'
 divisionNumber = '5698'
 currency = 'USD'
 billingFrequency = 'Monthly'
