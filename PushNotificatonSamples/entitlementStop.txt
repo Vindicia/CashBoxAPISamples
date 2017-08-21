@@ -1,0 +1,28 @@
+json={
+  "content": {
+    "merchantAutobillId": "Aggregator_AB_1502027692831",
+    "merchantBillingPlanId": "",
+    "merchantAutoBillItemId": "Free_AB_1502027692831_Drama_base_1502027692832",
+    "merchantEntitlementId": [
+      "foxtel_now_drama_pack"
+    ],
+    "merchantAccountId": "FOXTEL_NOW_TEST_CUST_1502027692831",
+    
+    "entitlementSource": "Product",
+    "merchantProductId": "Drama_base",
+    "autoBillItemVid": "5c111ae607fd271755d77f40654eb7b623b1c7ae",
+    "startTimestamp": "2017-08-06 06:52:47",
+    "endTimestamp": ""
+  },
+  "header": {
+    "author_id": "e8935e22ee97fff62cd28a6fc21fab9b7b6fbf3c",
+    "class_name": "entitlement",
+    "message_id": "dbee362ecc7336d4a12a6fd1fc12734cc1f5d0b8",
+    "event_name": "stop",
+    "merchant_vid": "886ad00d4f5d0c648d536befbd6248ef9ade71e8",
+    "x_el_id": "738887267",
+    "submitted": "2017-08-10T13:46:03.017291-0700",
+    "soap_version": "21_0",
+    "event_timestamp": "2017-08-06 06:52:49"
+  }
+}&signature=tpHFdxCtB7Q/86xbYDiD5ZeLv9DqaUBhcf+LfS8ckII=
