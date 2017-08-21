@@ -1,0 +1,219 @@
+json={
+  "content": {
+    "sourcePaymentMethod": {
+      "active": "1",
+      "merchantPaymentMethodId": "pm-1456339020899",
+      "billingAddress": {
+        "district": "CA",
+        "country": "US",
+        "city": "Mountain View",
+        "addr1": "809 Cuesta Dr",
+        "VID": "bb761eacd130b49f8aacda6945ee872f93b34efc",
+        "postalCode": "94040"
+      },
+      "accountHolderName": "CC Payer",
+      "type": "CreditCard",
+      "sortOrder": "0",
+      "creditCard": {
+        "lastDigits": "0247",
+        "bin": "445701",
+        "account": "445701XXXXXX0247",
+        "VID": "2da5e087d3747f269a696c8b56c0ec02af424f78",
+        "expirationDate": "201608",
+        "accountLength": "16"
+      },
+      "VID": "5d2b850d2ab4e9c0d99ce99d237b8a4dbc363847"
+    },
+    "transactionItems": [
+      {
+        "servicePeriodStartDate": "2016-03-24T00:00:00-07:00",
+        "taxType": "Exclusive Sales",
+        "sku": "billMeMonthly",
+        "quantity": "1",
+        "name": "Monthly Billing - No Free - No Price",
+        "total": 0,
+        "indexNumber": "1",
+        "itemType": "Purchase",
+        "servicePeriodEndDate": "2016-04-23T00:00:00-07:00"
+      },
+      {
+        "servicePeriodStartDate": "2016-03-24T00:00:00-07:00",
+        "merchantAutoBillItemId": "vin_test_abill1456339020899-regular-avataxed-product",
+        "taxType": "Exclusive Sales",
+        "sku": "regular-avataxed-product",
+        "quantity": "1",
+        "name": "Basic Digital Product",
+        "subtotal": "365",
+        "tax": [
+          {
+            "amount": "3.65",
+            "name": "SANTA CLARA COUNTY SALES TAX",
+            "jurisdiction": "COUNTY_085"
+          },
+          {
+            "amount": "4.56",
+            "name": "SANTA CLARA COUNTY DISTRICT TAX SP SPECIAL SALES TAX",
+            "jurisdiction": "SPECIAL_EMBK0"
+          },
+          {
+            "amount": "23.73",
+            "name": "CALIFORNIA STATE SALES TAX",
+            "jurisdiction": "STATE_06"
+          }
+        ],
+        "total": "396.94",
+        "autoBillItemVid": "06f584b41e5c258fe261017064517c84bfa8688c",
+        "price": "365",
+        "indexNumber": "2",
+        "itemType": "Purchase",
+        "servicePeriodEndDate": "2016-04-23T00:00:00-07:00"
+      },
+      {
+        "taxClassification": "TaxExempt",
+        "servicePeriodStartDate": "2016-03-24T00:00:00-07:00",
+        "taxType": "Exclusive Sales",
+        "sku": "Total Tax",
+        "quantity": "1",
+        "name": "Total Tax",
+        "subtotal": 0,
+        "tax": [
+          {
+            "amount": "3.65",
+            "name": "SANTA CLARA COUNTY SALES TAX",
+            "jurisdiction": "COUNTY_085"
+          },
+          {
+            "amount": "4.56",
+            "name": "SANTA CLARA COUNTY DISTRICT TAX SP SPECIAL SALES TAX",
+            "jurisdiction": "SPECIAL_EMBK0"
+          },
+          {
+            "amount": "23.73",
+            "name": "CALIFORNIA STATE SALES TAX",
+            "jurisdiction": "STATE_06"
+          }
+        ],
+        "discount": 0,
+        "total": "31.94",
+        "price": 0,
+        "indexNumber": "3",
+        "itemType": "Purchase",
+        "servicePeriodEndDate": "2016-04-23T00:00:00-07:00"
+      }
+    ],
+    "currency": "USD",
+    "paymentProcessorTransactionId": "INT00011722",
+    "timestamp": "2016-02-24T11:00:09-08:00",
+    "merchantAutobillIdentifier": "vin_test_abill1456339020899",
+    "nameValues": [
+      {
+        "value": "5016604c02a1f25753b48d2b3f4f0711bff601e8",
+        "name": "vin:AutoBillVID"
+      },
+      {
+        "value": "vin_test_abill1456339020899",
+        "name": "vin:MerchantAutoBillIdentifier"
+      },
+      {
+        "value": "2016-03-24 00:00:00",
+        "name": "vin:OriginalActivityDate"
+      },
+      {
+        "value": "143765765",
+        "name": "vin:GCOrderId"
+      },
+      {
+        "value": "0",
+        "name": "vin:RetryNumber"
+      },
+      {
+        "value": "1",
+        "name": "vin:BillingCycle"
+      }
+    ],
+    "statusLog": [
+      {
+        "paymentMethodType": "CreditCard",
+        "creditCardStatus": {
+          "authCode": "T00"
+        },
+        "timestamp": "2016-02-24T11:11:13-08:00",
+        "status": "Captured"
+      },
+      {
+        "paymentMethodType": "CreditCard",
+        "creditCardStatus": {
+          "authCode": "T00"
+        },
+        "timestamp": "2016-02-24T11:00:10-08:00",
+        "status": "New"
+      }
+    ],
+    "retryNumber": "0",
+    "autoBillCycle": "1",
+    "account": {
+      "paymentMethods": [
+        {
+          "active": "1",
+          "merchantPaymentMethodId": "pm-1456339020899",
+          "billingAddress": {
+            "district": "CA",
+            "country": "US",
+            "city": "Mountain View",
+            "addr1": "809 Cuesta Dr",
+            "VID": "bb761eacd130b49f8aacda6945ee872f93b34efc",
+            "postalCode": "94040"
+          },
+          "accountHolderName": "CC Payer",
+          "type": "CreditCard",
+          "sortOrder": "0",
+          "creditCard": {
+            "lastDigits": "0247",
+            "bin": "445701",
+            "account": "445701XXXXXX0247",
+            "VID": "2da5e087d3747f269a696c8b56c0ec02af424f78",
+            "expirationDate": "201608",
+            "accountLength": "16"
+          },
+          "VID": "5d2b850d2ab4e9c0d99ce99d237b8a4dbc363847"
+        }
+      ],
+      "emailTypePreference": "html",
+      "emailAddress": "sdeshpande@vindicia.com",
+      "preferredLanguage": "EN",
+      "VID": "8c5752c033f1fb547dd2944b60991d49c81177b5",
+      "merchantAccountId": "vin_test_acct_1456339020899"
+    },
+    "merchantTransactionId": "INT00011722",
+    "autobillVID": "5016604c02a1f25753b48d2b3f4f0711bff601e8",
+    "amount": "396.94",
+    "originalActivityDate": "2016-03-24T00:00:00-07:00",
+    "VID": "1d215f331db5d01097536bad7e4503f4462fe21e",
+    "billingPlanCycle": "1",
+    "paymentProcessor": "Test",
+    "salesTaxAddress": {
+      "district": "CA",
+      "country": "US",
+      "city": "MT VIEW",
+      "addr1": "809 Cuesta Dr",
+      "VID": "254cb15af453c5037e9fcd403256075ee7c7b241",
+      "postalCode": "94040"
+    },
+    "sourceIp": "233.56.67.23"
+  },
+  "header": {
+    "author_id": "f81dc61f41b9766a1e35f3cd805fa18ee6a6cd90",
+    "class_name": "transactions",
+    "message_id": "4953ff0a0476ca0e8913dddde6f75b2c856163f9",
+    "event_name": "attempt succeeded",
+    "merchant_id": "101000655",
+    "soap_version": "17_0",
+    "submitted": "1456341074",
+    "hostname": "ws01.staging.vindicia.com",
+    "transaction_vid": "1d215f331db5d01097536bad7e4503f4462fe21e",
+    "event_timestamp": "2016-02-24 11:11:14",
+    "callers_save": "",
+    "callers_new": ""
+  }
+}
+&signature=oSe3iO0pI8LkjhstezKFfsmH4h+Bv/BqL5ulPbZYMG0=

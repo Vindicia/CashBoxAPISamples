@@ -1,0 +1,153 @@
+json={
+  "content": {
+    "nextBilling": {
+      "currency": "AUD",
+      "transactionItems": [
+        {
+          "taxType": "Exclusive Sales",
+          "sku": "Drama_base",
+          "name": "Drama pack",
+          "quantity": "1",
+          "itemType": "Purchase",
+          "total": 0
+        }
+      ],
+      "amount": "0.00",
+      "timestamp": "2017-09-10T00:00:00-07:00"
+    },
+    "status": "Expired",
+    "merchantAutoBillId": "Aggregator_AB_1502395637400",
+    "currency": "AUD",
+    "billingPlan": {
+      "daysBeforeSeasonToBill": "0",
+      "merchantBillingPlanId": "Monthly_unlimited",
+      "status": "Active",
+      "daysEntitledBeforeSeason": "0",
+      "skipInitialFreeWhenRepeating": "1",
+      "daysEntitledAfterSeason": "0",
+      "description": "Insertion of Radioactive Element into Face, Open Approach",
+      "periods": [
+        {
+          "free": "0",
+          "doNotNotifyFirstBill": "0",
+          "cycles": "0",
+          "quantity": "1",
+          "type": "Month",
+          "prices": [
+            {
+              "currency": "AUD",
+              "amount": "0"
+            }
+          ]
+        }
+      ],
+      "timesToRun": "1",
+      "VID": "3a8da22937d7bcff193a453a344d3dd79b704f36"
+    },
+    "paymentMethod": {
+      "merchantAcceptedPayment": {
+        "timestamp": "2017-08-10T13:04:49-07:00",
+        "account": "XXX",
+        "paymentType": "TELCOBILL"
+      },
+      "active": "1",
+      "merchantPaymentMethodId": "PM_MAP_1502395637400",
+      "billingAddress": {
+        "country": "AU",
+        "VID": "b195f343e8b460fc1d1dc2dfcf11cf90afa07d46"
+      },
+      "accountHolderName": "Foxtel Now Customer 1502395637400",
+      "type": "MerchantAcceptedPayment",
+      "sortOrder": "0",
+      "VID": "54ffe93e1a7fef19bbdefbe49e62ce1a64c49bc0"
+    },
+    "subscriptionBalance": 0,
+    "startTimestamp": "2017-08-10T13:04:51-07:00",
+    "billingDay": "10",
+    "minimumCommitment": "0",
+    "account": {
+      "paymentMethods": [
+        {
+          "merchantAcceptedPayment": {
+            "timestamp": "2017-08-10T13:04:49-07:00",
+            "account": "XXX",
+            "paymentType": "TELCOBILL"
+          },
+          "active": "1",
+          "merchantPaymentMethodId": "PM_MAP_1502395637400",
+          "billingAddress": {
+            "country": "AU",
+            "VID": "b195f343e8b460fc1d1dc2dfcf11cf90afa07d46"
+          },
+          "accountHolderName": "Foxtel Now Customer 1502395637400",
+          "type": "MerchantAcceptedPayment",
+          "sortOrder": "0",
+          "VID": "54ffe93e1a7fef19bbdefbe49e62ce1a64c49bc0"
+        }
+      ],
+      "emailTypePreference": "html",
+      "name": "Foxtel Now Customer 1502395637400",
+      "merchantAccountId": "FOXTEL_NOW_TEST_CUST_1502395637400",
+      "VID": "37ec3cea7c0d2e024fe2c5da709e0df58d7f416c"
+    },
+    "billingState": "Billing Completed",
+    "warnOnExpiration": "0",
+    "VID": "8f41c64da7f829ef705a1ee88ad3ce3e7dbda749",
+    "endTimestamp": "2017-08-15T14:38:45-07:00",
+    "items": [
+      {
+        "merchantAutoBillItemId": "Free_AB_1502395637400_Drama_base_1502395637401",
+        "quantity": "1",
+        "addedDate": "2017-08-10T13:04:51-07:00",
+        "removedDate": "2017-08-15T14:38:45-07:00",
+        "campaignId": "TL_IP8_FP_1",
+        "index": "0",
+        "VID": "5e65eb63901a3cba8473c111b070e3e9b573f02c",
+        "product": {
+          "status": "Active",
+          "merchantProductId": "Drama_base",
+          "creditGranted": {
+            
+          },
+          "merchantEntitlementIds": [
+            {
+              "id": "foxtel_now_drama_pack",
+              "description": "Foxtel Now Drama Pack Subscription"
+            }
+          ],
+          "descriptions": [
+            {
+              "language": "EN",
+              "description": "Drama pack"
+            }
+          ],
+          "VID": "48d349c708f6e47989c5e4ab75082e4f8f10fca7",
+          "nameValues": [
+            {
+              "value": "Base",
+              "name": "Foxtel:ProductType"
+            }
+          ],
+          "prices": [
+            {
+              "currency": "AUD",
+              "amount": "15.00"
+            }
+          ]
+        },
+        "startDate": "2017-08-10T00:00:00-07:00"
+      }
+    ]
+  },
+  "header": {
+    "author_id": "ea0b537284e542cf2d295ee63f95d221f679261d",
+    "class_name": "autobills",
+    "autobill_vid": "8f41c64da7f829ef705a1ee88ad3ce3e7dbda749",
+    "message_id": "c1471d361188995f8f1e4443a8aadd394363888c",
+    "event_name": "stop",
+    "merchant_vid": "886ad00d4f5d0c648d536befbd6248ef9ade71e8",
+    "submitted": "2017-08-15T14:38:49.050085-0700",
+    "soap_version": "21_0",
+    "event_timestamp": "2017-08-15 14:38:49"
+  }
+}&signature=W2hczTfaeJyHqWOfs3CJo7RAAnzKPG/uVHVfEfQBdwM=
