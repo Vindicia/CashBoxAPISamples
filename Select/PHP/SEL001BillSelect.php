@@ -116,6 +116,23 @@ $response = $select->billTransactions($billTransactions);
 
 // print_r($select);
 print_r($response);
+// print_r($response->return);
+// print_r($response->response);
+
+print "\treturnCode = " . $response->return->returnCode . EOL;
+print "\treturnString = " . $response->return->returnString . EOL;
+print "\tsoapId = " . $response->return->soapId . EOL . EOL . EOL;
+
+print "\tTransactionValidationResponse array:" . EOL . EOL;
+// print_r($response->response);
+
+foreach ($response->response as $key => $val)
+{
+	print "\tTransactionValidationResponse[" . $key . "]:" . EOL;
+	print "\t\tmerchantTransactionId = " . $val->merchantTransactionId . EOL;
+	print "\t\tcode = " . $val->code . EOL;
+	print "\t\tdescription = " . $val->description . EOL . EOL;
+}
 
 print "\tsoap endpoint = " . $endpoint . EOL . EOL;
 print "\tsoap login = " . $auth->login . EOL;
