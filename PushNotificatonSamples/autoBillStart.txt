@@ -1,0 +1,142 @@
+json={
+  "content": {
+    "status": "Processing",
+    "account": {
+      "paymentMethods": [
+        {
+          "active": "1",
+          "merchantPaymentMethodId": "pm-1509659731129",
+          "billingAddress": {
+            "country": "US",
+            "district": "PA",
+            "city": "Lancaster",
+            "addr1": "328 Copley Dr",
+            "VID": "02dfe973f37146f519d8374ea9b86dd8fa704a4f",
+            "postalCode": "17601"
+          },
+          "accountHolderName": "CC Payer",
+          "type": "CreditCard",
+          "sortOrder": "0",
+          "creditCard": {
+            "lastDigits": "0247",
+            "bin": "445701",
+            "account": "445701XXXXXX0247",
+            "VID": "4d3fb07311589ccaa3b0aa1451d017ceb60a0499",
+            "expirationDate": "201608",
+            "accountLength": "16"
+          },
+          "VID": "dc4eaa9f0379e15d55a44f1c18cf8a7d8846da47"
+        }
+      ],
+      "emailTypePreference": "html",
+      "emailAddress": "sdeshpande@vindicia.com",
+      "name": "Simulated Customer-1509659731129",
+      "merchantAccountId": "vin_test_acct_1509659731129",
+      "VID": "5734737403c21f4a5d1ab9f468936769fa6e4aad"
+    },
+    "merchantAutoBillId": "vin_test_abill1509659731129",
+    "currency": "USD",
+    "billingState": "Unbilled",
+    "billingPlan": {
+      "merchantBillingPlanId": "billEveryMonth",
+      "periods": [
+        {
+          "doNotNotifyFirstBill": "1",
+          "cycles": "0",
+          "quantity": "1",
+          "type": "Month",
+          "prices": [
+            {
+              "currency": "USD",
+              "amount": "0"
+            }
+          ]
+        }
+      ],
+      "status": "Active",
+      "VID": "4b03d8dfcfabbb6e608a330da07148b701f3f4ca",
+      "description": "Generates bill every month"
+    },
+    "paymentMethod": {
+      "active": "1",
+      "merchantPaymentMethodId": "pm-1509659731129",
+      "billingAddress": {
+        "country": "US",
+        "district": "PA",
+        "city": "Lancaster",
+        "addr1": "328 Copley Dr",
+        "VID": "02dfe973f37146f519d8374ea9b86dd8fa704a4f",
+        "postalCode": "17601"
+      },
+      "accountHolderName": "CC Payer",
+      "type": "CreditCard",
+      "sortOrder": "0",
+      "creditCard": {
+        "lastDigits": "0247",
+        "bin": "445701",
+        "account": "445701XXXXXX0247",
+        "VID": "4d3fb07311589ccaa3b0aa1451d017ceb60a0499",
+        "expirationDate": "201608",
+        "accountLength": "16"
+      },
+      "VID": "dc4eaa9f0379e15d55a44f1c18cf8a7d8846da47"
+    },
+    "subscriptionBalance": 0,
+    "warnOnExpiration": "0",
+    "startTimestamp": "2017-11-02T14:55:36-07:00",
+    "VID": "76c7072f6aa8aebdfd87f63ee80ff39398784103",
+    "billingDay": "2",
+    "sourceIp": "233.56.67.23",
+    "items": [
+      {
+        "merchantAutoBillItemId": "vin_test_abill1509659731129-monthlySub",
+        "index": "0",
+        "quantity": "1",
+        "addedDate": "2017-11-02T14:55:36-07:00",
+        "product": {
+          "taxClassification": "OtherTaxable",
+          "status": "Active",
+          "merchantProductId": "monthlySub",
+          "creditGranted": {
+            
+          },
+          "merchantEntitlementIds": [
+            {
+              "id": "monthlySub"
+            }
+          ],
+          "descriptions": [
+            {
+              "language": "EN",
+              "description": "Monthly service"
+            }
+          ],
+          "VID": "4d5ac117a2484debcf3521924b8ce8f39ccf0aa8",
+          "prices": [
+            {
+              "currency": "USD",
+              "amount": "100.00"
+            },
+            {
+              "currency": "MYR",
+              "amount": "200.00"
+            }
+          ]
+        },
+        "VID": "66913c70ddb58b7f59c0131f64950dbb155c0f12",
+        "startDate": "2017-11-02T00:00:00-07:00"
+      }
+    ]
+  },
+  "header": {
+    "author_id": "1d8d28763f311fbc2818110e5b1ea78a2a8e977d",
+    "class_name": "autobills",
+    "autobill_vid": "76c7072f6aa8aebdfd87f63ee80ff39398784103",
+    "message_id": "e231da4a9b1ba1adc4b42c100592d41024b8bd0b",
+    "event_name": "start",
+    "merchant_vid": "59f6df9925c6cd19addc124c8a4ca0883ca12a30",
+    "submitted": "2017-11-02T14:55:37.944066-0700",
+    "soap_version": "21_0",
+    "event_timestamp": "2017-11-02 14:55:37"
+  }
+}&signature=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
