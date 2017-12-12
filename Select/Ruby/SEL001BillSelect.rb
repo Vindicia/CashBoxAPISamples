@@ -40,7 +40,7 @@ transaction[:divisionNumber] = '5599'
 transaction[:status] = 'Failed'
 transaction[:currency] = 'USD'
 transaction[:billingFrequency] = 'Monthly'
-transaction[:paymentMethodIsTokenized] = 'False' # Change to True when using Tokens
+transaction[:paymentMethodIsTokenized] = 'false' # Change to true when using Tokens
 
 #add two copies of this transaction for testing
 transactions = []
