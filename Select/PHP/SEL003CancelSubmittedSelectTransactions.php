@@ -88,7 +88,7 @@ $creditCardExpirationDate = '202208';
 $divisionNumber = '5698';
 $currency = 'USD';
 $billingFrequency = 'Monthly';
-$paymentMethodIsTokenized = 'False';	# Change to True when using Tokens
+$paymentMethodIsTokenized = 'false';	# Change to 'true' when using Tokens
 
 $n = 2;	# number of transactions to process
 
