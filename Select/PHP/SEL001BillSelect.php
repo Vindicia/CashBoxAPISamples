@@ -1,3 +1,4 @@
+<pre>
 <?php
 #
 #	SEL001BillSelect.php:
@@ -24,10 +25,14 @@
 #
 # 4. Cleanup generated code to work with Select (Return datatype is PHP keyword):
 #
-#	mv Select.php{,.orig}; sed 's/class Return /class VindiciaReturn /g' Select.php.orig > Select.php
+#	mv Select.php{,.orig}; sed 's/class Return /class VindiciaReturn /g' Select.php.orig > Select2.php
 #	(or edit generated Select.php: change class Return to class VindiciaReturn).
 #
 #	(SelectUtil.php overrides 'Return' to 'VindiciaReturn' to match the change above)
+#
+#	Also fix up constructor to be compatible with PHP 7.0+:
+#
+#	sed 's/function Select(/function __construct(/g' Select2.php > Select.php
 #
 #
 # 5. This sample may be found on GitHub at:
@@ -71,24 +76,24 @@ print "\tsoap version = " . $auth->version . EOL;
 print "\tuserAgent = " . $auth->userAgent . EOL . EOL;
 
 
-$timestamp = '2016-02-05T10:41:39.000Z';	# Change to timestamp of last Failure of the Failed Transaction
+$timestamp = '2016-02-05T10:41:39-07:00';	# Change to timestamp of last Failure of the Failed Transaction
 
 // create a unique identifier
 
-$merchantTransactionId = 'TEST1236';	# Change this to your unique id of the Failed Transaction
+$merchantTransactionId = 'TEST12369_boolean_false-07:00';	# Change this to your unique id of the Failed Transaction
 
 
-$customerId = 'CUST1234';	# Change this to your unique id of the Customer's account
-$subscriptionId = 'SUBS1235';	# Change this to your unique id of the Customer's subscription
+$customerId = 'CUST123456';	# Change this to your unique id of the Customer's account
+$subscriptionId = 'SUBS123569_boolean_false-07:00';	# Change this to your unique id of the Customer's subscription
 $authCode = '302';
-$creditCardAccount = '4111111111111111';	# When using Tokens, change to the BIN (1st 6 digits of Card)
+$creditCardAccount = '4417123456789113';	# When using Tokens, change to the BIN (1st 6 digits of Card)
 $amount = '10.99';
-$paymentMethodId = 'PAYMETHOD1234';	# Change to your unique id of the Payment Method, or Token Id
+$paymentMethodId = 'PAYMETHOD123456';	# Change to your unique id of the Payment Method, or Token Id
 $creditCardExpirationDate = '202208';
 $divisionNumber = '5698';
 $currency = 'USD';
 $billingFrequency = 'Monthly';
-$paymentMethodIsTokenized = 'false';	# Change to 'true' when using Tokens
+$paymentMethodIsTokenized = false;	# Change to True when using Tokens
 
 $n = 2;	# number of transactions to process
 
@@ -102,29 +107,49 @@ for ($i =0; $i < $n; $i++) {
 		$paymentMethodIsTokenized);
 	// print_r ($trx);
   	$transactions[$i] = $trx;
+	print "transactions[" . $i . "]->paymentMethodIsTokenized="
+		. ($transactions[$i]->paymentMethodIsTokenized ? "true" : "false") . EOL;
 }
 
 print_r($transactions);
-
+print "paymentMethodIsTokenized=" . ($paymentMethodIsTokenized ? "true" : "false") . EOL;
 
 $billTransactions = new billTransactions();
 
 $billTransactions->auth = $auth;
 $billTransactions->transactions = $transactions;	#array($transaction);
 
-$response = $select->billTransactions($billTransactions);
+try{ 
+	$response = $select->billTransactions($billTransactions);
+}catch(SoapFault $fault){ 
+	print "\nRequest "  . EOL; 
+	# print_r($select->__getLastRequest()); 
+	echo "\n\n ====== Printing request soap envl below ====== <br>\n\n\n" . "<pre class=\"brush: xml\">" . htmlspecialchars(xmlpp($select->__getLastRequest())) ."</pre>"."\n\n <br>============End Soap Request============\n\n\n<br>";
 
-// print_r($select);
+	print "\nSOAP Fault: " . $fault->getMessage() . EOL . EOL; 
+}
+
+print_r($select);
 print_r($response);
-// print_r($response->return);
-// print_r($response->response);
+print_r($response->return);
+print_r($response->response);
+
+print "\nRequest "  . EOL; 
+# print_r($select->__getLastRequest()); 
+echo "\n\n ====== Printing request soap envl below ====== <br>\n\n\n" . "<pre class=\"brush: xml\">" . htmlspecialchars(xmlpp($select->__getLastRequest())) ."</pre>"."\n\n <br>============End Soap Request============\n\n\n<br>";
+
+
+print "\nResponse "  . EOL;
+if ( $select->__getLastResponse() != NULL ) {
+	echo "\n\n====== Printing response soap envl below ========= <br>\n\n\n" . "<pre class=\"brush: xml\">". htmlspecialchars(xmlpp($select->__getLastResponse())) . "</pre>". "\n\n <br>============End Soap Response ============\n\n\n<br>";
+
 
 print "\treturnCode = " . $response->return->returnCode . EOL;
 print "\treturnString = " . $response->return->returnString . EOL;
 print "\tsoapId = " . $response->return->soapId . EOL . EOL . EOL;
 
 print "\tTransactionValidationResponse array:" . EOL . EOL;
-// print_r($response->response);
+# print_r($response->response);
 
 foreach ($response->response as $key => $val)
 {
@@ -133,6 +158,10 @@ foreach ($response->response as $key => $val)
 	print "\t\tcode = " . $val->code . EOL;
 	print "\t\tdescription = " . $val->description . EOL . EOL;
 }
+}
+else
+	print "\n\tNo Response "  . EOL . EOL . EOL;
+
 
 print "\tsoap endpoint = " . $endpoint . EOL . EOL;
 print "\tsoap login = " . $auth->login . EOL;
@@ -141,4 +170,5 @@ print "\tuserAgent = " . $auth->userAgent . EOL;
 
 
 ?>
+<pre>
 
