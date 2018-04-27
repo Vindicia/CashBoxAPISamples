@@ -201,7 +201,7 @@ class Select extends SoapClient {
                                     'fetchByMerchantTransactionIdResponse' => 'fetchByMerchantTransactionIdResponse',
                                    );
 
-  public function Select($wsdl = "https://soap.vindicia.com/1.1/Select.wsdl", $options = array()) {
+  public function __construct($wsdl = "https://soap.vindicia.com/1.1/Select.wsdl", $options = array()) {
     foreach(self::$classmap as $key => $value) {
       if(!isset($options['classmap'][$key])) {
         $options['classmap'][$key] = $value;
