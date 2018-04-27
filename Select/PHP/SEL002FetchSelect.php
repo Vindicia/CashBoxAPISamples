@@ -24,10 +24,14 @@
 #
 # 4. Cleanup generated code to work with Select (Return datatype is PHP keyword):
 #
-#	mv Select.php{,.orig}; sed 's/class Return /class VindiciaReturn /g' Select.php.orig > Select.php
+#	mv Select.php{,.orig}; sed 's/class Return /class VindiciaReturn /g' Select.php.orig > Select2.php
 #	(or edit generated Select.php: change class Return to class VindiciaReturn).
 #
 #	(SelectUtil.php overrides 'Return' to 'VindiciaReturn' to match the change above)
+#
+#	Also fix up constructor to be compatible with PHP 7.0+:
+#
+#	sed 's/function Select(/function __construct(/g' Select2.php > Select.php
 #
 #
 # 5. This sample may be found on GitHub at:
@@ -78,8 +82,12 @@ print "\tuserAgent = " . $auth->userAgent . EOL . EOL;
 # the timestamps on the returned Transactions, they will be transformed
 # to the Pacific Timezone (i.e. -07:00).
 #
-$start = '2016-04-05T10:41:39-07:00';	# Change to timestamp of last successful execution 
-$end = '2016-05-02T10:41:39-07:00';	# Change to timestamp of now (or prior midnight)
+$start = '2016-05-02T02:08:09';
+$end = '2016-05-02T12:08:09';
+//$start = '2016-04-05T10:41:39-07:00';	# Change to timestamp of last successful execution 
+//$end = '2016-05-02T10:41:39-07:00';		# Change to timestamp of now (or prior midnight)
+//$start = '2015-11-09T10:41:39-07:00';	# Change to timestamp of last successful execution 
+//$end = '2015-11-10T10:41:39-07:00';		# Change to timestamp of now (or prior midnight)
 $pageSize = 100;
 
 
@@ -203,6 +211,8 @@ function reportResults($results, $page) {
 					. " created selectTransactionId " . wrapValue($tx->selectTransactionId)
 					. " with status " . wrapValue($status)
 					. " , authCode " . wrapValue($tx->authCode)
+					. " , divisionNumber " . wrapValue($tx->divisionNumber)
+					. " , paymentMethodIsTokenized " . wrapValue($tx->paymentMethodIsTokenized)
 					. " on " . $tx->timestamp
 					. " for " . $tx->amount
 					. " " . $tx->currency
