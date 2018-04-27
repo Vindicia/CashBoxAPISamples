@@ -17,11 +17,14 @@
 #
 # 4. Cleanup generated code to work with Select (Return datatype is PHP keyword):
 #
-#	mv Select.php{,.orig}; sed 's/class Return /class VindiciaReturn /g' Select.php.orig > Select.php
+#	mv Select.php{,.orig}; sed 's/class Return /class VindiciaReturn /g' Select.php.orig > Select2.php
 #	(or edit generated Select.php: change class Return to class VindiciaReturn).
 #
 #	(SelectUtil.php overrides 'Return' to 'VindiciaReturn' to match the change above)
 #
+#	Also fix up constructor to be compatible with PHP 7.0+:
+#
+#	sed 's/function Select(/function __construct(/g' Select2.php > Select.php
 #
 # 5. This sample may be found on GitHub at:
 #
@@ -39,5 +42,6 @@ echo "Executing in: $DIR ..."
 
 wsdl2php https://soap.vindicia.com/1.1/Select.wsdl
 
-mv Select.php{,.orig}; sed 's/class Return /class VindiciaReturn /g' Select.php.orig > Select.php
+mv Select.php{,.orig}; sed 's/class Return /class VindiciaReturn /g' Select.php.orig | sed 's/function Select/function __construct/g' > Select.php
 diff Select.php{.orig,}
+
