@@ -24,10 +24,14 @@
 #
 # 4. Cleanup generated code to work with Select (Return datatype is PHP keyword):
 #
-#	mv Select.php{,.orig}; sed 's/class Return /class VindiciaReturn /g' Select.php.orig > Select.php
+#	mv Select.php{,.orig}; sed 's/class Return /class VindiciaReturn /g' Select.php.orig > Select2.php
 #	(or edit generated Select.php: change class Return to class VindiciaReturn).
 #
 #	(SelectUtil.php overrides 'Return' to 'VindiciaReturn' to match the change above)
+#
+#	Also fix up constructor to be compatible with PHP 7.0+:
+#
+#	sed 's/function Select(/function __construct(/g' Select2.php > Select.php
 #
 #
 # 5. This sample may be found on GitHub at:
@@ -77,7 +81,8 @@ function getOptions($endpoint) {
                     "location"           => $endpoint,
                     "trace"              => 1,
                     "classmap"           => $types,
-                    "features"           => SOAP_SINGLE_ELEMENT_ARRAYS
+                    "features"           => SOAP_SINGLE_ELEMENT_ARRAYS,
+                    "ssltransport"       => "tlsv1.2"
                 );
 
 	return $options;
@@ -97,7 +102,7 @@ function getProperties($file) {
 function parse_properties($txtProperties) {
 	$result = array();
 
-	$lines = split("\n", $txtProperties);
+	$lines = explode("\n", $txtProperties);
 	$key = "";
 
 	$isWaitingOtherLine = false;
@@ -127,6 +132,47 @@ function parse_properties($txtProperties) {
  	}
 
 	return $result;
+}
+
+/** Prettifies an XML string into a human-readable and indented work of art
+ *  @param string $xml The XML as a string
+ *  @param boolean $html_output True if the output should be escaped (for use in HTML)
+ */
+
+function xmlpp($xml, $html_output=false) {
+    $xml_obj = new SimpleXMLElement($xml);
+    $level = 4;
+    $indent = 0; // current indentation level
+    $pretty = array();    
+
+    // get an array containing each XML element
+    $xml = explode("\n", preg_replace('/>\s*</', ">\n<", $xml_obj->asXML()));
+
+    // shift off opening XML tag if present
+    if (count($xml) && preg_match('/^<\?\s*xml/', $xml[0])) {
+      $pretty[] = array_shift($xml);
+    }
+
+    foreach ($xml as $el) {
+
+      if (preg_match('/^<([\w])+[^>\/]*>$/U', $el)) { 
+          // opening tag, increase indent 
+          $pretty[] = str_repeat(' ', $indent) . $el; 
+          $indent += $level; 
+      } else { 
+        if (preg_match('/^<\/.+>$/', $el)) {            
+          $indent -= $level;  // closing tag, decrease indent 
+        } 
+        if ($indent < 0) { 
+          $indent += $level; 
+        } 
+        $pretty[] = str_repeat(' ', $indent) . $el; 
+      } 
+    }   
+
+    $xml = implode("\n", $pretty);   
+
+    return ($html_output) ? htmlentities($xml) : $xml; 
 }
 
 
