@@ -76,7 +76,7 @@ print "\tsoap version = " . $auth->version . EOL;
 print "\tuserAgent = " . $auth->userAgent . EOL . EOL;
 
 
-$timestamp = '2016-02-05T10:41:39-07:00';	# Change to timestamp of last Failure of the Failed Transaction
+$timestamp = '2018-04-05T10:41:39-07:00';	# Change to timestamp of last Failure of the Failed Transaction
 
 // create a unique identifier
 
