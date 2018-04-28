@@ -144,20 +144,24 @@ if ( $select->__getLastResponse() != NULL ) {
 	echo "\n\n====== Printing response soap envl below ========= <br>\n\n\n" . "<pre class=\"brush: xml\">". htmlspecialchars(xmlpp($select->__getLastResponse())) . "</pre>". "\n\n <br>============End Soap Response ============\n\n\n<br>";
 
 
-print "\treturnCode = " . $response->return->returnCode . EOL;
-print "\treturnString = " . $response->return->returnString . EOL;
-print "\tsoapId = " . $response->return->soapId . EOL . EOL . EOL;
+	print "\treturnCode = " . $response->return->returnCode . EOL;
+	print "\treturnString = " . $response->return->returnString . EOL;
+	print "\tsoapId = " . $response->return->soapId . EOL . EOL . EOL;
 
-print "\tTransactionValidationResponse array:" . EOL . EOL;
-# print_r($response->response);
+	print "\tTransactionValidationResponse array:" . EOL . EOL;
+	# print_r($response->response);
 
-foreach ($response->response as $key => $val)
-{
-	print "\tTransactionValidationResponse[" . $key . "]:" . EOL;
-	print "\t\tmerchantTransactionId = " . $val->merchantTransactionId . EOL;
-	print "\t\tcode = " . $val->code . EOL;
-	print "\t\tdescription = " . $val->description . EOL . EOL;
-}
+	if ( $response->response != null ) {
+		foreach ($response->response as $key => $val)
+		{
+			print "\tTransactionValidationResponse[" . $key . "]:" . EOL;
+			print "\t\tmerchantTransactionId = " . $val->merchantTransactionId . EOL;
+			print "\t\tcode = " . $val->code . EOL;
+			print "\t\tdescription = " . $val->description . EOL . EOL;
+		}
+	}
+	else
+		print "\n\t\tNo TransactionValidationResponse array"  . EOL . EOL . EOL;
 }
 else
 	print "\n\tNo Response "  . EOL . EOL . EOL;
