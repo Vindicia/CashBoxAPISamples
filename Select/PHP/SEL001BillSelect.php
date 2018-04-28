@@ -80,11 +80,11 @@ $timestamp = '2016-02-05T10:41:39-07:00';	# Change to timestamp of last Failure 
 
 // create a unique identifier
 
-$merchantTransactionId = 'TEST12369_boolean_false-07:00';	# Change this to your unique id of the Failed Transaction
+$merchantTransactionId = 'TEST1234567890';	# Change this to your unique id of the Failed Transaction
 
 
 $customerId = 'CUST123456';	# Change this to your unique id of the Customer's account
-$subscriptionId = 'SUBS123569_boolean_false-07:00';	# Change this to your unique id of the Customer's subscription
+$subscriptionId = 'SUBS1234567890';	# Change this to your unique id of the Customer's subscription
 $authCode = '302';
 $creditCardAccount = '4417123456789113';	# When using Tokens, change to the BIN (1st 6 digits of Card)
 $amount = '10.99';
