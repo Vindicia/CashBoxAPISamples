@@ -101,7 +101,7 @@ $transactions = array();
 
 for ($i =0; $i < $n; $i++) {
 	$trx = getTransaction($merchantTransactionId.($i==0 ? '' : '_'.$i),
-		$customerId, $subscriptionId,
+		$customerId, $subscriptionId.($i==0 ? '' : '_'.$i),
 		$authCode, $creditCardAccount, $paymentMethodId, $creditCardExpirationDate,
 		$amount, $currency, $timestamp, $divisionNumber, $billingFrequency,
 		$paymentMethodIsTokenized);
