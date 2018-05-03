@@ -1,3 +1,4 @@
+<pre>
 <?php
 #
 #	SEL002FetchSelect.php:
