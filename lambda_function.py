@@ -45,13 +45,15 @@ def lambda_handler(event, context):
     log.info('Account Id: %s', merchantAccountId)
     log.info('Name is: %s', name)
     
+    senderEmail = "yourAddress@yourDomain.com"
+    
     # Replace sender@example.com with your "From" address.
     # This address must be verified with Amazon SES.
-    SENDER = "Liam Maxwell <liam.hall.maxwell@gmail.com>"
+    SENDER = senderEmail
     
     # Replace recipient@example.com with a "To" address. If your account 
     # is still in the sandbox, this address must be verified.
-    RECIPIENT = "lmaxwell@vindicia.com"
+    RECIPIENT = emailAddress
     
     # If necessary, replace us-west-2 with the AWS Region you're using for Amazon SES.
     AWS_REGION = "us-east-1"
