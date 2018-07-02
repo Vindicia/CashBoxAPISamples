@@ -36,7 +36,8 @@ def lambda_handler(event, context):
     else: 
         log.warning('ERROR PROCESSING EVENT BODY')
     
-    # Copy the HTTP headers into variables 
+    # Copy the HTTP headers into variables - the http header should always be present 
+    # the http header is added to the Lambda request by the Body Mapping Template in the API Gateway 
     httpHeaderContentType = event['headers']['Content-Type']
     httpHeaderVia = event['headers']['Via']
     httpHeaderProtocol = event['headers']['CloudFront-Forwarded-Proto']
@@ -137,21 +138,70 @@ def lambda_handler(event, context):
                        
             
     
-    # Copy the account object attributes into variables     
-    merchantAccountId = event['body']['content']['merchantAccountId']
-    merchantAccountVID = event['body']['content']['VID']
-    emailAddress = event['body']['content']['emailAddress']
-    emailTypePreference = event['body']['content']['emailTypePreference']
-    name = event['body']['content']['name']
-    defaultCurrency = event['body']['content']['defaultCurrency']
-    preferredLanguage = event['body']['content']['preferredLanguage']
-    shippingAddressVID = event['body']['content']['shippingAddress']['VID']
-    shippingAddressName = event['body']['content']['shippingAddress']['name']
-    shippingAddressAddr1 = event['body']['content']['shippingAddress']['addr1']
-    shippingAddressCity = event['body']['content']['shippingAddress']['city']
-    shippingAddressDistrict = event['body']['content']['shippingAddress']['district']
-    shippingAddressCountry =  event['body']['content']['shippingAddress']['country']
-    shippingAddressPostalCode = event['body']['content']['shippingAddress']['postalCode']
+    # Copy the account object attributes into variables if they exist in the event    
+    merchantAccountVID = event['body']['content']['VID']  # a VID will always be present 
+
+    if 'merchantAccountId' in event['body']['content']:
+       merchantAccountId = event['body']['content']['merchantAccountId']
+    else: 
+       merchantAccountId = ""
+   
+    if 'emailAddress' in event['body']['content']:
+       emailAddress = event['body']['content']['emailAddress']
+    else: 
+       emailAddress = ""
+       
+    if 'emailTypePreference' in event['body']['content']:
+       emailTypePreference = event['body']['content']['emailTypePreference']
+    else: 
+       emailTypePreference = ""
+       
+    if 'name' in event['body']['content']:
+       name = event['body']['content']['name']
+    else: 
+       name = ""    
+    
+    if 'preferredLanguage' in event['body']['content']:
+       preferredLanguage = event['body']['content']['preferredLanguage']
+    else: 
+       preferredLanguage = ""
+       
+    if 'defaultCurrency' in event['body']['content']:
+       defaultCurrency = event['body']['content']['defaultCurrency']
+    else: 
+       defaultCurrency = ""
+       
+    shippingAddressVID = event['body']['content']['shippingAddress']['VID'] # VID should always be present 
+    
+    if 'name' in event['body']['content']['shippingAddress']:
+       shippingAddressName = event['body']['content']['shippingAddress']['name']
+    else: 
+       shippingAddressName = ""
+       
+    if 'addr1' in event['body']['content']['shippingAddress']:
+       shippingAddressAddr1 = event['body']['content']['shippingAddress']['addr1']
+    else: 
+       shippingAddressAddr1 = ""
+       
+    if 'city' in event['body']['content']['shippingAddress']:
+       shippingAddressCity = event['body']['content']['shippingAddress']['city']
+    else: 
+       shippingAddressCity = ""    
+    
+    if 'district' in event['body']['content']['shippingAddress']:
+       shippingAddressDistrict = event['body']['content']['shippingAddress']['district']
+    else: 
+       shippingAddressDistrict = ""    
+       
+    if 'country' in event['body']['content']['shippingAddress']:
+       shippingAddressCountry = event['body']['content']['shippingAddress']['country']
+    else: 
+       shippingAddressCountry = ""   
+       
+    if 'postalCode' in event['body']['content']['shippingAddress']:
+       shippingAddressPostalCode = event['body']['content']['shippingAddress']['postalCode']
+    else: 
+       shippingAddressPostalCode = ""       
     
     # Need to support an array of payment methods on the account as well as the account 
     # having no payment method defined 
@@ -163,26 +213,107 @@ def lambda_handler(event, context):
        numberOfPaymentMethods = len(event['body']['content']['paymentMethods']) 
        x = 0
        while x < numberOfPaymentMethods: 
-          paymentMethodId = event['body']['content']['paymentMethods'][x]['merchantPaymentMethodId']
-          sortOrder = event['body']['content']['paymentMethods'][x]['sortOrder']
-          active = event['body']['content']['paymentMethods'][x]['active']
-          customerDescription = event['body']['content']['paymentMethods'][x]['customerDescription']
-          paymentMethodType = event['body']['content']['paymentMethods'][x]['type']
-          accountHolderName = event['body']['content']['paymentMethods'][x]['accountHolderName']
-          paymentMethodVID = event['body']['content']['paymentMethods'][x]['VID']
-          billingAddressCity = event['body']['content']['paymentMethods'][x]['billingAddress']['city']
-          billingAddressName = event['body']['content']['paymentMethods'][x]['billingAddress']['name']
-          billingAddressVID = event['body']['content']['paymentMethods'][x]['billingAddress']['VID']
-          billingAddressCountry = event['body']['content']['paymentMethods'][x]['billingAddress']['country']
-          billingAddressDistrict = event['body']['content']['paymentMethods'][x]['billingAddress']['district']
-          billingAddressAddr1 = event['body']['content']['paymentMethods'][x]['billingAddress']['addr1']
-          billingAddressPostalCode = event['body']['content']['paymentMethods'][x]['billingAddress']['postalCode']
-          creditCardBin = event['body']['content']['paymentMethods'][x]['creditCard']['bin']
-          creditCardAccount = event['body']['content']['paymentMethods'][x]['creditCard']['account']
-          creditCardVID = event['body']['content']['paymentMethods'][x]['creditCard']['VID']
-          creditCardLastDigits = event['body']['content']['paymentMethods'][x]['creditCard']['lastDigits']
-          creditCardExpirationDate = event['body']['content']['paymentMethods'][x]['creditCard']['expirationDate']
-          creditCardAccountLength = event['body']['content']['paymentMethods'][x]['creditCard']['accountLength']
+        
+          if 'merchantPaymentMethodId' in event['body']['content']['paymentMethods'][x]:
+             paymentMethodId = event['body']['content']['paymentMethods'][x]['merchantPaymentMethodId']
+          else: 
+             paymentMethodId = ""
+             
+          if 'sortOrder' in event['body']['content']['paymentMethods'][x]:
+             sortOrder = event['body']['content']['paymentMethods'][x]['sortOrder']
+          else: 
+             sortOrder = ""
+             
+          if 'active' in event['body']['content']['paymentMethods'][x]:
+             active = event['body']['content']['paymentMethods'][x]['active']
+          else: 
+             active = ""
+             
+          if 'customerDescription' in event['body']['content']['paymentMethods'][x]:
+             customerDescription = event['body']['content']['paymentMethods'][x]['customerDescription']
+          else: 
+             customerDescription = ""
+             
+          if 'type' in event['body']['content']['paymentMethods'][x]:
+             paymentMethodType = event['body']['content']['paymentMethods'][x]['type']
+          else: 
+             paymentMethodType = ""
+             
+          if 'accountHolderName' in event['body']['content']['paymentMethods'][x]: 
+             accountHolderName = event['body']['content']['paymentMethods'][x]['accountHolderName']
+          else: 
+             accountHolderName = ""
+             
+          if 'VID' in event['body']['content']['paymentMethods'][x]:
+             paymentMethodVID = event['body']['content']['paymentMethods'][x]['VID']
+          else: 
+             paymentMethodVID = ""
+             
+          if 'city' in event['body']['content']['paymentMethods'][x]['billingAddress']:
+             billingAddressCity = event['body']['content']['paymentMethods'][x]['billingAddress']['city']
+          else: 
+             billingAddressCity = ""
+             
+          if 'name' in event['body']['content']['paymentMethods'][x]['billingAddress']:
+             billingAddressName = event['body']['content']['paymentMethods'][x]['billingAddress']['name']
+          else: 
+             billingAddressName = ""
+             
+          if 'VID' in event['body']['content']['paymentMethods'][x]['billingAddress']:   
+             billingAddressVID = event['body']['content']['paymentMethods'][x]['billingAddress']['VID']
+          else: 
+             billingAddressVID = ""
+             
+          if 'country' in event['body']['content']['paymentMethods'][x]['billingAddress']:   
+             billingAddressCountry = event['body']['content']['paymentMethods'][x]['billingAddress']['country']
+          else: 
+             billingAddressCountry = ""
+             
+          if 'district' in event['body']['content']['paymentMethods'][x]['billingAddress']:   
+             billingAddressDistrict = event['body']['content']['paymentMethods'][x]['billingAddress']['district']
+          else: 
+             billingAddressCountry = ""
+          
+          if 'addr1' in event['body']['content']['paymentMethods'][x]['billingAddress']:   
+             billingAddressAddr1 = event['body']['content']['paymentMethods'][x]['billingAddress']['addr1']
+          else: 
+             billingAddressAddr1 = ""
+          
+          if 'postalCode' in event['body']['content']['paymentMethods'][x]['billingAddress']:   
+             billingAddressPostalCode = event['body']['content']['paymentMethods'][x]['billingAddress']['postalCode']
+          else: 
+             billingAddressPostalCode = ""
+             
+          if 'bin' in event['body']['content']['paymentMethods'][x]['creditCard']:   
+             creditCardBin = event['body']['content']['paymentMethods'][x]['creditCard']['bin']
+          else: 
+             creditCardBin = ""
+             
+          if 'account' in event['body']['content']['paymentMethods'][x]['creditCard']:    
+             creditCardAccount = event['body']['content']['paymentMethods'][x]['creditCard']['account']
+          else:
+             creditCardAccount = ""
+             
+          if 'VID' in event['body']['content']['paymentMethods'][x]['creditCard']:    
+             creditCardVID = event['body']['content']['paymentMethods'][x]['creditCard']['VID']
+          else:
+             creditCardVID = ""
+             
+          if 'lastDigits' in event['body']['content']['paymentMethods'][x]['creditCard']:    
+             creditCardLastDigits = event['body']['content']['paymentMethods'][x]['creditCard']['lastDigits']
+          else: 
+             creditCardLastDigits = ""
+             
+          if 'expirationDate' in event['body']['content']['paymentMethods'][x]['creditCard']:    
+             creditCardExpirationDate = event['body']['content']['paymentMethods'][x]['creditCard']['expirationDate']
+          else: 
+             creditCardExpirationDate = ""
+             
+          if 'accountLength' in event['body']['content']['paymentMethods'][x]['creditCard']:    
+             creditCardAccountLength = event['body']['content']['paymentMethods'][x]['creditCard']['accountLength']
+          else: 
+             creditCardAccountLength = ""
+             
           print ("Payment Method Id {}".format(paymentMethodId))
           PM_HTML += """
             <tr>
@@ -270,7 +401,7 @@ def lambda_handler(event, context):
     
     # Replace sender@example.com with your "From" address.
     # This address must be verified with Amazon SES.
-    SENDER = "Liam Maxwell <liam.hall.maxwell@gmail.com>"
+    SENDER = "TBD
     
     # Replace recipient@example.com with a "To" address. If your account 
     # is still in the sandbox, this address must be verified.
