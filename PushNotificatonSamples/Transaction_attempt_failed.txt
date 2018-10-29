@@ -1,0 +1,231 @@
+{
+  "content": {
+    "transactionItems": [
+      {
+        "taxType": "Inclusive Sales",
+        "servicePeriodStartDate": "2018-11-16T00:00:00-08:00",
+        "sku": "f4dda32f-5045-4acb-8eb0-11eeb55892c2",
+        "name": "Monthly Billing Plan",
+        "quantity": "1",
+        "total": 0,
+        "indexNumber": "1",
+        "itemType": "Purchase",
+        "servicePeriodEndDate": "2018-12-15T00:00:00-08:00"
+      },
+      {
+        "taxType": "Inclusive Sales",
+        "servicePeriodStartDate": "2018-11-16T00:00:00-08:00",
+        "sku": "aa041e3d-5c62-4fd2-b2ee-368c13ae5b49",
+        "subtotal": 301,
+        "name": "Legal Access Plan",
+        "quantity": "1",
+        "tax": [
+          {
+            "amount": "50.17",
+            "externalJurisdictionName": "UNITED KINGDOM",
+            "externalTaxName": "VAT",
+            "name": "Inclusive UNITED KINGDOM COUNTRY VAT TAX",
+            "externalTaxCategory": "VAT",
+            "jurisdiction": "COUNTRY_78295",
+            "taxRate": "0.2"
+          }
+        ],
+        "total": 301,
+        "autoBillItemVid": "de09f5fb3966a22c81e00b128611dff38ad1784c",
+        "indexNumber": "2",
+        "itemType": "Purchase",
+        "price": 301,
+        "servicePeriodEndDate": "2018-12-15T00:00:00-08:00"
+      },
+      {
+        "taxClassification": "TaxExempt",
+        "taxType": "Inclusive Sales",
+        "servicePeriodStartDate": "2018-11-16T00:00:00-08:00",
+        "sku": "Total Tax",
+        "subtotal": 0,
+        "name": "Total Tax",
+        "quantity": "1",
+        "tax": [
+          {
+            "amount": "50.17",
+            "name": "Inclusive UNITED KINGDOM COUNTRY VAT TAX",
+            "jurisdiction": "COUNTRY_78295"
+          }
+        ],
+        "total": "50.17",
+        "discount": 0,
+        "indexNumber": "3",
+        "itemType": "Purchase",
+        "price": 0,
+        "servicePeriodEndDate": "2018-12-15T00:00:00-08:00"
+      }
+    ],
+    "sourcePaymentMethod": {
+      "active": "1",
+      "merchantPaymentMethodId": "9e7ad889231b130317972de18aa47cfc",
+      "billingAddress": {
+        "country": "UK",
+        "VID": "ddabde7d0cc0bb754b9057f110063d3f4ae36843",
+        "postalCode": "sw1a 1aa"
+      },
+      "accountHolderName": "asdfasdf asasfd",
+      "type": "CreditCard",
+      "sortOrder": "0",
+      "creditCard": {
+        "lastDigits": "4242",
+        "bin": "424242",
+        "extendedCardAttributes": {
+          "PINlessDebitCard": "0",
+          "DurbinRegulated": "0",
+          "CommercialCard": "0",
+          "Affluent": "0",
+          "SignatureDebitCard": "0",
+          "CountryOfIssuance": "USA",
+          "HealthcareCard": "0",
+          "PrepaidCard": "0"
+        },
+        "account": "424242XXXXXX4242",
+        "VID": "d06e725454327b6fe0c9739db982be98f8d30231",
+        "expirationDate": "202001",
+        "accountLength": "16"
+      },
+      "VID": "c99933d85cf011fe742cd2510eede1c35c4f9e47"
+    },
+    "paymentProcessorTransactionId": "91830000KUSL",
+    "currency": "GBP",
+    "timestamp": "2018-10-26T15:39:54-07:00",
+    "merchantAutobillIdentifier": "509bb3f9-4b3c-455a-8a0f-8a1f20e30ded",
+    "statusLog": [
+      {
+        "paymentMethodType": "CreditCard",
+        "creditCardStatus": {
+          "authCode": "301",
+          "extendedCardAttributes": {
+            "PINlessDebitCard": "0",
+            "DurbinRegulated": "0",
+            "CommercialCard": "0",
+            "Affluent": "0",
+            "SignatureDebitCard": "0",
+            "CountryOfIssuance": "USA",
+            "HealthcareCard": "0",
+            "PrepaidCard": "0"
+          },
+          "avsCode": "I4"
+        },
+        "timestamp": "2018-10-26T16:52:54-07:00",
+        "status": "Cancelled",
+        "vinAVS": "PartialMatch"
+      },
+      {
+        "paymentMethodType": "CreditCard",
+        "creditCardStatus": {
+          "authCode": "301",
+          "extendedCardAttributes": {
+            "PINlessDebitCard": "0",
+            "DurbinRegulated": "0",
+            "CommercialCard": "0",
+            "Affluent": "0",
+            "SignatureDebitCard": "0",
+            "CountryOfIssuance": "USA",
+            "HealthcareCard": "0",
+            "PrepaidCard": "0"
+          }
+        },
+        "timestamp": "2018-10-26T15:39:57-07:00",
+        "status": "New"
+      }
+    ],
+    "nameValues": [
+      {
+        "value": "d2f2e5fc059f265395729f94545a714258ecd721",
+        "name": "vin:AutoBillVID"
+      },
+      {
+        "value": "509bb3f9-4b3c-455a-8a0f-8a1f20e30ded",
+        "name": "vin:MerchantAutoBillIdentifier"
+      },
+      {
+        "value": "2018-11-16 00:00:00-08",
+        "name": "vin:OriginalActivityDate"
+      },
+      {
+        "value": "1539711163288202",
+        "name": "vin:MandateID"
+      },
+      {
+        "value": "0",
+        "name": "vin:RetryNumber"
+      },
+      {
+        "value": "1",
+        "name": "vin:BillingCycle"
+      }
+    ],
+    "retryNumber": "0",
+    "autoBillCycle": "1",
+    "account": {
+      "paymentMethods": [
+        {
+          "active": "1",
+          "merchantPaymentMethodId": "9e7ad889231b130317972de18aa47cfc",
+          "billingAddress": {
+            "country": "UK",
+            "VID": "ddabde7d0cc0bb754b9057f110063d3f4ae36843",
+            "postalCode": "sw1a 1aa"
+          },
+          "accountHolderName": "asdfasdf asasfd",
+          "type": "CreditCard",
+          "sortOrder": "0",
+          "creditCard": {
+            "lastDigits": "4242",
+            "bin": "424242",
+            "extendedCardAttributes": {
+              "PINlessDebitCard": "0",
+              "DurbinRegulated": "0",
+              "CommercialCard": "0",
+              "Affluent": "0",
+              "SignatureDebitCard": "0",
+              "CountryOfIssuance": "USA",
+              "HealthcareCard": "0",
+              "PrepaidCard": "0"
+            },
+            "account": "424242XXXXXX4242",
+            "VID": "d06e725454327b6fe0c9739db982be98f8d30231",
+            "expirationDate": "202001",
+            "accountLength": "16"
+          },
+          "VID": "c99933d85cf011fe742cd2510eede1c35c4f9e47"
+        }
+      ],
+      "emailTypePreference": "html",
+      "preferredLanguage": "EN",
+      "merchantAccountId": "ec5dd4a6-c33c-4050-8ff7-e5e9bc4d009d",
+      "VID": "30cb9d2d3701a1e671e8e8fb71118f24d87cd596",
+      "createdDate": "2018-10-16T10:28:52-07:00"
+    },
+    "merchantTransactionId": "LSUK00003819",
+    "autobillVID": "d2f2e5fc059f265395729f94545a714258ecd721",
+    "amount": "301.00",
+    "originalActivityDate": "2018-11-16T00:00:00-08:00",
+    "divisionNumber": "352058",
+    "VID": "3fa764dd564b77c67134093273c9f0420733c133",
+    "salesTaxAddress": {
+      "country": "GB",
+      "VID": "b16243d22ec82c7ec4c59e20d130f992e095f8c0",
+      "postalCode": "SW1A 1AA"
+    },
+    "paymentProcessor": "Paymentech",
+    "billingPlanCycle": "1"
+  },
+  "header": {
+    "author_id": "41271ea80ed993e82ad20f008f07ac4f1d82cf33",
+    "class_name": "transactions",
+    "message_id": "2d08ce1b83371f16f278f367a09f65b225f89b87",
+    "event_name": "attempt failed",
+    "merchant_vid": "5dd6cd777bf32d9e2374dd23b1f299f7ebf2cc86",
+    "submitted": "2018-10-26T16:52:55.000000-0700",
+    "soap_version": "23_0",
+    "transaction_vid": "3fa764dd564b77c67134093273c9f0420733c133",
+    "event_timestamp": "2018-10-26 16:52:55"
+  }
+}
