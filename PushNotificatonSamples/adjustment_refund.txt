@@ -1,0 +1,164 @@
+json={
+{
+  "content": {
+    "merchantRefundId": "BBCT03767963",
+    "status": "Processing",
+    "note": "Refund with |deentitle=true|reasoncode=|usercontentrevokedmsg=|source=Test-CRM-Refund-Client|refundeventid=r-c6045cc5-3961-4fc4-8917-1c2d990c4312|",
+    "currency": "GBP",
+    "amount": "0.1",
+    "refundDistributionStrategy": "None",
+    "timestamp": "2016-08-01T03:02:05-07:00",
+    "transaction": {
+      "shippingAddress": {
+        "country": "GB",
+        "VID": "7debab730fd5a5af0c91684a608e605ead37a0f2"
+      },
+      "sourcePaymentMethod": {
+        "active": "1",
+        "merchantPaymentMethodId": "p-96da1511-3e98-4a92-b7bc-c7727fc8495b",
+        "billingAddress": {
+          "country": "GB",
+          "VID": "619a190e55566d59f2795ee4019ffb5487fd47a0"
+        },
+        "accountHolderName": "test_user_automation",
+        "type": "CreditCard",
+        "sortOrder": "0",
+        "creditCard": {
+          "lastDigits": "4444",
+          "bin": "555555",
+          "account": "555555XXXXXX4444",
+          "VID": "a6561a1d8b43af91e26ddfe9b70e1d1660638960",
+          "expirationDate": "201809",
+          "accountLength": "16"
+        },
+        "VID": "e2e15a01e952556773363f7c79478e29209d9a28"
+      },
+      "transactionItems": [
+        {
+          "taxType": "Inclusive Sales",
+          "sku": "crid:\/\/schange.com\/b59272b0-5722-4224-be80-c19fce853e6d",
+          "quantity": "1",
+          "name": "The League of Gentlemen - Series 1 - SD",
+          "subtotal": "9.99",
+          "tax": [
+            {
+              "amount": "1.66",
+              "name": "Inclusive UNITED KINGDOM COUNTRY OUTPUT TAX",
+              "jurisdiction": "COUNTRY_GB"
+            }
+          ],
+          "total": "11.65",
+          "price": "9.99",
+          "itemType": "Purchase",
+          "indexNumber": "1"
+        },
+        {
+          "taxClassification": "TaxExempt",
+          "taxType": "Inclusive Sales",
+          "sku": "Total Tax",
+          "quantity": "1",
+          "name": "Total Tax",
+          "subtotal": 0,
+          "tax": [
+            {
+              "amount": "1.66",
+              "name": "Inclusive UNITED KINGDOM COUNTRY OUTPUT TAX",
+              "jurisdiction": "COUNTRY_GB"
+            }
+          ],
+          "discount": 0,
+          "total": "1.66",
+          "price": 0,
+          "itemType": "Purchase",
+          "indexNumber": "2"
+        }
+      ],
+      "account": {
+        "paymentMethods": [
+          {
+            "active": "1",
+            "merchantPaymentMethodId": "p-96da1511-3e98-4a92-b7bc-c7727fc8495b",
+            "billingAddress": {
+              "country": "GB",
+              "VID": "619a190e55566d59f2795ee4019ffb5487fd47a0"
+            },
+            "accountHolderName": "test_user_automation",
+            "type": "CreditCard",
+            "sortOrder": "0",
+            "creditCard": {
+              "lastDigits": "4444",
+              "bin": "555555",
+              "account": "555555XXXXXX4444",
+              "VID": "a6561a1d8b43af91e26ddfe9b70e1d1660638960",
+              "expirationDate": "201809",
+              "accountLength": "16"
+            },
+            "VID": "e2e15a01e952556773363f7c79478e29209d9a28"
+          }
+        ],
+        "shippingAddress": {
+          "country": "GB",
+          "VID": "7debab730fd5a5af0c91684a608e605ead37a0f2"
+        },
+        "emailTypePreference": "html",
+        "emailAddress": "test-store-user-20160801110149_21_@example.com",
+        "name": "Firstname Lastname",
+        "VID": "73c5231e5521a755a9b69d5f08ecc29f83054e86",
+        "merchantAccountId": "313a9abd06f53a4c03900f16268fd506f53866c58c7654c7b6a68265e42a2cd756c9"
+      },
+      "merchantTransactionId": "BBCT03767961",
+      "currency": "GBP",
+      "paymentProcessorTransactionId": "BBCT03767961",
+      "amount": "9.99",
+      "timestamp": "2016-08-01T03:01:56-07:00",
+      "VID": "6440d6148e4f6ba1c4aec535b942ab224986ab6c",
+      "nameValues": [
+        {
+          "value": "YTXVYEQWZZBN24QDKB7BQRQ",
+          "name": "productOfferPriceOfferId"
+        }
+      ],
+      "statusLog": [
+        {
+          "paymentMethodType": "CreditCard",
+          "creditCardStatus": {
+            "authCode": "T00"
+          },
+          "timestamp": "2016-08-01T03:01:57-07:00",
+          "status": "Authorized"
+        },
+        {
+          "paymentMethodType": "CreditCard",
+          "creditCardStatus": {
+            "authCode": "T00"
+          },
+          "timestamp": "2016-08-01T03:01:55-07:00",
+          "status": "New"
+        }
+      ],
+      "paymentProcessor": "Test",
+      "salesTaxAddress": {
+        "country": "GB",
+        "VID": "82a8cf7cf8ea2f091795498eee245bf29549352f"
+      },
+      "sourceIp": "54.77.76.93"
+    },
+    "VID": "b01ef40fb9a872ab9288897202bd9abeb26a6096",
+    "amountIncludesTax": 1,
+    "tokenAction": "None"
+  },
+  "header": {
+    "author_id": "dfd25fbc477060f511dedef1cfded4e2409ab957",
+    "class_name": "adjustments",
+    "message_id": "71d901b19d8eb0b73040f878c8ffc81e04acb3ad",
+    "event_name": "refund",
+    "merchant_vid": "d008b14d2e75365d6406aed3c454e3f1bb0bfc5e",
+    "initiated": "",
+    "soap_version": "19_0",
+    "submitted": "2016-08-01T03:02:08.337116-0700",
+    "refund_status_id": "7",
+    "refund_vid": "b01ef40fb9a872ab9288897202bd9abeb26a6096",
+    "event_timestamp": "2016-08-01 03:02:08"
+  }
+}
+}&signature=XXXXXXXXXXXXXXXXXXXXXXXXX
