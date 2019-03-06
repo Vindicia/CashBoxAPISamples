@@ -52,7 +52,7 @@ public class CreateAccount {
 				System.out.println(", Vindicia assigned  ID " + acct.getVID());
 			}
 			else {
-				// This product already existed in CashBox and was only updated by this call
+				// This account already existed in CashBox and was only updated by this call
 				System.out.print("Successfully updated account " + acct.getMerchantAccountId());
 			
 			}
