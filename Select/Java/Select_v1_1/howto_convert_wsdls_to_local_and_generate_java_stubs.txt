@@ -3,8 +3,8 @@
 
 1) First retrieve the WSDL files & save to local copies from these URI's:
 
-	https://soap.prodtest.sj.vindicia.com/1.1/Select.wsdl
-	https://soap.prodtest.sj.vindicia.com/1.1/SelectTypes.xsd
+	https://soap.staging.us-west.vindicia.com/1.1/Select.wsdl
+	https://soap.staging.us-west.vindicia.com/1.1/SelectTypes.xsd
 
 2) Create a directory, called wsdls, and save these two files there.
 
